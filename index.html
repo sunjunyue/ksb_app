@@ -112,10 +112,17 @@
 			});
 
 			function changeSub(index) {
+				var settings = plus.webview.getWebviewById('settings2.html');
+				if (index != 1) {
+					if (!plus.storage.getItem('uid')){
+						mui.toast('请先登录');
+						index = 4;
+					}
+				}
 				var home = plus.webview.getWebviewById('home.html');
 				var work = plus.webview.getWebviewById('work.html');
 				var message = plus.webview.getWebviewById('message.html');
-				var settings = plus.webview.getWebviewById('settings2.html');
+				
 				var workbarcode = plus.webview.getWebviewById('workbarcode.html');
 				home.setStyle({
 					left: (1 - index) * 100 + "%"

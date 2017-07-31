@@ -53,7 +53,7 @@
 				<p class="tip">...载入中...</p>
 			</div>
 			<footer>
-				<div class="fbt" onclick="">取　 消</div>
+				<div class="fbt" onclick="cancelscan();">取　 消</div>
 				<div class="fbt" onclick="openscan();">开启散光灯</div>
 			</footer>
 		</body>
@@ -89,6 +89,11 @@
 			
 			function openscan() {
 				scan.setFlash(true);
+			}
+			
+			function cancelscan(){
+				scan.cancel();
+				mui.back();
 			}
 		</script>
 	</body>
