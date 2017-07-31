@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>copy</title>
+		<link href="css/mui.css" rel="stylesheet" />
+		<style>
+			#bcid {
+				width: 100%;
+				position: absolute;
+				top: 0px;
+				bottom: 44px;
+				text-align: center;
+			}
+			
+			.tip {
+				color: #FFFFFF;
+				font-weight: bold;
+				text-shadow: 0px -1px #103E5C;
+			}
+			
+			footer {
+				width: 100%;
+				height: 44px;
+				position: absolute;
+				bottom: 0px;
+				line-height: 44px;
+				text-align: center;
+				color: #FFF;
+			}
+			
+			.fbt {
+				width: 50%;
+				height: 100%;
+				background-color: #FFCC33;
+				float: left;
+			}
+			
+			.fbt:active {
+				-webkit-box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.5);
+				box-shadow: inse;
+			}
+		</style>
+	</head>
+
+	<body>
+
+		<body style="background-color: #000000;">
+			<div id="bcid">
+				<div style="height:40%"></div>
+				<p class="tip">...载入中...</p>
+			</div>
+			<footer>
+				<div class="fbt" onclick="">取　 消</div>
+				<div class="fbt" onclick="openscan();">开启散光灯</div>
+			</footer>
+		</body>
+		<script src="js/mui.min.js"></script>
+		<script type="text/javascript" charset="utf-8">
+			mui.init();
+			
+			var scan = null, ws = null, wo = null;
+			mui.plusReady(function () {
+				ws = plus.webview.currentWebview();
+				wo = ws.opener();
+				scan = new plus.barcode.Barcode('bcid');
+				scan.onmarked = onmarked;
+				scan.start();		
+			}); 
+			
+			function onmarked(type,result) {
+				var text = "未知：";
+				switch(type) {
+					case plus.barcode.QR:
+					text = 'QR: ';
+					break;
+					case plus.barcode.EAN13:
+					text = 'EAN13: ';
+					break;
+					case plus.barcode.EAN8:
+					text = 'EAN8: ';
+					break;
+				}
+				wo.evalJS("al('"+result+"');");
+				mui.back();
+			}
+			
+			function openscan() {
+				scan.setFlash(true);
+			}
+		</script>
+	</body>
+
+</html>

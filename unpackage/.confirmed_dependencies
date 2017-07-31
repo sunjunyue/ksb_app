@@ -14,7 +14,8 @@
 			"work.html",
 			"message.html",
 			"settings.html",
-			"settings2.html"
+			"settings2.html",
+			"workbarcode.html"
 		]
 	},
 	"work.html": {
@@ -42,6 +43,19 @@
 			"css/mui.css",
 			"js/mui.view.js",
 			"js/feedback.js"
+		]
+	},
+	"workbarcode.html": {
+		"resources": [
+			"css/mui.css"
+		],
+		"refer": [
+			"barcode.html"
+		]
+	},
+	"barcode.html": {
+		"resources": [
+			"css/mui.css"
 		]
 	}
 }

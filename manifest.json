@@ -206,7 +206,8 @@
 					"work.html",
 					"message.html",
 					"settings.html",
-					"settings2.html"
+					"settings2.html",
+					"workbarcode.html"
 				],
 				"priority": 0
 			},
@@ -243,6 +244,22 @@
 					"css/mui.css",
 					"js/mui.view.js",
 					"js/feedback.js"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"workbarcode.html": {
+				"resources": [
+					"css/mui.css"
+				],
+				"refer": [
+					"barcode.html"
+				],
+				"priority": 0
+			},
+			"barcode.html": {
+				"resources": [
+					"css/mui.css"
 				],
 				"refer": [],
 				"priority": 0
