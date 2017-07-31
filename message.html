@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title></title>
+    <link href="css/mui.css" rel="stylesheet"/>
+</head>
+<body>
+	message
+	<script src="js/mui.min.js"></script>
+    <script type="text/javascript" charset="utf-8">
+      	mui.init();
+      	var _index, _self, _prev;
+      	mui.plusReady(function () {
+      		_self = plus.webview.currentWebview();
+      		//_next = plus.webview.getWebviewById('settings.html');
+      		_index = plus.webview.getLaunchWebview();
+      		_prev = plus.webview.getWebviewById('work.html')
+      		_self.drag({
+      			direction: 'right',
+      			moveMode: 'followFinger'
+      		},{
+      			view: _prev,
+      			moveMode: 'follow'
+      		}, function (e) {
+      			if (e.type == 'end' && e.result) {
+      				_index.evalJS('h("#navFooter").find("a").removeClass("mui-active");h("#nav2").addClass("mui-active")');
+      			}
+      		});
+      	});
+    </script>
+</body>
+</html>

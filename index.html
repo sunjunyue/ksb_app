@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title></title>
+		<link href="css/mui.css" rel="stylesheet" />
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav hBg">
+			<div id="logo">
+				<img src="imgs/logo2.jpeg" />
+				<h1 class="mui-title" style="color: #FFFFFF;">款式宝</h1>
+			</div>
+		</header>
+		<nav class="mui-bar mui-bar-tab hBg" id="navFooter">
+			<a class="mui-tab-item mui-active" id="nav1">
+				<span class="mui-icon mui-icon-home" style="color: #FFFFFF"></span>
+				<span class="mui-tab-label">首页</span>
+			</a>
+			<a class="mui-tab-item" id="nav2">
+				<span class="mui-icon mui-icon-phone" style="color: #FFFFFF"></span>
+				<span class="mui-tab-label">工作</span>
+			</a>
+			<a class="mui-tab-item" href="javascript:openbarcodescan()">
+				<div style="margin:5px auto;text-align:center;">
+					<img src="imgs/logo.jpeg" height="35px" />
+				</div>
+			</a>
+			<a class="mui-tab-item" id="nav3">
+				<span class="mui-icon mui-icon-chatboxes" style="color: #FFFFFF"><span id="msgbadge" style="visibility: visible;" class="mui-badge">99</span></span>
+				<span class="mui-tab-label">消息</span>
+			</a>
+			<a class="mui-tab-item" id="nav4">
+				<span class="mui-icon mui-icon-settings" style="color: #FFFFFF"></span>
+				<span class="mui-tab-label">设置</span>
+			</a>
+		</nav>
+		<script src="js/mui.min.js"></script>
+		<script src="js/h.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript" charset="utf-8">
+			mui.init({
+				subpages: [{
+					url: 'home.html',
+					id: 'home.html',
+					styles: {
+						top: '44px',
+						bottom: '50px',
+						width: "100%"
+					}
+				}, {
+					url: 'work.html',
+					id: 'work.html',
+					styles: {
+						top: '44px',
+						bottom: '50px',
+						width: "100%",
+						left: "100%"
+					}
+				}, {
+					url: 'message.html',
+					id: 'message.html',
+					styles: {
+						top: '44px',
+						bottom: '50px',
+						width: "100%",
+						left: "200%"
+					}
+				}, {
+					url: 'settings2.html',
+					id: 'settings2.html',
+					styles: {
+						top: '44px',
+						bottom: '50px',
+						width: "100%",
+						left: "300%"
+					}
+				}]
+			});
+
+			h('#nav1').tap(function() {
+				changeSub(1);
+			});
+			h('#nav2').tap(function() {
+				changeSub(2);
+			});
+			h('#nav3').tap(function() {
+				changeSub(3);
+			});
+			h('#nav4').tap(function() {
+				// 判断用户是否已经登录
+				/*var uid = plus.storage.getItem('uid');
+				if(!uid) {
+					loginByWx('changeSub(4);');
+					return false;
+				}*/
+				changeSub(4);
+			});
+
+			function changeSub(index) {
+				var home = plus.webview.getWebviewById('home.html');
+				var work = plus.webview.getWebviewById('work.html');
+				var message = plus.webview.getWebviewById('message.html');
+				var settings = plus.webview.getWebviewById('settings2.html');
+				home.setStyle({
+					left: (1 - index) * 100 + "%"
+				});
+				work.setStyle({
+					left: (2 - index) * 100 + "%"
+				});
+				message.setStyle({
+					left: (3 - index) * 100 + "%"
+				});
+				settings.setStyle({
+					left: (4 - index) * 100 + "%"
+				});
+			}
+			mui.plusReady(function () {
+				
+			});
+		</script>
+	</body>
+
+</html>
