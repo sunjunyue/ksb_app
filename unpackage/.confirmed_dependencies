@@ -30,7 +30,12 @@
 	},
 	"message.html": {
 		"resources": [
-			"css/mui.css"
+			"css/mui.css",
+			"js/mui.lazyload.js",
+			"js/mui.lazyload.img.js",
+			"imgs/logo.jpeg",
+			"js/mui.min.js",
+			"fonts/mui.ttf"
 		]
 	},
 	"settings.html": {

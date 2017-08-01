@@ -7,58 +7,63 @@
     <link href="css/mui.css" rel="stylesheet"/>
 </head>
 <body>
-	<div>
-		<ul class="mui-table-view mui-table-view-chevron">
-				<li class="mui-table-view-cell mui-media" href="detail.html">
-					<a class="mui-navigate-right">
-						<img class="mui-media-object mui-pull-left" src="imgs/logo.jpeg">
-						<div class="mui-media-body">
-							CBD
-							<p class='mui-ellipsis'>烤炉模式的城，到黄昏，如同打翻的调色盘一般.</p>
-						</div>
-					</a>
-				</li>
-				<li class="mui-table-view-cell mui-media" href="detail.html">
-					<a class='mui-navigate-right' href="javascript:;">
-						<img class="mui-media-object mui-pull-left" src="imgs/logo.jpeg">
-						<div class="mui-media-body">
-							远眺
-							<p class='mui-ellipsis'>静静的看这个世界，最后终于疯了</p>
-						</div>
-					</a>
-				</li>
-				<li class="mui-table-view-cell mui-media" href="detail.html">
-					<a class="mui-navigate-right">
-						<img class="mui-media-object mui-pull-left" src="imgs/logo.jpeg">
-						<div class="mui-media-body">
-							幸福
-							<p class='mui-ellipsis'>能和心爱的人一起睡觉，是件幸福的事情；可是，打呼噜怎么办？</p>
-						</div>
-					</a>
-				</li>
-			</ul>
+	<div class="mui-content">
+		<ul class="mui-table-view">
+			<li class="mui-table-view-cell">
+				<span style="font-size:14px">是否选择未读消息</span>
+				<div class="mui-switch mui-active">
+					<div class="mui-switch-handle"></div>
+				</div>
+			</li>
+		</ul>
 	</div>
+	<div class="message_list" id="sms">
+		<ul id="list" class="mui-table-view mui-table-view-chevron">
+
+		</ul>
+		</div>
 	<script src="js/mui.min.js"></script>
-    <script type="text/javascript" charset="utf-8">
-      	mui.init();
-      	var _index, _self, _prev;
-      	mui.plusReady(function () {
-      		_self = plus.webview.currentWebview();
-      		//_next = plus.webview.getWebviewById('settings.html');
-      		_index = plus.webview.getLaunchWebview();
-      		_prev = plus.webview.getWebviewById('work.html')
-      		_self.drag({
-      			direction: 'right',
-      			moveMode: 'followFinger'
-      		},{
-      			view: _prev,
-      			moveMode: 'follow'
-      		}, function (e) {
-      			if (e.type == 'end' && e.result) {
-      				_index.evalJS('h("#navFooter").find("a").removeClass("mui-active");h("#nav2").addClass("mui-active")');
-      			}
-      		});
-      	});
-    </script>
+	<script src="js/mui.lazyload.js"></script>
+	<script src="js/mui.lazyload.img.js"></script>
+    <script>
+		mui.init();
+		//懒加载
+		var createFragment = function(count) {
+			var fragment = document.createDocumentFragment();
+			var li;
+			for (var i = 0; i < count; i++) {
+				li = document.createElement('li');
+				li.className = 'mui-table-view-cell mui-media';
+				li.innerHTML = '<a class="mui-navigate-right"><img class="mui-media-object mui-pull-left" data-lazyload="http://www.dcloud.io/hellomui/images/' + (i % 5 + 1) + '.jpg?version=' + Math.random() * 1000 + '"><div class="mui-media-body">标题名称<p class="mui-ellipsis">标题内容</p></div></a>';
+				fragment.appendChild(li);
+			}
+			return fragment;
+		};
+		(function($) {
+			var list = document.getElementById("list");
+			list.appendChild(createFragment(50));
+			$(document).imageLazyload({
+				placeholder: 'imgs/logo.jpeg'
+			});
+		})(mui);
+		
+		function al(result) {
+				mui.post(
+				'http://192.168.31.242/ksbapi2/api/sm/getsmcountlist?token='
+					+ plus.storage.getItem('token'),
+				{
+					guid: result,
+				},
+				function (data) {
+					if (data.flag == "get_devtask_by_guid_success") {
+						h('#sms').val(data.data.sms);
+					}
+				},
+				'json'
+			);
+			}
+			
+			
+	</script>
 </body>
 </html>
