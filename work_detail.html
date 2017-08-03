@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title></title>
+    <link href="css/mui.css" rel="stylesheet"/>
+</head>
+<body>
+	<div class="mui-navbar-inner mui-bar mui-bar-nav">
+		<button type="button" class="mui-left mui-action-back mui-btn  mui-btn-link mui-btn-nav mui-pull-left">
+			<span class="mui-icon mui-icon-left-nav"></span>
+		</button>
+		<h1 class="mui-center mui-title">工作详情</h1>
+	</div>
+	<div class="mui-content">
+		<div class="mui-content-padded ">
+			<h5>任务名称：</h5>
+			<div class="mui-input-row">
+				<input type="text" class="mui-input" id="devtask_builder">
+			</div>
+		</div>
+		<div class="mui-content-padded ">
+			<h5>选择文件：</h5>
+			<div class="mui-input-row">
+				<textarea id="devtask_text" placeholder="文件描述" style="font-size:14px;margin-bottom: 5px;"/></textarea>
+				<input type="file" style="font-size:14px;margin-bottom:10px;">
+			</div>
+		</div>
+		<div class="mui-content-padded ">
+			<h5>选择图片：</h5>
+			<div class="mui-input-row">
+				<textarea id="devtask_text" placeholder="图片描述" style="font-size:14px;margin-bottom: 5px;"/></textarea>
+				<input type="file" style="font-size:14px;margin-bottom:10px;">
+			</div>
+		</div>
+		<div class="mui-content-padded" style="margin:0 auto;text-align: center;">
+			<div class="mui-btn mui-btn-success ">
+				暂存
+			</div>
+			<span class="mui-btn mui-btn-primary">
+				保存
+			</span>
+			<button type="button" class="mui-btn mui-btn-warning">
+				取消
+			</button>
+		</div>
+	</div>
+	<script src="js/mui.min.js"></script>
+    <script type="text/javascript" charset="utf-8">
+      	mui.init();
+    </script>
+</body>
+</html>
