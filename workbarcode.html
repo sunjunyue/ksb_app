@@ -93,6 +93,7 @@
 				</div>
 			</div>
 		</div>
+		<script src="js/common.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/mui.min.js"></script>
 		<script src="js/h.js"></script>
 		<script type="text/javascript" charset="utf-8">
@@ -108,7 +109,7 @@
 			// 扫描二维码回调函数
 			function al(result) {
 				mui.post(
-					'http://192.168.31.243/ksbapi2/api/devtask/getdevtaskbyguid?token=' +
+					url + 'devtask/getdevtaskbyguid?token=' +
 					plus.storage.getItem('token'), {
 						guid: result,
 					},
@@ -122,6 +123,12 @@
 									mui.toast('抱歉，此项任务不是您的工作');
 									return;
 								}
+								
+								if (data.data.devtask.subguid != null) {
+									mui.toast('此项工作任务已经在您的工作目录里了');
+									return;
+								}
+								
 								h('#taskname').val(data.data.devtask.devtask_name + "::款式初稿");
 							}
 							
