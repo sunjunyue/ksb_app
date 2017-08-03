@@ -36,6 +36,9 @@
 			"imgs/logo.jpeg",
 			"js/mui.min.js",
 			"fonts/mui.ttf"
+		],
+		"refer": [
+			"message_detail.html"
 		]
 	},
 	"settings.html": {
@@ -47,18 +50,48 @@
 		"resources": [
 			"css/mui.css",
 			"js/mui.view.js",
-			"js/feedback.js"
+			"js/feedback.js",
+			"js/h.js",
+			"js/mui.min.js"
 		]
 	},
 	"workbarcode.html": {
 		"resources": [
-			"css/mui.css"
+			"css/mui.css",
+			"js/h.js",
+			"js/mui.min.js"
 		],
 		"refer": [
-			"barcode.html"
+			"barcode.html",
+			"task_detail.html"
 		]
 	},
 	"barcode.html": {
+		"resources": [
+			"css/mui.css",
+			"js/mui.min.js"
+		]
+	},
+	"task_detail.html": {
+		"resources": [
+			"css/mui.css",
+			"js/mui.min.js",
+			"js/h.js"
+		],
+		"refer": [
+			"task_detail2.html"
+		]
+	},
+	"task_detail2.html": {
+		"resources": [
+			"js/mui.zoom.js",
+			"js/mui.min.js",
+			"js/mui.previewimage.js",
+			"css/mui.css",
+			"js/h.js"
+		]
+	},
+	"message_detail.html": {
 		"resources": [
 			"css/mui.css"
 		]

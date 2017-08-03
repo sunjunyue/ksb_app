@@ -29,19 +29,25 @@
 				-webkit-border-radius: 5px;
 				border-radius: 5px;
 			}
-			.mui-input-row{
-				font-size:14px;
+			
+			.mui-input-row {
+				font-size: 14px;
 			}
-			input, textarea, select {
-				font-size:14px;
+			
+			input,
+			textarea,
+			select {
+				font-size: 14px;
 			}
-			.mui-btn-block{
-				font-size:14px;
-				padding:10px 0;
+			
+			.mui-btn-block {
+				font-size: 14px;
+				padding: 10px 0;
 			}
-			p{
-				margin:0 auto;
-				text-align:center;
+			
+			p {
+				margin: 0 auto;
+				text-align: center;
 			}
 		</style>
 	</head>
@@ -57,7 +63,7 @@
 			<div class="mui-content-padded">
 				<h5>任务封面图：</h5>
 				<p>
-					<img id="taskphotourl" src="imgs/logo.jpeg" data-preview-src="" data-preview-group="1" style="text-align:center"/>
+					<img id="taskphotourl" width="190" height="250" src="imgs/logo.jpeg" data-preview-src="" data-preview-group="1" style="text-align:center" />
 				</p>
 			</div>
 			<!--<div class="mui-content-padded ">
@@ -67,14 +73,14 @@
 				</div>
 			</div>-->
 			<form class="mui-input-group mui-content-padded">
-					<div class="mui-input-row">
-						<label>任务名称</label>
-						<input id="taskname" type="text" placeholder="普通输入框" disabled="disabled">
-					</div>
-					<div class="mui-input-row">
-						<label>任务截至时间</label>
-						<input id="deadline" type="text" class="mui-input-clear" placeholder="带清除按钮的输入框" disabled="disabled">
-					</div>
+				<div class="mui-input-row">
+					<label>任务名称</label>
+					<input id="taskname" type="text" placeholder="普通输入框" disabled="disabled">
+				</div>
+				<div class="mui-input-row">
+					<label>任务截至时间</label>
+					<input id="deadline" type="text" class="mui-input-clear" placeholder="带清除按钮的输入框" disabled="disabled">
+				</div>
 			</form>
 			<!--<div class="mui-content-padded">
 				<h5>任务截至时间：</h5>
@@ -82,8 +88,8 @@
 			</div>-->
 			<div class="mui-content-padded">
 				<div class="mui-button-row">
-					<button type="button" class="mui-btn mui-btn-primary mui-btn-block">接受任务</button>
-		        	<button type="button" class="mui-btn mui-btn-success mui-btn-block">进入任务</button>
+					<button id="acciveBtn" disabled="disabled" type="button" class="mui-btn mui-btn-primary mui-btn-block">接受任务</button>
+					<button id="viewDetailBtn" disabled="disabled" type="button" class="mui-btn mui-btn-success mui-btn-block" onclick="opentaskdetail()">查看任务详细</button>
 				</div>
 			</div>
 		</div>
@@ -91,36 +97,67 @@
 		<script src="js/h.js"></script>
 		<script type="text/javascript" charset="utf-8">
 			mui.init();
-			
+
 			function openscanwindow() {
 				mui.openWindow({
 					url: 'barcode.html',
 					id: 'barcode'
 				});
 			}
-			
+
 			// 扫描二维码回调函数
 			function al(result) {
 				mui.post(
-				'http://192.168.31.242/ksbapi2/api/devtask/getdevtaskbyguid?token='
-					+ plus.storage.getItem('token'),
-				{
-					guid: result,
-				},
-				function (data) {
-					if (data.flag == "get_devtask_by_guid_success") {
-						if (data.data.devtask.t1 == '0') {
-							h('#taskname').val(data.data.devtask.devtask_name + "::款式初稿" );
+					'http://192.168.31.243/ksbapi2/api/devtask/getdevtaskbyguid?token=' +
+					plus.storage.getItem('token'), {
+						guid: result,
+					},
+					function(data) {
+						console.log(data.flag);
+						if(data.flag == "get_devtask_by_guid_success") {
+							// 设定任务名称
+							if(data.data.devtask.devtask_progress2 == '1') {
+								// 设计初稿阶段
+								if (plus.storage.getItem('uid') != data.data.devtask.devtask_designerid) {
+									mui.toast('抱歉，此项任务不是您的工作');
+									return;
+								}
+								h('#taskname').val(data.data.devtask.devtask_name + "::款式初稿");
+							}
+							
+							
+							
+							h('#taskphotourl').attr('src', data.data.devtask.taskphotourl);
+
+							h('#deadline').val(data.data.devtask.devtask_deadline);
+							h('#acciveBtn').removeAttr('disabled');
+							h('#viewDetailBtn').removeAttr('disabled');
+							if(plus.storage.getItem('devtask'))
+							{
+								plus.storage.removeItem('devtask');
+							}
+							plus.storage.setItem('devtask',JSON.stringify(data.data.devtask));
 						}
-						h('#taskphotourl').attr('src',data.data.devtask.taskphotourl);
-						
-						h('#deadline').val(data.data.devtask.devtask_deadline);
-					}
-				},
-				'json'
-			);
+					},
+					'json'
+				);
 			}
 			
+			function opentaskdetail() {
+				mui.openWindow({
+					url: 'task_detail.html',
+					id: 'task_detail'
+				});
+			}
+			
+			// 恢复页面
+			function resetwindow() {
+				h('#taskname').val('');
+				h('#deadline').val('');
+				h('#taskphotourl').attr('src', 'imgs/logo.jpeg');
+				h('#acciveBtn').attr('disabled','disabled');
+				h('#viewDetailBtn').attr('disabled','disabled');
+			}
 		</script>
 	</body>
 

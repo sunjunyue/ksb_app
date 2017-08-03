@@ -26,13 +26,13 @@
 		<div class="mui-content-padded ">
 			<h5>标题：</h5>
 			<div class="mui-input-row">
-				<input type="text" class="mui-input">
+				<input id="sm_title" type="text" class="mui-input" disabled="disabled" style="color: #999999;">
 			</div>
 		</div>
 		<div class="mui-content-padded ">
 			<h5>内容：</h5>
 			<div class="mui-input-row">
-				<textarea ></textarea>
+				<textarea id="sm_content" disabled="disabled" style="color: #999999; height: 150px;" ></textarea>
 			</div>
 		</div>
 		<div class="mui-content-padded ">
@@ -43,5 +43,22 @@
 		</div>
 	</div>
 	<script src="js/mui.min.js"></script>
+	<script type="text/javascript" src="js/h.js"></script>
+	<script type="text/javascript">
+		mui.init();
+		window.onload = function() {
+			mui.plusReady(function () {
+				var sms = JSON.parse(plus.storage.getItem('sms'));
+				for (var i = 0; i < sms.length; i++) {
+					if (sms[i].guid == plus.storage.getItem('currentsms')){
+						h('#sm_title').val(sms[i].sm_title);
+						h('#sm_content').html(sms[i].sm_content);
+					}
+				}
+				plus.nativeUI.closeWaiting();
+				mui.currentWebview.show();
+			});
+		}
+	</script>
 </body>
 </html>

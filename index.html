@@ -30,7 +30,7 @@
 				</div>
 			</a>
 			<a class="mui-tab-item" id="nav3">
-				<span class="mui-icon mui-icon-chatboxes" style="color: #FFFFFF"><span id="msgbadge" style="visibility: visible;" class="mui-badge">99</span></span>
+				<span class="mui-icon mui-icon-chatboxes" style="color: #FFFFFF" id="message_span"></span>
 				<span class="mui-tab-label">消息</span>
 			</a>
 			<a class="mui-tab-item" id="nav4">
@@ -113,17 +113,28 @@
 
 			function changeSub(index) {
 				var settings = plus.webview.getWebviewById('settings2.html');
-				if (index != 1) {
+				var message = plus.webview.getWebviewById('message.html');
+				var workbarcode = plus.webview.getWebviewById('workbarcode.html');
+				if (index != 1 && index != 4) {
 					if (!plus.storage.getItem('uid')){
 						mui.toast('请先登录');
 						index = 4;
 					}
 				}
+				
+				message.evalJS('tt(1);setOn();');
+				getnewmessagecount();
+				
+				// 清空任务扫描页
+				if (index != 5) {
+					workbarcode.evalJS('resetwindow();');
+				}
+				
 				var home = plus.webview.getWebviewById('home.html');
 				var work = plus.webview.getWebviewById('work.html');
-				var message = plus.webview.getWebviewById('message.html');
 				
-				var workbarcode = plus.webview.getWebviewById('workbarcode.html');
+				
+				
 				home.setStyle({
 					left: (1 - index) * 100 + "%"
 				});
@@ -141,8 +152,30 @@
 				})
 			}
 			
+			function getnewmessagecount() {
+				if (!plus.storage.getItem('uid')) {
+					h('#message_span').html('');
+					return;
+				}
+				mui.post(
+					'http://192.168.31.243/ksbapi2/api/sm/getsmcountnew?token=' + plus.storage.getItem('token'), {
+						uid: plus.storage.getItem('uid'),
+					},
+					function(data) {
+						if(data.flag == 'get_smcount_new_success') {
+							if (data.data.sms_count > 0){
+								h('#message_span').html('<span id="msgbadge" style="visibility: visible;" class="mui-badge">'+data.data.sms_count+'</span>');
+							} else {
+								h('#message_span').html('');
+							}
+						}
+					},
+					'json'
+				);
+			}
+			
 			mui.plusReady(function () {
-				
+				getnewmessagecount();
 			});
 		</script>
 	</body>

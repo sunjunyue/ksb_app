@@ -234,7 +234,9 @@
 					"js/mui.min.js",
 					"fonts/mui.ttf"
 				],
-				"refer": [],
+				"refer": [
+					"message_detail.html"
+				],
 				"priority": 0
 			},
 			"settings.html": {
@@ -248,21 +250,56 @@
 				"resources": [
 					"css/mui.css",
 					"js/mui.view.js",
-					"js/feedback.js"
+					"js/feedback.js",
+					"js/h.js",
+					"js/mui.min.js"
 				],
 				"refer": [],
 				"priority": 0
 			},
 			"workbarcode.html": {
 				"resources": [
-					"css/mui.css"
+					"css/mui.css",
+					"js/h.js",
+					"js/mui.min.js"
 				],
 				"refer": [
-					"barcode.html"
+					"barcode.html",
+					"task_detail.html"
 				],
 				"priority": 0
 			},
 			"barcode.html": {
+				"resources": [
+					"css/mui.css",
+					"js/mui.min.js"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"task_detail.html": {
+				"resources": [
+					"css/mui.css",
+					"js/mui.min.js",
+					"js/h.js"
+				],
+				"refer": [
+					"task_detail2.html"
+				],
+				"priority": 0
+			},
+			"task_detail2.html": {
+				"resources": [
+					"js/mui.zoom.js",
+					"js/mui.min.js",
+					"js/mui.previewimage.js",
+					"css/mui.css",
+					"js/h.js"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"message_detail.html": {
 				"resources": [
 					"css/mui.css"
 				],

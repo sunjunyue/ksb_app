@@ -1,168 +1,137 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
-    <title></title>
-    <link href="css/mui.css" rel="stylesheet"/>
-    <style>
-    	.mui-input-row .mui-btn{
-    		width:100%;
-    	}
-    	p{
-				margin:0 auto;
-				text-align:center;
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title></title>
+		<link href="css/mui.css" rel="stylesheet" />
+		<style>
+			.mui-input-row .mui-btn {
+				width: 100%;
 			}
-    </style>
-</head>
-<body>
-	<div class="mui-content">
-		<div class="mui-content-padded">
-			<h5>封面图：</h5>
-			<p>
-				<img id="taskphotourl" width="200" height="200" src="imgs/logo.jpeg" data-preview-src="" data-preview-group="1" />
-			</p>
+			
+			p {
+				margin: 0 auto;
+				text-align: center;
+			}
+			input {
+				color: #999;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="mui-navbar-inner mui-bar mui-bar-nav">
+			<button type="button" class="mui-left mui-action-back mui-btn  mui-btn-link mui-btn-nav mui-pull-left">
+			<span class="mui-icon mui-icon-left-nav"></span>
+		</button>
+			<h1 class="mui-center mui-title">任务详情</h1>
 		</div>
-		<div class="mui-content-padded">
-			<h5>二维码：</h5>
-			<p>
-				<img id="taskphotourl" width="200" height="200" src="imgs/logo.jpeg" data-preview-src="" data-preview-group="1" />
-			</p>
-		</div>
-		<div class="mui-content-padded ">
-			<h5>具体要求：</h5>
-			<div class="mui-input-row">
-				<!--<input type="text" class="mui-input">-->
-				<textarea ></textarea>
+		<div class="mui-content">
+			<div class="mui-content-padded">
+				<h5>封面图：</h5>
+				<p>
+					<img id="taskphotourl" width="200" height="200" src="imgs/logo.jpeg" data-preview-src="" data-preview-group="1" />
+				</p>
 			</div>
-		</div>
-		<div class="mui-content-padded ">
-			<h5>发起人：</h5>
-			<div class="mui-input-row">
-				<input type="text" class="mui-input">
+			<div class="mui-content-padded">
+				<h5>二维码：</h5>
+				<p>
+					<img id="devtask_qrcodeurl" width="200" height="200" src="imgs/logo.jpeg" data-preview-src="" data-preview-group="1" />
+				</p>
 			</div>
-		</div>
-		<div class="mui-content-padded ">
-			<h5>任务名称：</h5>
-			<div class="mui-input-row">
-				<input type="text" class="mui-input">
+			<div class="mui-content-padded ">
+				<h5>具体要求：</h5>
+				<div class="mui-input-row" >
+					<!--<input type="text" class="mui-input">-->
+					<textarea id="devtask_text" disabled="disabled" style="color: #999;"></textarea>
+				</div>
 			</div>
-		</div>
-		<div class="mui-content-padded ">
-			<h5>任务来源：</h5>
-			<div class="mui-input-row">
-				<input type="text" class="mui-input">
+			<div class="mui-content-padded ">
+				<h5>发起人：</h5>
+				<div class="mui-input-row">
+					<input type="text" class="mui-input" id="devtask_builder" disabled="disabled">
+				</div>
 			</div>
-		</div>
-		<div class="mui-content-padded ">
-			<h5>参考图：</h5>
-			<div class="mui-input-row">
-				<div class="mui-btn mui-btn-primary">
-					查看参考图
+			<div class="mui-content-padded ">
+				<h5>任务名称：</h5>
+				<div class="mui-input-row">
+					<input type="text" class="mui-input" id="devtask_name" disabled="disabled">
+				</div>
+			</div>
+			<div class="mui-content-padded ">
+				<h5>任务来源：</h5>
+				<div class="mui-input-row">
+					<input type="text" class="mui-input" id="devtask_source" disabled="disabled">
+				</div>
+			</div>
+			<div class="mui-content-padded ">
+				<h5>参考图：</h5>
+				<div class="mui-input-row">
+					<div class="mui-btn mui-btn-primary" onclick="openckt();">
+						查看参考图
+					</div>
+				</div>
+			</div>
+			<div class="mui-content-padded ">
+				<h5>截至时间：</h5>
+				<div class="mui-input-row">
+					<input type="text" class="mui-input" id="devtask_deadline" disabled="disabled">
+				</div>
+			</div>
+			<div class="mui-content-padded ">
+				<h5>设计师：</h5>
+				<div class="mui-input-row">
+					<input type="text" class="mui-input" id="devtask_designer" disabled="disabled">
+				</div>
+			</div>
+			<div class="mui-content-padded ">
+				<h5>制版师：</h5>
+				<div class="mui-input-row">
+					<input type="text" class="mui-input" id="devtask_patternmaker" disabled="disabled">
+				</div>
+			</div>
+			<div class="mui-content-padded ">
+				<h5>裁剪师：</h5>
+				<div class="mui-input-row">
+					<input type="text" class="mui-input" id="devtask_cutter" disabled="disabled">
+				</div>
+			</div>
+			<div class="mui-content-padded ">
+				<h5>样衣工：</h5>
+				<div class="mui-input-row">
+					<input type="text" class="mui-input" id="devtask_yyg" disabled="disabled">
 				</div>
 			</div>
 		</div>
-		<div class="mui-content-padded ">
-			<h5>截至时间：</h5>
-			<div class="mui-input-row">
-				<input type="text" class="mui-input">
-			</div>
-		</div>
-		<div class="mui-content-padded ">
-			<h5>设计师：</h5>
-			<div class="mui-input-row">
-				<select class="mui-btn">
-					<option value="item-1">item-1</option>
-					<option value="item-2">item-2</option>
-					<option value="item-3">item-3</option>
-					<option value="item-4">item-4</option>
-					<option value="item-5">item-5</option>
-				</select>
-			</div>
-		</div>
-		<div class="mui-content-padded ">
-			<h5>制版师：</h5>
-			<div class="mui-input-row">
-				<select class="mui-btn">
-					<option value="item-1">item-1</option>
-					<option value="item-2">item-2</option>
-					<option value="item-3">item-3</option>
-					<option value="item-4">item-4</option>
-					<option value="item-5">item-5</option>
-				</select>
-			</div>
-		</div>
-		<div class="mui-content-padded ">
-			<h5>裁剪师：</h5>
-			<div class="mui-input-row">
-				<select class="mui-btn">
-					<option value="item-1">item-1</option>
-					<option value="item-2">item-2</option>
-					<option value="item-3">item-3</option>
-					<option value="item-4">item-4</option>
-					<option value="item-5">item-5</option>
-				</select>
-			</div>
-		</div>
-		<div class="mui-content-padded ">
-			<h5>样衣工：</h5>
-			<div class="mui-input-row">
-				<select class="mui-btn">
-					<option value="item-1">item-1</option>
-					<option value="item-2">item-2</option>
-					<option value="item-3">item-3</option>
-					<option value="item-4">item-4</option>
-					<option value="item-5">item-5</option>
-				</select>
-			</div>
-		</div>
-	</div>
-	<script src="js/mui.min.js"></script>
-	<script src="js/picker.min.js"></script>
-    <script>
-		mui.init();
-		(function($) {
-				$.init();
-				var result = $('#result')[0];
-				var btns = $('.btn');
-				btns.each(function(i, btn) {
-					btn.addEventListener('tap', function() {
-						var optionsJson = this.getAttribute('data-options') || '{}';
-						var options = JSON.parse(optionsJson);
-						var id = this.getAttribute('id');
-						/*
-						 * 首次显示时实例化组件
-						 * 示例为了简洁，将 options 放在了按钮的 dom 上
-						 * 也可以直接通过代码声明 optinos 用于实例化 DtPicker
-						 */
-						var picker = new $.DtPicker(options);
-						picker.show(function(rs) {
-							/*
-							 * rs.value 拼合后的 value
-							 * rs.text 拼合后的 text
-							 * rs.y 年，可以通过 rs.y.vaue 和 rs.y.text 获取值和文本
-							 * rs.m 月，用法同年
-							 * rs.d 日，用法同年
-							 * rs.h 时，用法同年
-							 * rs.i 分（minutes 的第二个字母），用法同年
-							 */
-							result.innerText = '选择结果: ' + rs.text;
-							/* 
-							 * 返回 false 可以阻止选择框的关闭
-							 * return false;
-							 */
-							/*
-							 * 释放组件资源，释放后将将不能再操作组件
-							 * 通常情况下，不需要示放组件，new DtPicker(options) 后，可以一直使用。
-							 * 当前示例，因为内容较多，如不进行资原释放，在某些设备上会较慢。
-							 * 所以每次用完便立即调用 dispose 进行释放，下次用时再创建新实例。
-							 */
-							picker.dispose();
-						});
-					}, false);
+		<script src="js/mui.min.js"></script>
+		<script src="js/h.js"></script>
+		<script src="js/picker.min.js"></script>
+		<script>
+			mui.init();
+			mui.plusReady(function () {
+				console.log(JSON.parse(plus.storage.getItem('devtask')).devtask_name);
+				h('#taskphotourl').attr('src', JSON.parse(plus.storage.getItem('devtask')).taskphotourl);
+				h('#devtask_qrcodeurl').attr('src', 'http://192.168.31.243/ksbapi2/public/qrcodes/' + JSON.parse(plus.storage.getItem('devtask')).devtask_qrcodeurl);
+				h('#devtask_text').html(JSON.parse(plus.storage.getItem('devtask')).devtask_text);
+				h('#devtask_builder').val(JSON.parse(plus.storage.getItem('devtask')).devtask_builder);
+				h('#devtask_name').val(JSON.parse(plus.storage.getItem('devtask')).devtask_name);
+				h('#devtask_source').val(JSON.parse(plus.storage.getItem('devtask')).devtask_source);
+				h('#devtask_deadline').val(JSON.parse(plus.storage.getItem('devtask')).devtask_deadline.substr(0, 10));
+				h('#devtask_designer').val(JSON.parse(plus.storage.getItem('devtask')).devtask_designer);
+				h('#devtask_patternmaker').val(JSON.parse(plus.storage.getItem('devtask')).devtask_patternmaker);
+				h('#devtask_cutter').val(JSON.parse(plus.storage.getItem('devtask')).devtask_cutter);
+				h('#devtask_yyg').val(JSON.parse(plus.storage.getItem('devtask')).devtask_yyg);
+			});
+			
+			function openckt() {
+				mui.openWindow({
+					url: 'task_detail2.html',
+					id: 'task_detail2'
 				});
-			})(mui);
-		
-	</script>
-</body>
+			}
+		</script>
+	</body>
+
 </html>
