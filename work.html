@@ -1,96 +1,74 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
-    <title></title>
-    <link href="css/mui.css" rel="stylesheet"/>
-    <style>
-			.mui-table h4,.mui-table h5,.mui-table .mui-h5,.mui-table .mui-h6,.mui-table p{
-		        margin-top: 0;
-		    }
-		    .mui-table h4{
-		        line-height: 21px;
-		        font-weight: 500;
-		    }
-		
-		    .mui-table .oa-icon{
-		        position: absolute;
-		        right:0;
-		        bottom: 0;
-		    }
-		    .mui-table .oa-icon-star-filled{
-		        color:#f14e41;
-		    }
-		    .mui-table-view-cell.mui-collapse .mui-collapse-content{
-		    	padding:0px 10px 15px;
-		    }
-		    h4, .mui-h4 {
-		    	font-size:14px;
-    		}
-    		.mui-table-view-cell.mui-collapse .mui-table-view .mui-table-view-cell {
-    			padding-left:20px;
-    		}
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title></title>
+		<link href="css/mui.css" rel="stylesheet" />
+		<style>
+			.mui-table h4,
+			.mui-table h5,
+			.mui-table .mui-h5,
+			.mui-table .mui-h6,
+			.mui-table p {
+				margin-top: 0;
+			}
+			
+			.mui-table h4 {
+				line-height: 21px;
+				font-weight: 500;
+			}
+			
+			.mui-table .oa-icon {
+				position: absolute;
+				right: 0;
+				bottom: 0;
+			}
+			
+			.mui-table .oa-icon-star-filled {
+				color: #f14e41;
+			}
+			
+			.mui-table-view-cell.mui-collapse .mui-collapse-content {
+				padding: 0px 10px 15px;
+			}
+			
+			h4,
+			.mui-h4 {
+				font-size: 14px;
+			}
 		</style>
-</head>
-<body>
-	<div class="mui-navbar-inner mui-bar mui-bar-nav">
-		<button type="button" class="mui-left mui-action-back mui-btn  mui-btn-link mui-btn-nav mui-pull-left">
+	</head>
+
+	<body>
+		<div class="mui-navbar-inner mui-bar mui-bar-nav">
+			<button type="button" class="mui-left mui-action-back mui-btn  mui-btn-link mui-btn-nav mui-pull-left">
 			<span class="mui-icon mui-icon-left-nav"></span>
 		</button>
-		<h1 class="mui-center mui-title">工作台</h1>
-	</div>
-	<div class="mui-content">
+			<h1 class="mui-center mui-title">工作台</h1>
+		</div>
+		<div class="mui-content">
 			<div class="mui-card">
 				<ul class="mui-table-view">
 					<li class="mui-table-view-cell mui-collapse mui-active">
 						<a class="mui-navigate-right" href="#">正在进行中的工作</a>
 						<div class="mui-collapse-content">
 							<div class="mui-content">
-							    <ul class="mui-table-view mui-table-view-striped mui-table-view-condensed">
-							        <li class="mui-table-view-cell">
-							        	<a href="work_detail.html">
-							        		<div class="mui-table">
-								                <div class="mui-table-cell mui-col-xs-10">
-								                    <h4 class="mui-ellipsis">任务标题1：*********************</h4>
-								                    <h5>申请人：***</h5>
-								                    <p class="mui-h6 mui-ellipsis">你好，这是你的任务请查看</p>
-								                </div>
-								                <div class="mui-table-cell mui-col-xs-2 mui-text-right">
-								                    <span class="mui-h5">10-02</span>
-								                </div>
-							            	</div>
-							        	</a>
-							        </li>
-							        <li class="mui-table-view-cell">
-							        	<a href="work_detail.html">
-								            <div class="mui-table">
-								                <div class="mui-table-cell mui-col-xs-10">
-								                    <h4 class="mui-ellipsis">任务标题2：*********************</h4>
-								                    <h5>申请人：***</h5>
-								                    <p class="mui-h6 mui-ellipsis">你好，这是你的任务请查看</p>
-								                </div>
-								                <div class="mui-table-cell mui-col-xs-2 mui-text-right">
-								                    <span class="mui-h5">10-02</span>
-								                </div>
-								            </div>
-							           </a>
-							        </li>
-							        <li class="mui-table-view-cell">
-							        	<a href="work_detail.html">
-								            <div class="mui-table">
-								                <div class="mui-table-cell mui-col-xs-10">
-								                    <h4 class="mui-ellipsis">任务标题3：*********************</h4>
-								                    <h5>申请人：***</h5>
-								                    <p class="mui-h6 mui-ellipsis">你好，这是你的任务请查看</p>
-								                </div>
-								                <div class="mui-table-cell mui-col-xs-2 mui-text-right">
-								                    <span class="mui-h5">10-02</span>
-								                </div>
-								            </div>
-								        </a>    
-							        </li>
-							        <div class="mui-content-padded" style="margin-top: 10px;margin-bottom: 10px">
+								<ul id="list01" class="mui-table-view mui-table-view-striped mui-table-view-condensed">
+									<li class="mui-table-view-cell">
+										<div class="mui-table">
+											<div class="mui-table-cell mui-col-xs-10">
+												<h4 class="mui-ellipsis">任务标题1：*********************</h4>
+												<h5>申请人：***</h5>
+												<p class="mui-h6 mui-ellipsis">你好，这是你的任务请查看</p>
+											</div>
+											<div class="mui-table-cell mui-col-xs-2 mui-text-right">
+												<span class="mui-h5">10-02</span>
+											</div>
+										</div>
+									</li>
+									<div class="mui-content-padded" style="margin-top: 10px;margin-bottom: 10px">
 										<ul class="mui-pager">
 											<li class="mui-disabled">
 												<span> 上一页 </span>
@@ -102,59 +80,51 @@
 											</li>
 										</ul>
 									</div>
-							    </ul>
+								</ul>
 							</div>
 						</div>
-						
+
 					</li>
 					<li class="mui-table-view-cell mui-collapse">
 						<a class="mui-navigate-right" href="#">已经完成的工作</a>
 						<div class="mui-collapse-content">
 							<div class="mui-content">
-							    <ul class="mui-table-view mui-table-view-striped mui-table-view-condensed">
-							        <li class="mui-table-view-cell">
-							        	<a href="work_detail.html">
-								            <div class="mui-table">
-								                <div class="mui-table-cell mui-col-xs-10">
-								                    <h4 class="mui-ellipsis">任务标题1：*********************</h4>
-								                    <h5>申请人：***</h5>
-								                    <p class="mui-h6 mui-ellipsis">你好，这是你的任务请查看</p>
-								                </div>
-								                <div class="mui-table-cell mui-col-xs-2 mui-text-right">
-								                    <span class="mui-h5">10-02</span>
-								                </div>
-								            </div>
-								        </a>
-							        </li>
-							        <li class="mui-table-view-cell">
-							        	<a href="work_detail.html">
-								            <div class="mui-table">
-								                <div class="mui-table-cell mui-col-xs-10">
-								                    <h4 class="mui-ellipsis">任务标题2：*********************</h4>
-								                    <h5>申请人：***</h5>
-								                    <p class="mui-h6 mui-ellipsis">你好，这是你的任务请查看</p>
-								                </div>
-								                <div class="mui-table-cell mui-col-xs-2 mui-text-right">
-								                    <span class="mui-h5">10-02</span>
-								                </div>
-								            </div>
-								        </a>
-							        </li>
-							        <li class="mui-table-view-cell">
-							        	<a href="work_detail.html">
-								            <div class="mui-table">
-								                <div class="mui-table-cell mui-col-xs-10">
-								                    <h4 class="mui-ellipsis">任务标题3：*********************</h4>
-								                    <h5>申请人：***</h5>
-								                    <p class="mui-h6 mui-ellipsis">你好，这是你的任务请查看</p>
-								                </div>
-								                <div class="mui-table-cell mui-col-xs-2 mui-text-right">
-								                    <span class="mui-h5">10-02</span>
-								                </div>
-								            </div>
-								        </a>
-							        </li>
-							        <div class="mui-content-padded" style="margin-top: 10px;margin-bottom: 10px">
+								<ul id="list02" class="mui-table-view mui-table-view-striped mui-table-view-condensed">
+									<li class="mui-table-view-cell">
+										<div class="mui-table">
+											<div class="mui-table-cell mui-col-xs-10">
+												<h4 class="mui-ellipsis">任务标题：test01::款式初稿</h4>
+												<h5>申请人：***</h5>
+												<p class="mui-h6 mui-ellipsis">你好，这是你的任务请查看</p>
+											</div>
+											<div class="mui-table-cell mui-col-xs-2 mui-text-right">
+												<span class="mui-h5">10-02</span>
+											</div>
+										</div>
+									</li>
+									<li class="mui-table-view-cell">
+										<div class="mui-table">
+											<div class="mui-table-cell mui-col-xs-10">
+												<h4 class="mui-ellipsis">任务标题2：*********************</h4>
+												<h5>申请人：***</h5>
+												<p class="mui-h6 mui-ellipsis">你好，这是你的任务请查看</p>
+											</div>
+											<div class="mui-table-cell mui-col-xs-2 mui-text-right">
+												<span class="mui-h5">10-02</span>
+											</div>
+										</div>
+									</li>
+									<li class="mui-table-view-cell">
+										<div class="mui-table">
+											<div class="mui-table-cell mui-col-xs-10">
+												<h4 class="mui-ellipsis">任务标题3：*********************</h4>
+												<h5>申请人：***</h5>
+												<p class="mui-h6 mui-ellipsis">你好，这是你的任务请查看</p>
+											</div>
+
+										</div>
+									</li>
+									<div class="mui-content-padded" style="margin-top: 10px;margin-bottom: 10px">
 										<ul class="mui-pager">
 											<li class="mui-disabled">
 												<span> 上一页 </span>
@@ -166,46 +136,168 @@
 											</li>
 										</ul>
 									</div>
-							    </ul>
+								</ul>
 							</div>
-							
 						</div>
 					</li>
 				</ul>
 			</div>
 		</div>
-	<script src="js/mui.min.js"></script>
-    <script type="text/javascript" charset="utf-8">
-      	mui.init();
-      	var _index, _self, _next, _prev;
-      	mui.plusReady(function () {
-      		_self = plus.webview.currentWebview();
-      		_next = plus.webview.getWebviewById('message.html');
-      		_index = plus.webview.getLaunchWebview();
-      		_prev = plus.webview.getWebviewById('home.html')
-      		_self.drag({
-      			direction: 'left',
-      			moveMode: 'followFinger'
-      		},{
-      			view: _next,
-      			moveMode: 'follow'
-      		}, function (e) {
-      			if (e.type == 'end' && e.result) {
-      				_index.evalJS('h("#navFooter").find("a").removeClass("mui-active");h("#nav3").addClass("mui-active")');
-      			}
-      		});
-      		_self.drag({
-      			direction: 'right',
-      			moveMode: 'followFinger'
-      		},{
-      			view: _prev,
-      			moveMode: 'follow'
-      		}, function (e) {
-      			if (e.type == 'end' && e.result) {
-      				_index.evalJS('h("#navFooter").find("a").removeClass("mui-active");h("#nav1").addClass("mui-active")');
-      			}
-      		});
-      	});
-    </script>
-</body>
+		<script src="js/mui.min.js"></script>
+		<script src="js/h.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/common.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript" charset="utf-8">
+			mui.init();
+
+			//var _index, _self, _next, _prev;
+			var currentpage = 1, currentpage2 = 1,
+				numperpage = 3;
+			var uname;
+			mui.plusReady(function() {
+				uname = plus.storage.getItem('name');
+				console.log(uname);
+				getsubinfo('任务执行中');
+				//    		_self = plus.webview.currentWebview();
+				//    		_next = plus.webview.getWebviewById('message.html');
+				//    		_index = plus.webview.getLaunchWebview();
+				//    		_prev = plus.webview.getWebviewById('home.html')
+				//    		_self.drag({
+				//    			direction: 'left',
+				//    			moveMode: 'followFinger'
+				//    		},{
+				//    			view: _next,
+				//    			moveMode: 'follow'
+				//    		}, function (e) {
+				//    			if (e.type == 'end' && e.result) {
+				//    				_index.evalJS('h("#navFooter").find("a").removeClass("mui-active");h("#nav3").addClass("mui-active")');
+				//    			}
+				//    		});
+				//    		_self.drag({
+				//    			direction: 'right',
+				//    			moveMode: 'followFinger'
+				//    		},{
+				//    			view: _prev,
+				//    			moveMode: 'follow'
+				//    		}, function (e) {
+				//    			if (e.type == 'end' && e.result) {
+				//    				_index.evalJS('h("#navFooter").find("a").removeClass("mui-active");h("#nav1").addClass("mui-active")');
+				//    			}
+				//    		});
+
+			});
+
+			var createFragment = function(subs) {
+				var fragment = document.createDocumentFragment();
+				var li;
+				for(var i = 0; i < subs.length; i++) {
+					li = document.createElement('li');
+					li.className = 'mui-table-view-cell';
+					li.innerHTML = '<div class="mui-table"><div class="mui-table-cell mui-col-xs-10"><h4 class="mui-ellipsis">任务标题：' +
+						subs[i].subtitle + '</h4><h5>执行人：' +
+						uname +
+						'</h5><p class="mui-h6 mui-ellipsis">任务类型：【' +
+						subs[i].type +
+						'】</p></div>' +
+						'<div class="mui-table-cell mui-col-xs-2 mui-text-right"><span class="mui-h5">' +
+						subs[i].created_at.substring(5, 10) +
+						'</span></div>' +
+						'</div>';
+					//console.log(li.innerHTML);
+					fragment.appendChild(li);
+				}
+				return fragment;
+			}
+			
+			var nextpage = function() {
+				currentpage++;
+				getsubinfo('任务执行中');
+			}
+			
+			var prepage = function() {
+				currentpage--;
+				getsubinfo('任务执行中');
+			}
+
+			var getsubinfo = function(status) {
+				mui.post(
+					url + 'devtasksub/getdevtasksubinfolist?token=' + plus.storage.getItem('token'), {
+						curr_page: currentpage,
+						page_size: numperpage,
+						uid: plus.storage.getItem('uid'),
+						status: status,
+					},
+					function(data) {
+						if(data.flag == 'get_devtasksubinfo_list_success') {
+							if(status == "任务执行中") {
+								var list = document.getElementById("list01");
+								h('#list01').html('');
+								list.appendChild(createFragment(data.data.devtasksub));
+
+								// 加分页按钮
+								if(data.data.pages == 2) {
+									if(data.data.currentpage == 1) {
+										var temp = h('#list01').html() +
+											'<div class="mui-content-padded" style="margin-top: 10px;margin-bottom: 10px"><ul class="mui-pager">' +
+											'<li class="mui-disabled"><span>' +
+											'上一页' +
+											'</span></li>' +
+											'<li><a href="javascript:;" onclick="nextpage();">' +
+											'下一页' +
+											'</a></li></ul></div>';
+										h('#list01').html(temp);
+									} else {
+										var temp = h('#list01').html() +
+											'<div class="mui-content-padded" style="margin-top: 10px;margin-bottom: 10px"><ul class="mui-pager">' +
+											'<li><a href="javascript:;" onclick="prepage();">' +
+											'上一页' +
+											'</a></li>' +
+											'<li class="mui-disabled"><span>' +
+											'下一页' +
+											'</span></li></ul></div>';
+										h('#list01').html(temp);
+									}
+								} else if(data.data.pages > 2) {
+									if(data.data.currentpage == 1) {
+										var temp = h('#list01').html() +
+											'<div class="mui-content-padded" style="margin-top: 10px;margin-bottom: 10px"><ul class="mui-pager">' +
+											'<li class="mui-disabled"><span>' +
+											'上一页' +
+											'</span></li>' +
+											'<li><a href="javascript:;" onclick="nextpage();">' +
+											'下一页' +
+											'</a></li></ul></div>';
+										h('#list01').html(temp);
+									} else if (data.data.currentpage == data.data.pages) {
+										var temp = h('#list01').html() +
+											'<div class="mui-content-padded" style="margin-top: 10px;margin-bottom: 10px"><ul class="mui-pager">' +
+											'<li><a href="javascript:;" onclick="prepage();">' +
+											'上一页' +
+											'</a></li>' +
+											'<li class="mui-disabled"><span>' +
+											'下一页' +
+											'</span></li></ul></div>';
+										h('#list01').html(temp);
+									} else {
+										var temp = h('#list01').html() +
+											'<div class="mui-content-padded" style="margin-top: 10px;margin-bottom: 10px"><ul class="mui-pager">' +
+											'<li><a href="javascript:;" onclick="prepage();">' +
+											'上一页' +
+											'</a></li>' +
+											'<li><a href="javascript:;" onclick="nextpage();">' +
+											'下一页' +
+											'</a></li></ul></div>';
+										h('#list01').html(temp);
+									}
+								}
+								console.log(data.data.currentpage);
+							} else if (status == "任务完成") {
+								
+							}
+						}
+					}
+				);
+			}
+		</script>
+	</body>
+
 </html>
