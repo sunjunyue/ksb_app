@@ -287,10 +287,10 @@
 				<div class="mui-scroll-wrapper">
 					<div class="mui-scroll">
 						<div class="mui-input-row" style="width: 90%; margin: 0 auto; margin-top: 20px;">
-							<input id="account2" type="text" class="mui-input-clear mui-input" placeholder="登录名/Email/手机号">
+							<input id="account2" type="text" class="mui-input-clear mui-input" placeholder="登录名/Email/手机号" value="doudou">
 						</div>
 						<div class="mui-input-row" style="width: 90%; margin: 0 auto;">
-							<input id="password" type="password" class="mui-input mui-input-password" placeholder="登录密码">
+							<input id="password" type="password" class="mui-input mui-input-password" placeholder="登录密码" value="ksb123456">
 						</div>
 						<div class="mui-content-padded" style="width:90%; margin: 0 auto;">
 							<button type="button" id='loginbtn' data-loading-text="提交中" class="mui-btn mui-btn-primary" style="width: 100%;">登录</button>
@@ -585,8 +585,8 @@
 						h('#head-img').attr('src', plus.storage.getItem('face'));
 						h('#head-img1').attr('src', plus.storage.getItem('face'));
 						h('#a_login').attr('href', '#account');
-						h('#account2').val("");
-						h('#password').val("");
+//						h('#account2').val("");
+//						h('#password').val("");
 						h('#name_span').html(data.data.name);
 						h('#accountname_span').html(data.data.accountname);
 						//viewApi.go('#setting');

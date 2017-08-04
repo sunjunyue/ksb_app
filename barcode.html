@@ -63,6 +63,8 @@
 			
 			var scan = null, ws = null, wo = null;
 			mui.plusReady(function () {
+				plus.nativeUI.closeWaiting();
+				mui.currentWebview.show();
 				ws = plus.webview.currentWebview();
 				wo = ws.opener();
 				scan = new plus.barcode.Barcode('bcid');
@@ -83,8 +85,15 @@
 					text = 'EAN8: ';
 					break;
 				}
-				wo.evalJS("al('"+result+"');");
-				mui.back();
+				//console.log(result);
+				if(result.substring(0,13) == 'ksbtask-uuid:') {
+					//console.log(result.substring(13));
+					wo.evalJS("al('"+result.substring(13)+"');");
+					mui.back();
+				} else {
+					mui.toast('非款式宝任务专用二维码');
+					mui.back();
+				}
 			}
 			
 			function openscan() {

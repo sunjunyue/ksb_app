@@ -88,7 +88,7 @@
 			</div>-->
 			<div class="mui-content-padded">
 				<div class="mui-button-row">
-					<button id="acciveBtn" disabled="disabled" type="button" class="mui-btn mui-btn-primary mui-btn-block">接受任务</button>
+					<button id="acciveBtn" disabled="disabled" type="button" class="mui-btn mui-btn-primary mui-btn-block" onclick="acctiveMyTask()">认领任务</button>
 					<button id="viewDetailBtn" disabled="disabled" type="button" class="mui-btn mui-btn-success mui-btn-block" onclick="opentaskdetail()">查看任务详细</button>
 				</div>
 			</div>
@@ -98,11 +98,16 @@
 		<script src="js/h.js"></script>
 		<script type="text/javascript" charset="utf-8">
 			mui.init();
+			var type = '';
+			var subtitle = '';
 
 			function openscanwindow() {
 				mui.openWindow({
 					url: 'barcode.html',
-					id: 'barcode'
+					id: 'barcode',
+					show: {
+						autoShow: false
+					}
 				});
 			}
 
@@ -114,56 +119,87 @@
 						guid: result,
 					},
 					function(data) {
-						console.log(data.flag);
+						//console.log(data.flag);
 						if(data.flag == "get_devtask_by_guid_success") {
 							// 设定任务名称
 							if(data.data.devtask.devtask_progress2 == '1') {
 								// 设计初稿阶段
-								if (plus.storage.getItem('uid') != data.data.devtask.devtask_designerid) {
+								if(plus.storage.getItem('uid') != data.data.devtask.devtask_designerid) {
 									mui.toast('抱歉，此项任务不是您的工作');
 									return;
 								}
-								
-								if (data.data.devtask.subguid != null) {
-									mui.toast('此项工作任务已经在您的工作目录里了');
+
+								if(data.data.devtask.subguid != null) {
+									//mui.toast('此项工作任务已经在您的工作目录里了');
+									var btnArray = ['否', '是'];
+									mui.confirm('此项工作任务已经在您的工作台中，是否跳转？', '操作提示', btnArray, function(e) {
+										if(e.index == 1) {
+											console.log('y');
+											plus.webview.getLaunchWebview().evalJS('changeSub(2)');
+										}
+									})
 									return;
 								}
-								
-								h('#taskname').val(data.data.devtask.devtask_name + "::款式初稿");
+								subtitle = data.data.devtask.devtask_name + "::款式初稿";
+								h('#taskname').val(subtitle);
+								type = '款式初稿';
 							}
-							
-							
-							
+
 							h('#taskphotourl').attr('src', data.data.devtask.taskphotourl);
 
 							h('#deadline').val(data.data.devtask.devtask_deadline);
 							h('#acciveBtn').removeAttr('disabled');
 							h('#viewDetailBtn').removeAttr('disabled');
-							if(plus.storage.getItem('devtask'))
-							{
+							if(plus.storage.getItem('devtask')) {
 								plus.storage.removeItem('devtask');
 							}
-							plus.storage.setItem('devtask',JSON.stringify(data.data.devtask));
+							plus.storage.setItem('devtask', JSON.stringify(data.data.devtask));
 						}
 					},
 					'json'
 				);
 			}
-			
+
 			function opentaskdetail() {
 				mui.openWindow({
 					url: 'task_detail.html',
-					id: 'task_detail'
+					id: 'task_detail',
+					show: {
+						autoShow: false
+					}
 				});
 			}
-			
+
+			function acctiveMyTask() {
+				//				console.log(JSON.parse(plus.storage.getItem('devtask')).guid);
+				//				console.log(JSON.parse(plus.storage.getItem('devtask')).id);
+				//				console.log(type);
+				//				console.log(subtitle);
+				mui.post(
+					url + 'devtasksub/createdevtasksubinfo?token=' + plus.storage.getItem('token'), {
+						uid: plus.storage.getItem('uid'),
+						type: type,
+						devtask_id: JSON.parse(plus.storage.getItem('devtask')).id,
+						devtask_guid: JSON.parse(plus.storage.getItem('devtask')).guid,
+						subtitle: subtitle,
+					},
+					function(data) {
+						if(data.flag == 'create_devtasksubinfo_success') {
+							mui.toast('工作任务：【' + type + '】已经认领！');
+							plus.webview.getLaunchWebview().evalJS('changeSub(2)');
+						}
+					},
+					'json'
+				);
+			}
+
 			// 恢复页面
 			function resetwindow() {
 				h('#taskname').val('');
 				h('#deadline').val('');
 				h('#taskphotourl').attr('src', 'imgs/logo.jpeg');
-				h('#acciveBtn').attr('disabled','disabled');
-				h('#viewDetailBtn').attr('disabled','disabled');
+				h('#acciveBtn').attr('disabled', 'disabled');
+				h('#viewDetailBtn').attr('disabled', 'disabled');
 			}
 		</script>
 	</body>

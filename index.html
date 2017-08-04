@@ -86,6 +86,24 @@
 						width: "100%",
 						left: "400%"
 					}
+				}, {
+					url: 'message_detail.html',
+					id: 'message_detail.html',
+					styles: {
+						top: '44px',
+						bottom: '50px',
+						width: "100%",
+						left: "500%"
+					}
+				}, {
+					url: 'work_kscg.html',
+					id: 'work_kscg.html',
+					styles: {
+						top: '44px',
+						bottom: '50px',
+						width: "100%",
+						left: "600%"
+					}
 				}]
 			});
 
@@ -111,10 +129,14 @@
 				changeSub(5);
 			});
 
-			function changeSub(index) {
-				var settings = plus.webview.getWebviewById('settings2.html');
-				var message = plus.webview.getWebviewById('message.html');
-				var workbarcode = plus.webview.getWebviewById('workbarcode.html');
+			function changeSub(index,flag) {
+				var settings = plus.webview.getWebviewById('settings2.html'); // 4
+				var message = plus.webview.getWebviewById('message.html'); // 3
+				var message_detail = plus.webview.getWebviewById('message_detail.html'); // 6
+				var workbarcode = plus.webview.getWebviewById('workbarcode.html'); // 5
+				var home = plus.webview.getWebviewById('home.html'); // 1
+				var work = plus.webview.getWebviewById('work.html'); // 2
+				var kscg = plus.webview.getWebviewById('work_kscg.html'); // 7
 				if (index != 1 && index != 4) {
 					if (!plus.storage.getItem('uid')){
 						mui.toast('请先登录');
@@ -129,11 +151,21 @@
 				if (index != 5) {
 					workbarcode.evalJS('resetwindow();');
 				}
+				if (index == 5 && flag != undefined){
+					workbarcode.evalJS("al('"+flag+"');");
+				}
 				
-				var home = plus.webview.getWebviewById('home.html');
-				var work = plus.webview.getWebviewById('work.html');
+				if (index == 6) {
+					message_detail.evalJS('getSMSData()');
+				}
 				
+				if (index == 2) {
+					work.evalJS('getData()');
+				}
 				
+//				if (index == 7) {
+//					kscg.evalJS('getShls()');
+//				}
 				
 				home.setStyle({
 					left: (1 - index) * 100 + "%"
@@ -149,7 +181,13 @@
 				});
 				workbarcode.setStyle({
 					left: (5 - index) * 100 + "%"
-				})
+				});
+				message_detail.setStyle({
+					left: (6 - index) * 100 + "%"
+				});
+				kscg.setStyle({
+					left: (7 - index) * 100 + "%"
+				});
 			}
 			
 			function getnewmessagecount() {

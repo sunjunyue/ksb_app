@@ -152,13 +152,14 @@
 			}
 			
 			var opensmdetails = function() {
-				mui.openWindow({
-					url: 'message_detail.html',
-					id: 'task_detail',
-					show: {
-						autoShow: false
-					}
-				});
+//				mui.openWindow({
+//					url: 'message_detail.html',
+//					id: 'task_detail',
+//					show: {
+//						autoShow: false
+//					}
+//				});
+				plus.webview.getLaunchWebview().evalJS('changeSub(6)');
 			}
 
 			mui.plusReady(function() {

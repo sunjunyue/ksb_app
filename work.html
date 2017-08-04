@@ -5,7 +5,7 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<title></title>
-		<link href="css/mui.min.css" rel="stylesheet" />
+		<link href="css/mui.css" rel="stylesheet" />
 		<link href="css/app.css" rel="stylesheet" type="text/css"/>
 		<link href="css/icons-extra.css" rel="stylesheet" type="text/css"/>
 		<style>
@@ -55,11 +55,11 @@
 			<h1 class="mui-center mui-title">工作台</h1>
 		</div>
 		<div class="mui-content">
-			<div class="mui-card">
+			<div class="mui-card" style="margin-top: 48px;">
 				<ul class="mui-table-view">
 					<li class="mui-table-view-cell mui-collapse mui-active">
 						<a class="mui-navigate-right" href="#">
-							<span class="mui-icon-extra mui-icon-extra-order" style="margin-right:5px;color:#007aff"></span> 
+							<span class="mui-icon-extra mui-icon-extra-order" style="margin-right:5px;color:#007aff"></span>
 							正在进行中的工作
 						</a>
 						<div class="mui-collapse-content">
@@ -92,6 +92,30 @@
 		<script src="js/common.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript" charset="utf-8">
 			mui.init();
+			var temp01 = null;
+			var temp02 = null;
+			
+			(function($) {
+				$('#list01').on('tap', '.mui-table', function(event) {
+					var elem = this;
+					var typett = ""
+					console.log(elem.parentNode.id);
+					for (var i = 0; i < temp01.length; i++) {
+						if (elem.parentNode.id == temp01[i].guid) {
+							typett = temp01[i].type;
+							nextWork(typett);
+							break;
+						}
+					}
+					
+				});
+			})(mui);
+			
+			var nextWork = function (type) {
+				if (type == '款式初稿') {
+					plus.webview.getLaunchWebview().evalJS('changeSub(7)');
+				}
+			}
 
 			//var _index, _self, _next, _prev;
 			var currentpage = 1,
@@ -99,10 +123,7 @@
 				numperpage = 3;
 			var uname;
 			mui.plusReady(function() {
-				uname = plus.storage.getItem('name');
-				console.log(uname);
-				getsubinfo('任务执行中');
-				getsubinfo('任务完成');
+				
 				//    		_self = plus.webview.currentWebview();
 				//    		_next = plus.webview.getWebviewById('message.html');
 				//    		_index = plus.webview.getLaunchWebview();
@@ -131,12 +152,20 @@
 				//    		});
 
 			});
+			
+			var getData = function () {
+				uname = plus.storage.getItem('name');
+				console.log(uname);
+				getsubinfo('任务执行中');
+				getsubinfo('任务完成');
+			}
 
 			var createFragment = function(subs) {
 				var fragment = document.createDocumentFragment();
 				var li;
 				for(var i = 0; i < subs.length; i++) {
 					li = document.createElement('li');
+					li.id = subs[i].guid;
 					li.className = 'mui-table-view-cell';
 					li.innerHTML = '<div class="mui-table"><div class="mui-table-cell mui-col-xs-10"><h4 class="mui-ellipsis">任务标题：' +
 						subs[i].subtitle + '</h4><h5>执行人：' +
@@ -185,7 +214,7 @@
 						},
 						function(data) {
 							if(data.flag == 'get_devtasksubinfo_list_success') {
-
+								temp01 = data.data.devtasksub;
 								var list = document.getElementById("list01");
 								h('#list01').html('');
 								list.appendChild(createFragment(data.data.devtasksub));
@@ -246,7 +275,7 @@
 										h('#list01').html(temp);
 									}
 								}
-								console.log(data.data.currentpage);
+								//console.log(data.data.currentpage);
 
 							}
 						}
@@ -322,7 +351,7 @@
 										h('#list02').html(temp);
 									}
 								}
-								console.log(data.data.currentpage);
+								//console.log(data.data.currentpage);
 
 							}
 						}

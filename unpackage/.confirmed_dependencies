@@ -15,13 +15,19 @@
 			"message.html",
 			"settings.html",
 			"settings2.html",
-			"workbarcode.html"
+			"workbarcode.html",
+			"message_detail.html",
+			"work_kscg.html"
 		]
 	},
 	"work.html": {
 		"resources": [
 			"css/mui.css",
-			"js/common.js"
+			"js/common.js",
+			"fonts/mui-icons-extra.ttf",
+			"css/app.css",
+			"css/mui.min.css",
+			"css/icons-extra.css"
 		]
 	},
 	"home.html": {
@@ -94,7 +100,17 @@
 	},
 	"message_detail.html": {
 		"resources": [
-			"css/mui.css"
+			"css/mui.css",
+			"js/mui.min.js"
+		]
+	},
+	"work_kscg.html": {
+		"resources": [
+			"js/mui.picker.js",
+			"css/mui.css",
+			"js/mui.poppicker.js",
+			"css/mui.poppicker.css",
+			"css/mui.picker.css"
 		]
 	}
 }

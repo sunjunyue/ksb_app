@@ -1,64 +1,87 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
-    <title></title>
-    <link href="css/mui.css" rel="stylesheet"/>
-    <style>
-    	.mui-input-row .mui-btn{
-    		width:100%;
-    	}
-    	p{
-				margin:0 auto;
-				text-align:center;
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title></title>
+		<link href="css/mui.css" rel="stylesheet" />
+		<style>
+			.mui-input-row .mui-btn {
+				width: 100%;
 			}
-    </style>
-</head>
-<body>
-	<div class="mui-navbar-inner mui-bar mui-bar-nav">
-		<button type="button" class="mui-left mui-action-back mui-btn  mui-btn-link mui-btn-nav mui-pull-left">
+			
+			p {
+				margin: 0 auto;
+				text-align: center;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="mui-navbar-inner mui-bar mui-bar-nav">
+			<!--<button type="button" class="mui-left mui-action-back mui-btn  mui-btn-link mui-btn-nav mui-pull-left">
 			<span class="mui-icon mui-icon-left-nav"></span>
-		</button>
-		<h1 class="mui-center mui-title">消息详情</h1>
-	</div>
-	<div class="mui-content">
-		<div class="mui-content-padded ">
-			<h5>标题：</h5>
-			<div class="mui-input-row">
-				<input id="sm_title" type="text" class="mui-input" disabled="disabled" style="color: #999999;">
+		</button>-->
+			<h1 class="mui-center mui-title">消息详情</h1>
+		</div>
+		<div class="mui-content">
+			<div class="mui-content-padded ">
+				<h5>标题：</h5>
+				<div class="mui-input-row">
+					<input id="sm_title" type="text" class="mui-input" disabled="disabled" style="color: #999999;">
+				</div>
+			</div>
+			<div class="mui-content-padded ">
+				<h5>内容：</h5>
+				<div class="mui-input-row">
+					<textarea id="sm_content" disabled="disabled" style="color: #999999; height: 150px;"></textarea>
+				</div>
+			</div>
+			<div class="mui-content-padded ">
+				<!--<h5>时间：</h5>
+				<div class="mui-input-row">
+					<input type="text" class="mui-input">
+				</div>-->
+				<div class="mui-button-row">
+					<button id="acciveBtn" onclick="toWorkbarcode()" type="button" class="mui-btn mui-btn-primary mui-btn-block">查看</button>
+				</div>
 			</div>
 		</div>
-		<div class="mui-content-padded ">
-			<h5>内容：</h5>
-			<div class="mui-input-row">
-				<textarea id="sm_content" disabled="disabled" style="color: #999999; height: 150px;" ></textarea>
-			</div>
-		</div>
-		<div class="mui-content-padded ">
-			<h5>时间：</h5>
-			<div class="mui-input-row">
-				<input type="text" class="mui-input">
-			</div>
-		</div>
-	</div>
-	<script src="js/mui.min.js"></script>
-	<script type="text/javascript" src="js/h.js"></script>
-	<script type="text/javascript">
-		mui.init();
-		window.onload = function() {
-			mui.plusReady(function () {
+		<script src="js/mui.min.js"></script>
+		<script type="text/javascript" src="js/h.js"></script>
+		<script type="text/javascript">
+			mui.init();
+//			var toWorkbarcode = function() {
+//				console.log(111);
+//				plus.webview.getLaunchWebview().evalJS('changeSub(5)');
+//			}
+			var taskguid = '';
+			function toWorkbarcode() {
+				console.log(taskguid);
+				plus.webview.getLaunchWebview().evalJS('changeSub(5,"'+taskguid+'")');
+			}
+
+			function getSMSData() {
 				var sms = JSON.parse(plus.storage.getItem('sms'));
-				for (var i = 0; i < sms.length; i++) {
-					if (sms[i].guid == plus.storage.getItem('currentsms')){
+				for(var i = 0; i < sms.length; i++) {
+					if(sms[i].guid == plus.storage.getItem('currentsms')) {
 						h('#sm_title').val(sms[i].sm_title);
 						h('#sm_content').html(sms[i].sm_content);
+						taskguid = sms[i].task_guid;
 					}
 				}
-				plus.nativeUI.closeWaiting();
-				mui.currentWebview.show();
-			});
-		}
-	</script>
-</body>
+			}
+
+			window.onload = function() {
+				mui.plusReady(function() {
+					//console.log('test:'+plus.storage.getItem('currentsms'));
+
+					plus.nativeUI.closeWaiting();
+					mui.currentWebview.show();
+				});
+			}
+		</script>
+	</body>
+
 </html>

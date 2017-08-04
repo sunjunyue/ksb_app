@@ -111,6 +111,8 @@
 		<script>
 			mui.init();
 			mui.plusReady(function () {
+				plus.nativeUI.closeWaiting();
+				mui.currentWebview.show();
 				console.log(JSON.parse(plus.storage.getItem('devtask')).devtask_name);
 				h('#taskphotourl').attr('src', JSON.parse(plus.storage.getItem('devtask')).taskphotourl);
 				h('#devtask_qrcodeurl').attr('src', 'http://192.168.31.243/ksbapi2/public/qrcodes/' + JSON.parse(plus.storage.getItem('devtask')).devtask_qrcodeurl);
