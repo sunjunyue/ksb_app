@@ -217,6 +217,16 @@
 				currentpage--;
 				getsubinfo('任务执行中');
 			}
+			
+			var nextpage2 = function() {
+				currentpage++;
+				getsubinfo('任务执行中');
+			}
+			
+			var prepage2 = function() {
+				currentpage--;
+				getsubinfo('任务执行中');
+			}
 
 			var getsubinfo = function(status) {
 				mui.post(
@@ -291,6 +301,65 @@
 								}
 								console.log(data.data.currentpage);
 							} else if (status == "任务完成") {
+								var list = document.getElementById("list02");
+								h('#list02').html('');
+								list.appendChild(createFragment(data.data.devtasksub));
+								// 加分页按钮
+								if(data.data.pages == 2) {
+									if(data.data.currentpage == 1) {
+										var temp = h('#list02').html() +
+											'<div class="mui-content-padded" style="margin-top: 10px;margin-bottom: 10px"><ul class="mui-pager">' +
+											'<li class="mui-disabled"><span>' +
+											'上一页' +
+											'</span></li>' +
+											'<li><a href="javascript:;" onclick="nextpage2();">' +
+											'下一页' +
+											'</a></li></ul></div>';
+										h('#list02').html(temp);
+									} else {
+										var temp = h('#list02').html() +
+											'<div class="mui-content-padded" style="margin-top: 10px;margin-bottom: 10px"><ul class="mui-pager">' +
+											'<li><a href="javascript:;" onclick="prepage2();">' +
+											'上一页' +
+											'</a></li>' +
+											'<li class="mui-disabled"><span>' +
+											'下一页' +
+											'</span></li></ul></div>';
+										h('#list02').html(temp);
+									}
+								} else if(data.data.pages > 2) {
+									if(data.data.currentpage == 1) {
+										var temp = h('#list02').html() +
+											'<div class="mui-content-padded" style="margin-top: 10px;margin-bottom: 10px"><ul class="mui-pager">' +
+											'<li class="mui-disabled"><span>' +
+											'上一页' +
+											'</span></li>' +
+											'<li><a href="javascript:;" onclick="nextpage2();">' +
+											'下一页' +
+											'</a></li></ul></div>';
+										h('#list02').html(temp);
+									} else if (data.data.currentpage == data.data.pages) {
+										var temp = h('#list02').html() +
+											'<div class="mui-content-padded" style="margin-top: 10px;margin-bottom: 10px"><ul class="mui-pager">' +
+											'<li><a href="javascript:;" onclick="prepage2();">' +
+											'上一页' +
+											'</a></li>' +
+											'<li class="mui-disabled"><span>' +
+											'下一页' +
+											'</span></li></ul></div>';
+										h('#list01').html(temp);
+									} else {
+										var temp = h('#list02').html() +
+											'<div class="mui-content-padded" style="margin-top: 10px;margin-bottom: 10px"><ul class="mui-pager">' +
+											'<li><a href="javascript:;" onclick="prepage2();">' +
+											'上一页' +
+											'</a></li>' +
+											'<li><a href="javascript:;" onclick="nextpage2();">' +
+											'下一页' +
+											'</a></li></ul></div>';
+										h('#list02').html(temp);
+									}
+								}
 								
 							}
 						}
