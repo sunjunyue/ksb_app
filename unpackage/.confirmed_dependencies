@@ -20,7 +20,8 @@
 	},
 	"work.html": {
 		"resources": [
-			"css/mui.css"
+			"css/mui.css",
+			"js/common.js"
 		]
 	},
 	"home.html": {

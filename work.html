@@ -56,30 +56,7 @@
 						<div class="mui-collapse-content">
 							<div class="mui-content">
 								<ul id="list01" class="mui-table-view mui-table-view-striped mui-table-view-condensed">
-									<li class="mui-table-view-cell">
-										<div class="mui-table">
-											<div class="mui-table-cell mui-col-xs-10">
-												<h4 class="mui-ellipsis">任务标题1：*********************</h4>
-												<h5>申请人：***</h5>
-												<p class="mui-h6 mui-ellipsis">你好，这是你的任务请查看</p>
-											</div>
-											<div class="mui-table-cell mui-col-xs-2 mui-text-right">
-												<span class="mui-h5">10-02</span>
-											</div>
-										</div>
-									</li>
-									<div class="mui-content-padded" style="margin-top: 10px;margin-bottom: 10px">
-										<ul class="mui-pager">
-											<li class="mui-disabled">
-												<span> 上一页 </span>
-											</li>
-											<li>
-												<a href="#">
-													下一页
-												</a>
-											</li>
-										</ul>
-									</div>
+									
 								</ul>
 							</div>
 						</div>
@@ -90,52 +67,6 @@
 						<div class="mui-collapse-content">
 							<div class="mui-content">
 								<ul id="list02" class="mui-table-view mui-table-view-striped mui-table-view-condensed">
-									<li class="mui-table-view-cell">
-										<div class="mui-table">
-											<div class="mui-table-cell mui-col-xs-10">
-												<h4 class="mui-ellipsis">任务标题：test01::款式初稿</h4>
-												<h5>申请人：***</h5>
-												<p class="mui-h6 mui-ellipsis">你好，这是你的任务请查看</p>
-											</div>
-											<div class="mui-table-cell mui-col-xs-2 mui-text-right">
-												<span class="mui-h5">10-02</span>
-											</div>
-										</div>
-									</li>
-									<li class="mui-table-view-cell">
-										<div class="mui-table">
-											<div class="mui-table-cell mui-col-xs-10">
-												<h4 class="mui-ellipsis">任务标题2：*********************</h4>
-												<h5>申请人：***</h5>
-												<p class="mui-h6 mui-ellipsis">你好，这是你的任务请查看</p>
-											</div>
-											<div class="mui-table-cell mui-col-xs-2 mui-text-right">
-												<span class="mui-h5">10-02</span>
-											</div>
-										</div>
-									</li>
-									<li class="mui-table-view-cell">
-										<div class="mui-table">
-											<div class="mui-table-cell mui-col-xs-10">
-												<h4 class="mui-ellipsis">任务标题3：*********************</h4>
-												<h5>申请人：***</h5>
-												<p class="mui-h6 mui-ellipsis">你好，这是你的任务请查看</p>
-											</div>
-
-										</div>
-									</li>
-									<div class="mui-content-padded" style="margin-top: 10px;margin-bottom: 10px">
-										<ul class="mui-pager">
-											<li class="mui-disabled">
-												<span> 上一页 </span>
-											</li>
-											<li>
-												<a href="#">
-													下一页
-												</a>
-											</li>
-										</ul>
-									</div>
 								</ul>
 							</div>
 						</div>
@@ -150,13 +81,15 @@
 			mui.init();
 
 			//var _index, _self, _next, _prev;
-			var currentpage = 1, currentpage2 = 1,
+			var currentpage = 1,
+				currentpage2 = 1,
 				numperpage = 3;
 			var uname;
 			mui.plusReady(function() {
 				uname = plus.storage.getItem('name');
 				console.log(uname);
 				getsubinfo('任务执行中');
+				getsubinfo('任务完成');
 				//    		_self = plus.webview.currentWebview();
 				//    		_next = plus.webview.getWebviewById('message.html');
 				//    		_index = plus.webview.getLaunchWebview();
@@ -207,38 +140,39 @@
 				}
 				return fragment;
 			}
-			
+
 			var nextpage = function() {
 				currentpage++;
 				getsubinfo('任务执行中');
 			}
-			
+
 			var prepage = function() {
 				currentpage--;
 				getsubinfo('任务执行中');
 			}
-			
+
 			var nextpage2 = function() {
-				currentpage++;
-				getsubinfo('任务执行中');
+				currentpage2++;
+				getsubinfo('任务完成');
 			}
-			
+
 			var prepage2 = function() {
-				currentpage--;
-				getsubinfo('任务执行中');
+				currentpage2--;
+				getsubinfo('任务完成');
 			}
 
 			var getsubinfo = function(status) {
-				mui.post(
-					url + 'devtasksub/getdevtasksubinfolist?token=' + plus.storage.getItem('token'), {
-						curr_page: currentpage,
-						page_size: numperpage,
-						uid: plus.storage.getItem('uid'),
-						status: status,
-					},
-					function(data) {
-						if(data.flag == 'get_devtasksubinfo_list_success') {
-							if(status == "任务执行中") {
+				if(status == '任务执行中') {
+					mui.post(
+						url + 'devtasksub/getdevtasksubinfolist?token=' + plus.storage.getItem('token'), {
+							curr_page: currentpage,
+							page_size: numperpage,
+							uid: plus.storage.getItem('uid'),
+							status: status,
+						},
+						function(data) {
+							if(data.flag == 'get_devtasksubinfo_list_success') {
+
 								var list = document.getElementById("list01");
 								h('#list01').html('');
 								list.appendChild(createFragment(data.data.devtasksub));
@@ -277,7 +211,7 @@
 											'下一页' +
 											'</a></li></ul></div>';
 										h('#list01').html(temp);
-									} else if (data.data.currentpage == data.data.pages) {
+									} else if(data.data.currentpage == data.data.pages) {
 										var temp = h('#list01').html() +
 											'<div class="mui-content-padded" style="margin-top: 10px;margin-bottom: 10px"><ul class="mui-pager">' +
 											'<li><a href="javascript:;" onclick="prepage();">' +
@@ -300,10 +234,25 @@
 									}
 								}
 								console.log(data.data.currentpage);
-							} else if (status == "任务完成") {
+
+							}
+						}
+					);
+				} else if(status == "任务完成") {
+					mui.post(
+						url + 'devtasksub/getdevtasksubinfolist?token=' + plus.storage.getItem('token'), {
+							curr_page: currentpage2,
+							page_size: numperpage,
+							uid: plus.storage.getItem('uid'),
+							status: status,
+						},
+						function(data) {
+							if(data.flag == 'get_devtasksubinfo_list_success') {
+
 								var list = document.getElementById("list02");
 								h('#list02').html('');
 								list.appendChild(createFragment(data.data.devtasksub));
+
 								// 加分页按钮
 								if(data.data.pages == 2) {
 									if(data.data.currentpage == 1) {
@@ -338,7 +287,7 @@
 											'下一页' +
 											'</a></li></ul></div>';
 										h('#list02').html(temp);
-									} else if (data.data.currentpage == data.data.pages) {
+									} else if(data.data.currentpage == data.data.pages) {
 										var temp = h('#list02').html() +
 											'<div class="mui-content-padded" style="margin-top: 10px;margin-bottom: 10px"><ul class="mui-pager">' +
 											'<li><a href="javascript:;" onclick="prepage2();">' +
@@ -347,7 +296,7 @@
 											'<li class="mui-disabled"><span>' +
 											'下一页' +
 											'</span></li></ul></div>';
-										h('#list01').html(temp);
+										h('#list02').html(temp);
 									} else {
 										var temp = h('#list02').html() +
 											'<div class="mui-content-padded" style="margin-top: 10px;margin-bottom: 10px"><ul class="mui-pager">' +
@@ -360,11 +309,13 @@
 										h('#list02').html(temp);
 									}
 								}
-								
+								console.log(data.data.currentpage);
+
 							}
 						}
-					}
-				);
+					);
+				}
+
 			}
 		</script>
 	</body>
