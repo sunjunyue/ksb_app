@@ -98,12 +98,12 @@
 			(function($) {
 				$('#list01').on('tap', '.mui-table', function(event) {
 					var elem = this;
-					var typett = ""
-					console.log(elem.parentNode.id);
+					//var typett = ""
+					//console.log(elem.parentNode.id);
 					for (var i = 0; i < temp01.length; i++) {
 						if (elem.parentNode.id == temp01[i].guid) {
-							typett = temp01[i].type;
-							nextWork(typett);
+							//typett = temp01[i].type;
+							nextWork(temp01[i].type,elem.parentNode.id);
 							break;
 						}
 					}
@@ -111,9 +111,15 @@
 				});
 			})(mui);
 			
-			var nextWork = function (type) {
+			var nextWork = function (type,guid) {
 				if (type == '款式初稿') {
+					//console.log(guid);
+					plus.storage.setItem('currentsubinfo',guid);
 					plus.webview.getLaunchWebview().evalJS('changeSub(7)');
+				} if (type == '款式初稿审核') {
+					console.log(guid);
+					plus.storage.setItem('currentsubinfo',guid);
+					plus.webview.getLaunchWebview().evalJS('changeSub(8)');
 				}
 			}
 
