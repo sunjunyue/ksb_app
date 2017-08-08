@@ -13,7 +13,7 @@
 			<!--<button type="button" class="mui-left mui-action-back mui-btn  mui-btn-link mui-btn-nav mui-pull-left">
 			<span class="mui-icon mui-icon-left-nav"></span>
 		</button>-->
-			<h1 class="mui-center mui-title">款式初稿审核-记录操作</h1>
+			<h1 class="mui-center mui-title">面辅料审核-记录操作</h1>
 		</div>
 		<div class="mui-content">
 			<div class="mui-content-padded">
@@ -37,7 +37,7 @@
 				//				console.log(plus.storage.getItem('currentsubinfo'));
 				var btnArray = ['否', '是'];
 				if(flag == 1) {
-					mui.confirm('您确定要审核通过该项款式初稿？', '操作提示', btnArray, function(e) {
+					mui.confirm('您确定要审核通过该面辅料准备？', '操作提示', btnArray, function(e) {
 						if(e.index == 1) {
 							mui.post(
 								url + 'devtasksub/nextdevtasksubinfo?token=' + plus.storage.getItem('token'), {
@@ -47,7 +47,7 @@
 								function(data) {
 									//console.log(data.error_message);
 									if(data.flag == 'next_devtasksubinfo_success') {
-										mui.toast('审核通过，已通知配面辅料');
+										mui.toast('审核通过，已通知设计制版');
 									}
 								},
 								'json'

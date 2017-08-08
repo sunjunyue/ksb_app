@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>copy</title>
+		<link href="css/mui.css" rel="stylesheet" />
+	</head>
+
+	<body>
+		<div class="mui-navbar-inner mui-bar mui-bar-nav">
+			<!--<button type="button" class="mui-left mui-action-back mui-btn  mui-btn-link mui-btn-nav mui-pull-left">
+			<span class="mui-icon mui-icon-left-nav"></span>
+		</button>-->
+			<h1 class="mui-center mui-title">样衣制作-记录操作</h1>
+		</div>
+		<div class="mui-content">
+			<div class="mui-content-padded">
+				<button id="savebtn" class="mui-btn mui-btn" type='button'>任务保存</button>
+				<button id="submitbtn01" class="mui-btn mui-btn" type='button' onclick="submittasksub();">提交定稿审核</button>
+			</div>
+		</div>
+		<script src="js/mui.min.js"></script>
+		<script src="js/common.js"></script>
+		<script src="js/h.js"></script>
+		<script type="text/javascript" charset="utf-8">
+			mui.init();
+
+			var next_id = 0;
+			var next_name = '';
+
+			// 提交样衣制作任务
+			var submittasksub = function() {
+				//				console.log('tt:' + flag);
+				//				console.log(plus.storage.getItem('currentsubinfo'));
+				var btnArray = ['否', '是'];
+
+				mui.confirm('您确定已完成样衣制作？', '操作提示', btnArray, function(e) {
+					if(e.index == 1) {
+						mui.post(
+							url + 'devtasksub/nextdevtasksubinfo?token=' + plus.storage.getItem('token'), {
+								devtasksub_guid: plus.storage.getItem('currentsubinfo'),
+							},
+							function(data) {
+								console.log(data.error_message);
+								if(data.flag == 'next_devtasksubinfo_success') {
+									mui.toast('任务已提交，已通知定稿审核');
+								}
+							},
+							'json'
+						);
+					}
+				})
+
+			};
+
+			var getnextinfo = function() {
+
+			}
+		</script>
+	</body>
+
+</html>

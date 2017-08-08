@@ -1,16 +1,89 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
-    <title>copy</title>
-    <link href="css/mui.css" rel="stylesheet"/>
-</head>
-<body>
-	面辅料准备工作页
-	<script src="js/mui.min.js"></script>
-    <script type="text/javascript" charset="utf-8">
-      	mui.init();
-    </script>
-</body>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>copy</title>
+		<link href="css/mui.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="css/mui.picker.css" />
+		<link rel="stylesheet" type="text/css" href="css/mui.poppicker.css" />
+	</head>
+
+	<body>
+		<div class="mui-navbar-inner mui-bar mui-bar-nav">
+			<!--<button type="button" class="mui-left mui-action-back mui-btn  mui-btn-link mui-btn-nav mui-pull-left">
+			<span class="mui-icon mui-icon-left-nav"></span>
+		</button>-->
+			<h1 class="mui-center mui-title">配面辅料-记录操作</h1>
+		</div>
+		<div class="mui-content">
+			<div class="mui-content-padded">
+				<button id='showUserPicker' class="mui-btn mui-btn-block" type='button'>点击此处选择面辅料审核人</button>
+				<div id='userResult' class="ui-alert"></div>
+				<button id="savebtn" class="mui-btn mui-btn" type='button'>任务保存</button>
+				<button id="submitbtn" class="mui-btn mui-btn" type='button' style="display: none;" onclick="submittasksub();"></button>
+			</div>
+		</div>
+		<script src="js/mui.min.js"></script>
+		<script src="js/common.js"></script>
+		<script src="js/h.js"></script>
+		<script src="js/mui.picker.js"></script>
+		<script src="js/mui.poppicker.js"></script>
+		<script type="text/javascript" charset="utf-8">
+			var shls = null; // 审核人集合对象
+			var shrid = 0;
+			var shrname = '';
+
+			(function($, doc) {
+				$.init();
+				var userPicker = new $.PopPicker();
+				$.plusReady(function() {
+					mui.post(
+						url + 'user/getuserlistbyroleid2', {
+							role_id: 6,
+						},
+						function(data) {
+							if(data.flag == 'get_userlist_by_roleid_success') {
+								userPicker.setData(data.data.users);
+							}
+						},
+						'json'
+					);
+					
+					var showUserPickerButton = doc.getElementById('showUserPicker');
+					var userResult = doc.getElementById('userResult');
+					showUserPickerButton.addEventListener('tap', function(event) {
+						userPicker.show(function(items) {
+							userResult.innerText = JSON.stringify(items[0]);
+							h('#submitbtn').html('提交给'+items[0].text+'审核').show();
+							shrid = items[0].value;
+							shrname = items[0].text;
+							//返回 false 可以阻止选择框的关闭
+							//return false;
+						});
+					}, false);
+				});
+			})(mui, document);
+			
+			// 提交面辅料准备任务
+			var submittasksub = function () {
+				//console.log(plus.storage.getItem('currentsubinfo')+"|"+shrid+"|"+shrname);	
+				mui.post(
+					url + 'devtasksub/nextdevtasksubinfo?token=' + plus.storage.getItem('token'), {
+						devtasksub_guid: plus.storage.getItem('currentsubinfo'),
+						next_id: shrid,
+						next_name: shrname,
+					},
+					function(data) {
+						if(data.flag == 'next_devtasksubinfo_success') {
+							mui.toast('已经提交审核');
+						}
+					},
+					'json'
+				);
+			};
+		</script>
+	</body>
+
 </html>

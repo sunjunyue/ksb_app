@@ -209,7 +209,13 @@
 					"settings2.html",
 					"workbarcode.html",
 					"message_detail.html",
-					"work_kscg.html"
+					"work_kscg.html",
+					"work_kscgsh.html",
+					"work_mflzb.html",
+					"work_mflsh.html",
+					"work_sjzb.html",
+					"work_yycj.html",
+					"work_yyzz.html"
 				],
 				"priority": 0
 			},
@@ -259,7 +265,8 @@
 					"js/mui.view.js",
 					"js/feedback.js",
 					"js/h.js",
-					"js/mui.min.js"
+					"js/mui.min.js",
+					"js/common.js"
 				],
 				"refer": [],
 				"priority": 0
@@ -321,6 +328,36 @@
 					"js/mui.poppicker.js",
 					"css/mui.poppicker.css",
 					"css/mui.picker.css"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"work_kscgsh.html": {
+				"resources": [
+					"css/mui.css"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"work_mflzb.html": {
+				"resources": [
+					"css/mui.poppicker.css",
+					"css/mui.picker.css",
+					"css/mui.css"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"work_sjzb.html": {
+				"resources": [
+					"css/mui.css"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"work_yyzz.html": {
+				"resources": [
+					"css/mui.css"
 				],
 				"refer": [],
 				"priority": 0

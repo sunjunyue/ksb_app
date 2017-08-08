@@ -19,8 +19,10 @@
 		</div>
 		<div class="mui-content">
 			<div class="mui-content-padded">
-				<button id='showUserPicker' class="mui-btn mui-btn-block" type='button'>点击此处选择审核人 ...</button>
+				<button id='showUserPicker' class="mui-btn mui-btn-block" type='button'>点击此处选择款式初稿审核人</button>
 				<div id='userResult' class="ui-alert"></div>
+				<button id="savebtn" class="mui-btn mui-btn" type='button'>任务保存</button>
+				<button id="submitbtn" class="mui-btn mui-btn" type='button' style="display: none;" onclick="submittasksub();"></button>
 			</div>
 		</div>
 		<script src="js/mui.min.js"></script>
@@ -30,6 +32,8 @@
 		<script src="js/mui.poppicker.js"></script>
 		<script type="text/javascript" charset="utf-8">
 			var shls = null; // 审核人集合对象
+			var shrid = 0;
+			var shrname = '';
 
 			(function($, doc) {
 				$.init();
@@ -47,18 +51,38 @@
 						'json'
 					);
 					
-					
 					var showUserPickerButton = doc.getElementById('showUserPicker');
 					var userResult = doc.getElementById('userResult');
 					showUserPickerButton.addEventListener('tap', function(event) {
 						userPicker.show(function(items) {
 							userResult.innerText = JSON.stringify(items[0]);
+							h('#submitbtn').html('提交给'+items[0].text+'审核').show();
+							shrid = items[0].value;
+							shrname = items[0].text;
 							//返回 false 可以阻止选择框的关闭
 							//return false;
 						});
 					}, false);
 				});
 			})(mui, document);
+			
+			// 提交款式初稿任务
+			var submittasksub = function () {
+				//console.log(plus.storage.getItem('currentsubinfo')+"|"+shrid+"|"+shrname);	
+				mui.post(
+					url + 'devtasksub/nextdevtasksubinfo?token=' + plus.storage.getItem('token'), {
+						devtasksub_guid: plus.storage.getItem('currentsubinfo'),
+						next_id: shrid,
+						next_name: shrname,
+					},
+					function(data) {
+						if(data.flag == 'next_devtasksubinfo_success') {
+							mui.toast('已经提交审核');
+						}
+					},
+					'json'
+				);
+			};
 		</script>
 	</body>
 

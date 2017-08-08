@@ -17,7 +17,13 @@
 			"settings2.html",
 			"workbarcode.html",
 			"message_detail.html",
-			"work_kscg.html"
+			"work_kscg.html",
+			"work_kscgsh.html",
+			"work_mflzb.html",
+			"work_mflsh.html",
+			"work_sjzb.html",
+			"work_yycj.html",
+			"work_yyzz.html"
 		]
 	},
 	"work.html": {
@@ -59,7 +65,8 @@
 			"js/mui.view.js",
 			"js/feedback.js",
 			"js/h.js",
-			"js/mui.min.js"
+			"js/mui.min.js",
+			"js/common.js"
 		]
 	},
 	"workbarcode.html": {
@@ -111,6 +118,28 @@
 			"js/mui.poppicker.js",
 			"css/mui.poppicker.css",
 			"css/mui.picker.css"
+		]
+	},
+	"work_kscgsh.html": {
+		"resources": [
+			"css/mui.css"
+		]
+	},
+	"work_mflzb.html": {
+		"resources": [
+			"css/mui.poppicker.css",
+			"css/mui.picker.css",
+			"css/mui.css"
+		]
+	},
+	"work_sjzb.html": {
+		"resources": [
+			"css/mui.css"
+		]
+	},
+	"work_yyzz.html": {
+		"resources": [
+			"css/mui.css"
 		]
 	}
 }

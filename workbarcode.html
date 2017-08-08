@@ -143,6 +143,153 @@
 								subtitle = data.data.devtask.devtask_name + "::款式初稿";
 								h('#taskname').val(subtitle);
 								type = '款式初稿';
+							} else if (data.data.devtask.devtask_progress2 == '2') {
+								// 设计初稿审核阶段
+								if(plus.storage.getItem('uid') != data.data.devtask.devtask_checkerid) {
+									mui.toast('抱歉，此项任务不是您的工作');
+									return;
+								}
+								
+								if(data.data.devtask.subguid != null) {
+									//mui.toast('此项工作任务已经在您的工作目录里了');
+									var btnArray = ['否', '是'];
+									mui.confirm('此项工作任务已经在您的工作台中，是否跳转？', '操作提示', btnArray, function(e) {
+										if(e.index == 1) {
+											//console.log('y');
+											plus.webview.getLaunchWebview().evalJS('changeSub(2)');
+										}
+									})
+									return;
+								}
+								subtitle = data.data.devtask.devtask_name + "::款式初稿审核";
+								h('#taskname').val(subtitle);
+								type = '款式初稿审核';
+							} else if (data.data.devtask.devtask_progress2 == '3') {
+								// 配面辅料
+								if(plus.storage.getItem('uid') != data.data.devtask.devtask_designerid) {
+									mui.toast('抱歉，此项任务不是您的工作');
+									return;
+								}
+								
+								if(data.data.devtask.subguid != null) {
+									//mui.toast('此项工作任务已经在您的工作目录里了');
+									var btnArray = ['否', '是'];
+									mui.confirm('此项工作任务已经在您的工作台中，是否跳转？', '操作提示', btnArray, function(e) {
+										if(e.index == 1) {
+											console.log('y');
+											plus.webview.getLaunchWebview().evalJS('changeSub(2)');
+										}
+									})
+									return;
+								} 
+								subtitle = data.data.devtask.devtask_name + "::配面辅料";
+								h('#taskname').val(subtitle);
+								type = '配面辅料';
+							} else if (data.data.devtask.devtask_progress2 == '4') {
+								// 配面辅料审核
+								if(plus.storage.getItem('uid') != data.data.devtask.devtask_checker2id) {
+									mui.toast('抱歉，此项任务不是您的工作');
+									return;
+								}
+								
+								if(data.data.devtask.subguid != null) {
+									//mui.toast('此项工作任务已经在您的工作目录里了');
+									var btnArray = ['否', '是'];
+									mui.confirm('此项工作任务已经在您的工作台中，是否跳转？', '操作提示', btnArray, function(e) {
+										if(e.index == 1) {
+											console.log('y');
+											plus.webview.getLaunchWebview().evalJS('changeSub(2)');
+										}
+									})
+									return;
+								} 
+								subtitle = data.data.devtask.devtask_name + "::配面辅料审核";
+								h('#taskname').val(subtitle);
+								type = '配面辅料审核';
+							} else if (data.data.devtask.devtask_progress2 == '5') {
+								// 设计制版
+								if(plus.storage.getItem('uid') != data.data.devtask.devtask_patternmakerid) {
+									mui.toast('抱歉，此项任务不是您的工作');
+									return;
+								}
+								
+								if(data.data.devtask.subguid != null) {
+									//mui.toast('此项工作任务已经在您的工作目录里了');
+									var btnArray = ['否', '是'];
+									mui.confirm('此项工作任务已经在您的工作台中，是否跳转？', '操作提示', btnArray, function(e) {
+										if(e.index == 1) {
+											console.log('y');
+											plus.webview.getLaunchWebview().evalJS('changeSub(2)');
+										}
+									})
+									return;
+								} 
+								subtitle = data.data.devtask.devtask_name + "::设计制版";
+								h('#taskname').val(subtitle);
+								type = '设计制版';
+							} else if (data.data.devtask.devtask_progress2 == '6') {
+								// 样衣裁剪
+								if(plus.storage.getItem('uid') != data.data.devtask.devtask_cutterid) {
+									mui.toast('抱歉，此项任务不是您的工作');
+									return;
+								}
+								
+								if(data.data.devtask.subguid != null) {
+									//mui.toast('此项工作任务已经在您的工作目录里了');
+									var btnArray = ['否', '是'];
+									mui.confirm('此项工作任务已经在您的工作台中，是否跳转？', '操作提示', btnArray, function(e) {
+										if(e.index == 1) {
+											console.log('y');
+											plus.webview.getLaunchWebview().evalJS('changeSub(2)');
+										}
+									})
+									return;
+								} 
+								subtitle = data.data.devtask.devtask_name + "::样衣裁剪";
+								h('#taskname').val(subtitle);
+								type = '样衣裁剪';
+							} else if (data.data.devtask.devtask_progress2 == '7') {
+								// 样衣制作
+								if(plus.storage.getItem('uid') != data.data.devtask.devtask_yygid) {
+									mui.toast('抱歉，此项任务不是您的工作');
+									return;
+								}
+								
+								if(data.data.devtask.subguid != null) {
+									//mui.toast('此项工作任务已经在您的工作目录里了');
+									var btnArray = ['否', '是'];
+									mui.confirm('此项工作任务已经在您的工作台中，是否跳转？', '操作提示', btnArray, function(e) {
+										if(e.index == 1) {
+											console.log('y');
+											plus.webview.getLaunchWebview().evalJS('changeSub(2)');
+										}
+									})
+									return;
+								} 
+								subtitle = data.data.devtask.devtask_name + "::样衣制作";
+								h('#taskname').val(subtitle);
+								type = '样衣制作';
+							} else if (data.data.devtask.devtask_progress2 == '8') {
+								// 样衣制作
+								if(plus.storage.getItem('uid') != data.data.devtask.devtask_checkerid) {
+									mui.toast('抱歉，此项任务不是您的工作');
+									return;
+								}
+								
+								if(data.data.devtask.subguid != null) {
+									//mui.toast('此项工作任务已经在您的工作目录里了');
+									var btnArray = ['否', '是'];
+									mui.confirm('此项工作任务已经在您的工作台中，是否跳转？', '操作提示', btnArray, function(e) {
+										if(e.index == 1) {
+											console.log('y');
+											plus.webview.getLaunchWebview().evalJS('changeSub(2)');
+										}
+									})
+									return;
+								} 
+								subtitle = data.data.devtask.devtask_name + "::样衣制作";
+								h('#taskname').val(subtitle);
+								type = '样衣制作';
 							}
 
 							h('#taskphotourl').attr('src', data.data.devtask.taskphotourl);

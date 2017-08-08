@@ -104,6 +104,60 @@
 						width: "100%",
 						left: "600%"
 					}
+				}, {
+					url: 'work_kscgsh.html',
+					id: 'work_kscgsh.html',
+					styles: {
+						top: '44px',
+						bottom: '50px',
+						width: "100%",
+						left: "600%"
+					}
+				}, {
+					url: 'work_mflzb.html',
+					id: 'work_mflzb.html',
+					styles: {
+						top: '44px',
+						bottom: '50px',
+						width: "100%",
+						left: "600%"
+					}
+				}, {
+					url: 'work_mflsh.html',
+					id: 'work_mflsh.html',
+					styles: {
+						top: '44px',
+						bottom: '50px',
+						width: "100%",
+						left: "600%"
+					}
+				}, {
+					url: 'work_sjzb.html',
+					id: 'work_sjzb.html',
+					styles: {
+						top: '44px',
+						bottom: '50px',
+						width: "100%",
+						left: "600%"
+					}
+				}, {
+					url: 'work_yycj.html',
+					id: 'work_yycj.html',
+					styles: {
+						top: '44px',
+						bottom: '50px',
+						width: "100%",
+						left: "600%"
+					}
+				}, {
+					url: 'work_yyzz.html',
+					id: 'work_yyzz.html',
+					styles: {
+						top: '44px',
+						bottom: '50px',
+						width: "100%",
+						left: "600%"
+					}
 				}]
 			});
 
@@ -137,6 +191,12 @@
 				var home = plus.webview.getWebviewById('home.html'); // 1
 				var work = plus.webview.getWebviewById('work.html'); // 2
 				var kscg = plus.webview.getWebviewById('work_kscg.html'); // 7
+				var kscgsh = plus.webview.getWebviewById('work_kscgsh.html'); // 8
+				var mflzb = plus.webview.getWebviewById('work_mflzb.html');  // 9
+				var mflsh = plus.webview.getWebviewById('work_mflsh.html');  // 10
+				var sjzb = plus.webview.getWebviewById('work_sjzb.html');  // 11
+				var yycj = plus.webview.getWebviewById('work_yycj.html'); // 12
+				var yyzz = plus.webview.getWebviewById('work_yyzz.html'); // 13
 				if (index != 1 && index != 4) {
 					if (!plus.storage.getItem('uid')){
 						mui.toast('请先登录');
@@ -187,6 +247,24 @@
 				});
 				kscg.setStyle({
 					left: (7 - index) * 100 + "%"
+				});
+				kscgsh.setStyle({
+					left: (8 - index) * 100 + "%"
+				});
+				mflzb.setStyle({
+					left: (9 - index) * 100 + "%"
+				});
+				mflsh.setStyle({
+					left: (10 - index) * 100 + "%"
+				});
+				sjzb.setStyle({
+					left: (11 - index) * 100 + "%"
+				});
+				yycj.setStyle({
+					left: (12 - index) * 100 + "%"
+				});
+				yyzz.setStyle({
+					left: (13 - index) * 100 + "%"
 				});
 			}
 			
