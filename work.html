@@ -116,11 +116,11 @@
 					//console.log(guid);
 					plus.storage.setItem('currentsubinfo',guid);
 					plus.webview.getLaunchWebview().evalJS('changeSub(7)');
-				} if (type == '款式初稿审核') {
-					console.log(guid);
+				} else if (type == '款式初稿审核') {
+					// console.log(guid);
 					plus.storage.setItem('currentsubinfo',guid);
 					plus.webview.getLaunchWebview().evalJS('changeSub(8)');
-				}
+				} 
 			}
 
 			//var _index, _self, _next, _prev;
