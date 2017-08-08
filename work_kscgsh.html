@@ -6,6 +6,14 @@
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<title>copy</title>
 		<link href="css/mui.css" rel="stylesheet" />
+		<style>
+			.mui-btn-block{
+				padding:10px 0;
+			}
+			.bT{
+				margin-bottom:-10px;
+			}
+		</style>
 	</head>
 
 	<body>
@@ -16,10 +24,21 @@
 			<h1 class="mui-center mui-title">款式初稿审核-记录操作</h1>
 		</div>
 		<div class="mui-content">
+			<div class="mui-content-padded bT">
+				<h5>设计说明：</h5>
+				<div class="mui-input-row" >
+					<textarea rows="4"></textarea>
+				</div>
+			</div>
+			<div class="mui-content-padded ">
+				<button type="button" class="mui-btn mui-btn-block mui-btn-primary" style="font-size:14px;">查看图片</button>
+			</div>
 			<div class="mui-content-padded">
-				<button id="savebtn" class="mui-btn mui-btn" type='button'>任务保存</button>
-				<button id="submitbtn01" class="mui-btn mui-btn" type='button' onclick="submittasksub(1);">审核通过</button>
-				<button id="submitbtn02" class="mui-btn mui-btn" type='button' onclick="submittasksub(2);">审核不通过</button>
+				<center>
+					<button id="savebtn" class="mui-btn mui-btn mui-btn-primary" type='button' style="margin-top:10px;">任务保存</button>
+					<button id="submitbtn01" class="mui-btn mui-btn mui-btn-success" type='button' style="margin-top:10px;" onclick="submittasksub(1);">审核通过</button>
+					<button id="submitbtn02" class="mui-btn mui-btn mui-btn-warning" type='button' style="margin-top:10px;" onclick="submittasksub(2);">审核不通过</button>
+				</center>
 			</div>
 		</div>
 		<script src="js/mui.min.js"></script>
