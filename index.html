@@ -38,6 +38,7 @@
 				<span class="mui-tab-label">设置</span>
 			</a>
 		</nav>
+		<script src="js/common.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/mui.min.js"></script>
 		<script src="js/h.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript" charset="utf-8">
@@ -184,6 +185,7 @@
 			});
 
 			function changeSub(index,flag) {
+				var wt = plus.nativeUI.showWaiting();
 				var settings = plus.webview.getWebviewById('settings2.html'); // 4
 				var message = plus.webview.getWebviewById('message.html'); // 3
 				var message_detail = plus.webview.getWebviewById('message_detail.html'); // 6
@@ -266,6 +268,7 @@
 				yyzz.setStyle({
 					left: (13 - index) * 100 + "%"
 				});
+				wt.close();
 			}
 			
 			function getnewmessagecount() {
@@ -274,7 +277,7 @@
 					return;
 				}
 				mui.post(
-					'http://192.168.31.243/ksbapi2/api/sm/getsmcountnew?token=' + plus.storage.getItem('token'), {
+					url + 'sm/getsmcountnew?token=' + plus.storage.getItem('token'), {
 						uid: plus.storage.getItem('uid'),
 					},
 					function(data) {

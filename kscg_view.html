@@ -13,6 +13,7 @@
 				z-index: 20;
 				background-color: #000;
 			}
+			
 			.mui-preview-header,
 			.mui-preview-footer {
 				position: absolute;
@@ -20,14 +21,17 @@
 				left: 0;
 				z-index: 10;
 			}
+			
 			.mui-preview-header {
 				height: 44px;
 				top: 0;
 			}
+			
 			.mui-preview-footer {
 				height: 50px;
 				bottom: 0px;
 			}
+			
 			.mui-preview-header .mui-preview-indicator {
 				display: block;
 				line-height: 25px;
@@ -39,6 +43,7 @@
 				border-radius: 12px;
 				font-size: 16px;
 			}
+			
 			.mui-preview-image {
 				display: none;
 				-webkit-animation-duration: 0.5s;
@@ -46,19 +51,23 @@
 				-webkit-animation-fill-mode: both;
 				animation-fill-mode: both;
 			}
+			
 			.mui-preview-image.mui-preview-in {
 				-webkit-animation-name: fadeIn;
 				animation-name: fadeIn;
 			}
+			
 			.mui-preview-image.mui-preview-out {
 				background: none;
 				-webkit-animation-name: fadeOut;
 				animation-name: fadeOut;
 			}
+			
 			.mui-preview-image.mui-preview-out .mui-preview-header,
 			.mui-preview-image.mui-preview-out .mui-preview-footer {
 				display: none;
 			}
+			
 			.mui-zoom-scroller {
 				position: absolute;
 				display: -webkit-box;
@@ -79,26 +88,32 @@
 				margin: 0;
 				-webkit-backface-visibility: hidden;
 			}
+			
 			.mui-zoom {
 				-webkit-transform-style: preserve-3d;
 				transform-style: preserve-3d;
 			}
+			
 			.mui-slider .mui-slider-group .mui-slider-item img {
 				width: auto;
 				height: auto;
 				max-width: 100%;
 				max-height: 100%;
 			}
+			
 			.mui-android-4-1 .mui-slider .mui-slider-group .mui-slider-item img {
 				width: 100%;
 			}
+			
 			.mui-android-4-1 .mui-slider.mui-preview-image .mui-slider-group .mui-slider-item {
 				display: inline-table;
 			}
+			
 			.mui-android-4-1 .mui-slider.mui-preview-image .mui-zoom-scroller img {
 				display: table-cell;
 				vertical-align: middle;
 			}
+			
 			.mui-preview-loading {
 				position: absolute;
 				width: 100%;
@@ -107,9 +122,11 @@
 				left: 0;
 				display: none;
 			}
+			
 			.mui-preview-loading.mui-active {
 				display: block;
 			}
+			
 			.mui-preview-loading .mui-spinner-white {
 				position: absolute;
 				top: 50%;
@@ -119,10 +136,12 @@
 				height: 50px;
 				width: 50px;
 			}
+			
 			.mui-preview-image img.mui-transitioning {
 				-webkit-transition: -webkit-transform 0.5s ease, opacity 0.5s ease;
 				transition: transform 0.5s ease, opacity 0.5s ease;
 			}
+			
 			@-webkit-keyframes fadeIn {
 				0% {
 					opacity: 0;
@@ -131,6 +150,7 @@
 					opacity: 1;
 				}
 			}
+			
 			@keyframes fadeIn {
 				0% {
 					opacity: 0;
@@ -139,6 +159,7 @@
 					opacity: 1;
 				}
 			}
+			
 			@-webkit-keyframes fadeOut {
 				0% {
 					opacity: 1;
@@ -147,6 +168,7 @@
 					opacity: 0;
 				}
 			}
+			
 			@keyframes fadeOut {
 				0% {
 					opacity: 1;
@@ -155,27 +177,58 @@
 					opacity: 0;
 				}
 			}
+			
 			p img {
 				max-width: 100%;
 				height: auto;
+			}
+			
+			.mui-btn-block {
+				margin-bottom: 0;
 			}
 		</style>
 	</head>
 
 	<body>
-		<div class="mui-content">
-			<div class="mui-content-padded">
-				<p>
-					<img src="imgs/logo.jpeg" data-preview-src="" data-preview-group="1" />
-				</p>
-			</div>
+		<div class="mui-navbar-inner mui-bar mui-bar-nav">
+			<button type="button" class="mui-left  mui-btn-link mui-btn-nav" onclick="backto();">
+			<span class="mui-icon mui-icon-left-nav"></span>
+		</button>
+			<h1 class="mui-center mui-title" id="titleh1">款式初稿-查看图片</h1>
+			<button type="button" class="mui-right  mui-btn-link mui-btn-nav" onclick="backto();" style="float:right">
+		        <span class="mui-icon mui-icon-trash"></span>
+			</button>
 		</div>
+		<div class="mui-content">
+			<div class="mui-content-padded" id="htmlcontent">
+
+			</div>
+			<!--<button type="button" class="mui-btn mui-btn-danger  mui-btn-block" style="position:fixed;bottom:0;">
+		            删除	
+		     </button>-->
+		</div>
+
 		<script src="js/mui.min.js"></script>
+		<script src="js/common.js"></script>
+		<script src="js/h.js"></script>
 		<script src="js/mui.zoom.js"></script>
 		<script src="js/mui.previewimage.js"></script>
 		<script type="text/javascript">
 			mui.init()
 			mui.previewImage();
+			mui.plusReady(function() {
+				h('#titleh1').html("款式初稿上传参考图片");
+				console.log(plus.storage.getItem('kscg_uploadfile'));
+				//htmltup += '<p><img src="' + urlqiniu + plus.storage.getItem('kscg_uploadfile') + '" data-preview-src="" data-preview-group="1" /></p>';
+				//console.log(htmltup);
+				h("#htmlcontent").html('<p><img src="' + urlqiniu + plus.storage.getItem('kscg_uploadfile') + '" data-preview-src="" data-preview-group="1" /></p>');
+				plus.nativeUI.closeWaiting();
+				mui.currentWebview.show();
+			});
+
+			function backto() {
+				mui.back();
+			}
 		</script>
 	</body>
 

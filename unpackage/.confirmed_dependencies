@@ -7,7 +7,8 @@
 			"imgs/logo2.jpeg",
 			"fonts/mui.ttf",
 			"home.html",
-			"js/h.js"
+			"js/h.js",
+			"js/common.js"
 		],
 		"refer": [
 			"home.html",
@@ -23,7 +24,8 @@
 			"work_mflsh.html",
 			"work_sjzb.html",
 			"work_yycj.html",
-			"work_yyzz.html"
+			"work_yyzz.html",
+			"work_kscg2.html"
 		]
 	},
 	"work.html": {
@@ -33,12 +35,17 @@
 			"fonts/mui-icons-extra.ttf",
 			"css/app.css",
 			"css/mui.min.css",
-			"css/icons-extra.css"
+			"css/icons-extra.css",
+			"js/h.js",
+			"js/mui.min.js"
 		]
 	},
 	"home.html": {
 		"resources": [
-			"css/mui.css"
+			"css/mui.css",
+			"js/common.js",
+			"js/h.js",
+			"js/mui.min.js"
 		]
 	},
 	"message.html": {
@@ -90,7 +97,8 @@
 		"resources": [
 			"css/mui.css",
 			"js/mui.min.js",
-			"js/h.js"
+			"js/h.js",
+			"js/common.js"
 		],
 		"refer": [
 			"task_detail2.html"
@@ -129,7 +137,9 @@
 		"resources": [
 			"css/mui.poppicker.css",
 			"css/mui.picker.css",
-			"css/mui.css"
+			"css/mui.css",
+			"js/mui.picker.js",
+			"js/mui.poppicker.js"
 		]
 	},
 	"work_sjzb.html": {
@@ -140,6 +150,33 @@
 	"work_yyzz.html": {
 		"resources": [
 			"css/mui.css"
+		]
+	},
+	"work_kscg2.html": {
+		"resources": [
+			"js/mui.picker.js",
+			"js/mui.poppicker.js",
+			"css/mui.poppicker.css",
+			"css/mui.picker.css",
+			"css/mui.css",
+			"js/mui.min.js",
+			"css/app.css",
+			"css/icons-extra.css",
+			"fonts/mui-icons-extra.ttf"
+		],
+		"refer": [
+			"kscg_view.html",
+			"task_detail.html"
+		]
+	},
+	"kscg_view.html": {
+		"resources": [
+			"js/mui.zoom.js",
+			"css/mui.min.css",
+			"js/mui.previewimage.js",
+			"js/mui.min.js",
+			"js/h.js",
+			"js/common.js"
 		]
 	}
 }

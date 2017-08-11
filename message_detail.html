@@ -48,6 +48,7 @@
 				</div>
 			</div>
 		</div>
+		<script src="js/common.js"></script>
 		<script src="js/mui.min.js"></script>
 		<script type="text/javascript" src="js/h.js"></script>
 		<script type="text/javascript">
@@ -58,7 +59,20 @@
 //			}
 			var taskguid = '';
 			function toWorkbarcode() {
-				console.log(taskguid);
+				//console.log(taskguid);
+				mui.post(
+					url + 'sm/setsmcountstatus?token=' + plus.storage.getItem('token'), {
+						uid: plus.storage.getItem('uid'),
+						guid: plus.storage.getItem('currentsms'),
+						status: 2,
+					},
+					function(data) {
+						if(data.flag == 'set_smcount_status_success') {
+							
+						}
+					},
+					'json'
+				);
 				plus.webview.getLaunchWebview().evalJS('changeSub(5,"'+taskguid+'")');
 			}
 

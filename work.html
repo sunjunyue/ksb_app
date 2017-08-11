@@ -115,6 +115,7 @@
 				if (type == '款式初稿') {
 					//console.log(guid);
 					plus.storage.setItem('currentsubinfo',guid);
+					plus.webview.getWebviewById('work_kscg2.html').evalJS('getData()');
 					plus.webview.getLaunchWebview().evalJS('changeSub(7)');
 				} else if (type == '款式初稿审核') {
 					// console.log(guid);
@@ -181,7 +182,7 @@
 			
 			var getData = function () {
 				uname = plus.storage.getItem('name');
-				console.log(uname);
+				//console.log(uname);
 				getsubinfo('任务执行中');
 				getsubinfo('任务完成');
 			}

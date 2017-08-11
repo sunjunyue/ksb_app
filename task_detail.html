@@ -105,6 +105,7 @@
 				</div>
 			</div>
 		</div>
+		<script src="js/common.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/mui.min.js"></script>
 		<script src="js/h.js"></script>
 		<script src="js/picker.min.js"></script>
@@ -115,7 +116,7 @@
 				mui.currentWebview.show();
 				console.log(JSON.parse(plus.storage.getItem('devtask')).devtask_name);
 				h('#taskphotourl').attr('src', JSON.parse(plus.storage.getItem('devtask')).taskphotourl);
-				h('#devtask_qrcodeurl').attr('src', 'http://192.168.31.243/ksbapi2/public/qrcodes/' + JSON.parse(plus.storage.getItem('devtask')).devtask_qrcodeurl);
+				h('#devtask_qrcodeurl').attr('src', url2 + JSON.parse(plus.storage.getItem('devtask')).devtask_qrcodeurl);
 				h('#devtask_text').html(JSON.parse(plus.storage.getItem('devtask')).devtask_text);
 				h('#devtask_builder').val(JSON.parse(plus.storage.getItem('devtask')).devtask_builder);
 				h('#devtask_name').val(JSON.parse(plus.storage.getItem('devtask')).devtask_name);

@@ -16,6 +16,7 @@
 			</div>
 		</div>
 		<script src="js/mui.min.js"></script>
+		<script src="js/common.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/h.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript" charset="utf-8">
 			mui.init();
@@ -23,7 +24,7 @@
 			mui.plusReady(function() {
 				// 获取轮播图片
 				mui.get(
-					'http://192.168.31.243/ksbapi2/api/temp/getrb',
+					url + 'temp/getrb',
 					function(res) {
 						var items = res.split('--hcSplitor--');
 						var html = '<div class="mui-slider-item"><a href="#">' + items[items.length-1] + '</a></div>';
@@ -42,20 +43,20 @@
 						});
 					}
 				);
-				_self = plus.webview.currentWebview();
-				_next = plus.webview.getWebviewById('work.html');
-				_index = plus.webview.getLaunchWebview();
-				_self.drag({
-					direction: 'left',
-					moveMode: 'followFinger'
-				}, {
-					view: _next,
-					moveMode: 'follow'
-				}, function(e) {
-					if(e.type == 'end' && e.result) {
-						_index.evalJS('h("#navFooter").find("a").removeClass("mui-active");h("#nav2").addClass("mui-active")');
-					}
-				});
+//				_self = plus.webview.currentWebview();
+//				_next = plus.webview.getWebviewById('work.html');
+//				_index = plus.webview.getLaunchWebview();
+//				_self.drag({
+//					direction: 'left',
+//					moveMode: 'followFinger'
+//				}, {
+//					view: _next,
+//					moveMode: 'follow'
+//				}, function(e) {
+//					if(e.type == 'end' && e.result) {
+//						_index.evalJS('h("#navFooter").find("a").removeClass("mui-active");h("#nav2").addClass("mui-active")');
+//					}
+//				});
 			});
 		</script>
 	</body>

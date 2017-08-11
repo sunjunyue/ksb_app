@@ -24,6 +24,7 @@
 
 			</ul>
 		</div>
+		<script src="js/common.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/mui.min.js"></script>
 		<script src="js/h.js"></script>
 		<script src="js/mui.lazyload.js"></script>
@@ -104,7 +105,7 @@
 			var tt = function(flag) {
 				//console.log(122222);
 				mui.post(
-					'http://192.168.31.243/ksbapi2/api/sm/getsmcountlist2?token=' + plus.storage.getItem('token'), {
+					url + 'sm/getsmcountlist2?token=' + plus.storage.getItem('token'), {
 						uid: plus.storage.getItem('uid'),
 						flag: flag,
 					},
@@ -128,7 +129,7 @@
 
 			var setsmstatus = function(guid, status) {
 				mui.post(
-					'http://192.168.31.243/ksbapi2/api/sm/setsmcountstatus?token=' + plus.storage.getItem('token'), {
+					url + 'sm/setsmcountstatus?token=' + plus.storage.getItem('token'), {
 						uid: plus.storage.getItem('uid'),
 						guid: guid,
 						status: status,
