@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>copy</title>
+		<link href="css/mui.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="css/mui.picker.css" />
+		<link rel="stylesheet" type="text/css" href="css/mui.poppicker.css" />
+		<link rel="stylesheet" type="text/css" href="css/app.css" />
+		<link rel="stylesheet" type="text/css" href="css/icons-extra.css" />
+
+		<style>
+			.mui-btn-block {
+				padding: 10px 0;
+			}
+			
+			.heading {
+				margin: 0 1em;
+				text-align: left;
+			}
+			
+			.button {
+				font-size: 18px;
+				font-weight: normal;
+				text-decoration: none;
+				display: block;
+				text-align: center;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				white-space: nowrap;
+				color: #FFF;
+				background-color: #FFCC33;
+				border: 1px solid #ECB100;
+				padding: .5em 0em;
+				margin: .5em .7em;
+				-webkit-border-radius: 5px;
+				border-radius: 5px;
+			}
+			
+			.button-select {
+				font-size: 14px;
+				background-color: #CCCCCC;
+				border: 0;
+				-webkit-border-radius: 2px;
+				border-radius: 2px;
+			}
+			
+			#dcontent ul li {
+				line-height: 35px;
+			}
+			.mui-plus .plus{
+				display: inline;
+			}
+			
+			.plus{
+				display: none;
+			}
+			
+			#topPopover {
+				position: fixed;
+				top: 16px;
+				right: 6px;
+			}
+			#topPopover .mui-popover-arrow {
+				left: auto;
+				right: 6px;
+			}
+			p {
+				text-indent: 22px;
+			}
+			span.mui-icon {
+				font-size: 14px;
+				color: #007aff;
+				margin-left: -15px;
+				padding-right: 10px;
+			}
+			.mui-popover {
+				height: 100px;
+			}
+			.mui-content {
+				padding: 10px;
+			}
+			.mui-table-view-cell{
+				font-size:14px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="mui-navbar-inner mui-bar mui-bar-nav">
+			<h1 class="mui-center mui-title">样衣制作-记录操作</h1>
+			<a id="menu" class="mui-action-menu mui-icon mui-icon-bars mui-pull-right" href="#topPopover"></a>
+		</div>
+
+		<div class="mui-content">
+			<div id="dcontent" class="dcontent">
+				<br />
+				<p class="heading">上传文件列表：</p>
+				<ul id="files" style="text-align:left;">
+					<p id="empty" style="font-size:12px;color:#C6C6C6;">无上传文件</p>
+				</ul>
+				<table style="width:100%;">
+					<tbody>
+						<tr>
+							<td style="width:40%">
+								<div class="button" onclick="appendByCamera()">拍照</div>
+							</td>
+							<td style="width:40%">
+								<div class="button" onclick="appendByGallery()">相册选取</div>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<!--<div class="mui-content-padded">
+				<button id="viewimgbtn" class="mui-btn mui-btn-block mui-btn-primary" type='button' onclick="openview();" >查看已上传图片</button>
+			</div>-->
+			<div class="mui-content-padded ">
+				<h5>样衣说明：</h5>
+				<div class="mui-input-row">
+					<!--<input type="text" class="mui-input">-->
+					<textarea id="designremark" rows="4"></textarea>
+				</div>
+			</div>
+			<div class="mui-content-padded">
+				<h5 style="float:left">是否编辑状态：</h5>
+
+				<div id="myswitch" class="mui-switch mui-active" style="float:right">
+					<div class="mui-switch-handle"></div>
+				</div>
+				<div class="mui-clearfix"></div>
+			</div>
+			<!--<div class="mui-content-padded ">
+				<div class="mui-input-row">
+					<p>
+						<button class="mui-btn-primary">参看图片</button>
+						<button>任务保存</button>
+					</p>
+				</div>
+			</div>-->
+			<div class="mui-content-padded ">
+				<button type="button" id='showUserPicker' class="mui-btn mui-btn-block" style="font-size:14px;margin-top:20px;">选择样衣制作审核人</button>
+			</div>
+			<div class="mui-content-padded">
+				<button id="submitbtn" class="mui-btn mui-btn-block mui-btn-primary" type='button'>暂时保存</button>
+			</div>
+			<!--<div class="mui-content-padded">
+				<button id='showUserPicker' class="mui-btn mui-btn-block" type='button'>点击此处选择款式初稿审核人</button>
+				<div id='userResult' class="ui-alert"></div>
+				<button id="savebtn" class="mui-btn mui-btn" type='button'>任务保存</button>
+				<button id="submitbtn" class="mui-btn mui-btn" type='button' style="display: none;" onclick="submittasksub();"></button>
+			</div>-->
+			<div id="topPopover" class="mui-popover">
+				<div class="mui-popover-arrow"></div>
+				<div class="mui-scroll-wrapper">
+					<div class="mui-scroll">
+						<ul class="mui-table-view">
+							<li class="mui-table-view-cell"><a href="#">查看研发任务详细</a>
+							</li>
+							<li class="mui-table-view-cell"><a href="#">查看款式初稿详细</a>
+							</li>
+						
+						</ul>
+				</div>
+			</div>
+		</div>
+		<script src="js/mui.min.js"></script>
+		<script src="js/common.js"></script>
+		<script src="js/h.js"></script>
+		<script src="js/mui.picker.js"></script>
+		<script src="js/mui.poppicker.js"></script>
+		<script type="text/javascript" charset="utf-8">
+			var shls = null; // 审核人集合对象
+			var shrid = 0;
+			var shrname = '';
+
+			var files = []; // 上传文件集合
+
+			// 改函数用以从工作列表中跳进来是获取
+			// 正在编辑中的原始数据
+			function getData() {
+				plus.storage.removeItem('kscg_uploadfiles');
+				mui.post(
+					url + 'devtask/getcscgdata?token=' + plus.storage.getItem('token'), {
+						subguid: plus.storage.getItem('currentsubinfo'),
+					},
+					function(data) {
+						if(data.flag == 'success') {
+							//console.log(data.data.uploadfiles);
+							//console.log(data.data.designremark);
+							h('#files').html('').html('<p id="empty" style="font-size:12px;color:#C6C6C6;">无上传文件</p>');
+
+							if(data.data.uploadfiles != null && data.data.uploadfiles != '') {
+								files = JSON.parse(data.data.uploadfiles);
+								var fe = document.getElementById("files");
+
+								if(files.length > 0) {
+									plus.storage.setItem('kscg_uploadfiles', JSON.stringify(files));
+								}
+
+								for(var i = 0; i < files.length; i++) {
+									//console.log(files[i].url);
+									var li = document.createElement("li");
+									var n = "";
+									if(files[i].url.indexOf("_IMG_") >= 0) {
+										//console.log(files[i].url.indexOf("_IMG_"));
+										n = files[i].url.substr(files[i].url.indexOf('_IMG_') + 1);
+									} else {
+										n = files[i].url.substr(files[i].url.lastIndexOf('_') + 1);
+									}
+									var aa = '<a href="javascript:;" onclick="openview(\'' + files[i].url + '\')">' + n + '</a>';
+									li.innerHTML = aa;
+									fe.appendChild(li);
+								}
+								empty.style.display = "none";
+							}
+							h('#designeremark').val("");
+							if(data.data.designeremark != null) {
+								h('#designeremark').val(data.data.designeremark);
+							}
+						}
+					},
+					'json'
+				);
+			}
+
+			function getDevtaskData() {
+				mui.post(
+					url + 'devtask/getdevtaskbysubguid?token=' +
+					plus.storage.getItem('token'), {
+						subguid: plus.storage.getItem('currentsubinfo'),
+					},
+					function(data) {
+						if(data.flag == "get_devtask_by_subguid_success") {
+							if(plus.storage.getItem('devtask')) {
+								plus.storage.removeItem('devtask');
+							}
+							plus.storage.setItem('devtask', JSON.stringify(data.data.devtask));
+						}
+					},
+					'json'
+				);
+			}
+
+			function opentaskdetail() {
+				mui.openWindow({
+					url: 'task_detail.html',
+					id: 'task_detail',
+					show: {
+						autoShow: false
+					}
+				});
+			}
+
+			// 查看已上传图片
+			function openview(purl) {
+				console.log(purl);
+				plus.storage.setItem('kscg_uploadfile', purl);
+				mui.openWindow({
+					url: 'kscg_view.html',
+					id: 'kscg_view',
+					show: {
+						autoShow: false
+					}
+				});
+			}
+
+			var index = 1;
+
+			function appendFile(p, p2, p3) {
+				var fe = document.getElementById("files");
+				var li = document.createElement("li");
+				var n = p.substr(p.lastIndexOf('/') + 1);
+				var aa = '<a href="javascript:;" onclick="openview(\'' + p2 + '\')">' + n + '</a>';
+				console.log(aa);
+				li.innerHTML = aa;
+				fe.appendChild(li);
+				index = files.length + 1;
+				files.push({
+					name: "uploadkey" + index,
+					url: p2,
+					oldname: p3
+				});
+				index++;
+				empty.style.display = "none";
+				//console.log("files:"+JSON.stringify(files));
+
+				if(files.length > 0) {
+					plus.storage.setItem('kscg_uploadfiles', JSON.stringify(files));
+				}
+
+				mui.post(
+					url + 'devtask/setuploadfiles?token=' + plus.storage.getItem('token'), {
+						subguid: plus.storage.getItem('currentsubinfo'),
+						uploadfiles: JSON.stringify(files)
+					},
+					function(data) {
+						if(data.flag == 'success') {
+							mui.toast('上传成功');
+						}
+					},
+					'json'
+				);
+			}
+
+			// 拍照添加文件
+			function appendByCamera() {
+				plus.camera.getCamera().captureImage(function(p) {
+					createUpload(p);
+				});
+			}
+
+			// 从相册添加文件
+			function appendByGallery() {
+				plus.gallery.pick(function(p) {
+					createUpload(p);
+				});
+			}
+
+			// 创建一个上传任务
+			function createUpload(p) {
+				var wt = plus.nativeUI.showWaiting();
+				// 检查上传的图片是否重复
+				var checkCF = false;
+				for(var i = 0; i < files.length; i++) {
+					if(files[i].oldname == p.substr(p.lastIndexOf('/') + 1)) {
+						checkCF = true;
+						wt.close();
+						break;
+					}
+				}
+				if(checkCF) {
+					mui.toast('请勿要上传相同的图片！');
+
+					return;
+				}
+
+				var task = plus.uploader.createUpload(
+					'http://upload.qiniu.com/', {
+						method: 'post',
+					},
+					function(t, status) {
+						console.log(t.responseText);
+						var data = JSON.parse(t.responseText);
+						if(status == 200) {
+							appendFile(p, data.key, p.substr(p.lastIndexOf('/') + 1));
+							wt.close();
+						} else {
+							mui.toast('上传失败！');
+						}
+					}
+				);
+				var uid = 'mobile_kscg_' + Math.floor(Math.random() * 100000000 + 10000000).toString() + '_' + p.substr(p.lastIndexOf('/') + 1);
+				task.addData('token', uploadtoken);
+				task.addData('key', uid);
+				task.addFile(p, {
+					key: "file"
+				});
+				task.start();
+			}
+
+			(function($, doc) {
+				$.init();
+				var userPicker = new $.PopPicker();
+				$.plusReady(function() {
+					getDevtaskData();
+					mui.post(
+						url + 'user/getuserlistbyroleid2', {
+							role_id: 6,
+						},
+						function(data) {
+							if(data.flag == 'get_userlist_by_roleid_success') {
+								userPicker.setData(data.data.users);
+							}
+						},
+						'json'
+					);
+
+					var showUserPickerButton = doc.getElementById('showUserPicker');
+					var userResult = doc.getElementById('userResult');
+					showUserPickerButton.addEventListener('tap', function(event) {
+						userPicker.show(function(items) {
+							userResult.innerText = JSON.stringify(items[0]);
+							h('#submitbtn').html('提交给' + items[0].text + '审核').show();
+							shrid = items[0].value;
+							shrname = items[0].text;
+							//返回 false 可以阻止选择框的关闭
+							//return false;
+						});
+					}, false);
+				});
+
+				doc.getElementById('myswitch').addEventListener("toggle", function(event) {
+					if(event.detail.isActive) {
+						console.log("你启动了开关");
+						h('#submitbtn').html('暂时保存');
+					} else {
+						console.log("你关闭了开关");
+						h('#submitbtn').html('提交');
+					}
+				});
+			})(mui, document);
+
+			// 提交款式初稿任务
+			var submittasksub = function() {
+				//console.log(plus.storage.getItem('currentsubinfo')+"|"+shrid+"|"+shrname);	
+				mui.post(
+					url + 'devtasksub/nextdevtasksubinfo?token=' + plus.storage.getItem('token'), {
+						devtasksub_guid: plus.storage.getItem('currentsubinfo'),
+						next_id: shrid,
+						next_name: shrname,
+					},
+					function(data) {
+						if(data.flag == 'next_devtasksubinfo_success') {
+							mui.toast('已经提交审核');
+						}
+					},
+					'json'
+				);
+			};
+			//popovers
+			mui('.mui-scroll-wrapper').scroll();
+			mui('body').on('shown', '.mui-popover', function(e) {
+				//console.log('shown', e.detail.id);//detail为当前popover元素
+			});
+			mui('body').on('hidden', '.mui-popover', function(e) {
+				//console.log('hidden', e.detail.id);//detail为当前popover元素
+			});
+		</script>
+	</body>
+
+</html>
