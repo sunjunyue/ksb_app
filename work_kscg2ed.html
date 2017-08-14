@@ -1,0 +1,92 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="css/app.css" />
+		<link rel="stylesheet" type="text/css" href="css/icons-extra.css" />
+		<style>
+			.text_empty {
+				font-size: 16px;
+				color: #ccc;
+				margin-left: 16px;
+				margin-top: 16px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="mui-navbar-inner mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<a class="mui-icon-extra mui-icon-extra-dictionary  mui-icon mui-icon-bars mui-pull-right"></a>
+			<h1 class="mui-center mui-title">款式初稿</h1>
+		</div>
+		<div class="mui-content">
+			<div id="dcontent" class="mui-content-padded ">
+				<h5>上传文件列表：</h5>
+				<div id="files" style="text-align:left;">
+					<p id="empty" class="text_empty">无上传文件</p>
+				</div>
+			</div>
+			<div class="mui-content-padded bT">
+				<h5>设计说明：</h5>
+				<div class="mui-input-row">
+					<textarea id="designremark" rows="4" disabled="disabled" style="color: #CCCCCC;"></textarea>
+				</div>
+			</div>
+		</div>
+		<script src="js/mui.min.js"></script>
+		<script src="js/common.js"></script>
+		<script src="js/h.js"></script>
+		<script type="text/javascript">
+			// 获取款式初稿的工作数据
+			function getData() {
+				plus.storage.removeItem('kscg_uploadfiles');
+				mui.post(
+					url + 'devtask/getcscgdata?token=' + plus.storage.getItem('token'), {
+						subguid: plus.storage.getItem('currentsubinfo'),
+					},
+					function(data) {
+						if(data.flag == 'success') {
+							//console.log(data.data.uploadfiles);
+							//console.log(data.data.designremark);
+							h('#files').html('').html('<p id="empty" class="text_empty">无上传文件</p>');
+							h('#designremark').val(data.data.designremark);
+
+							if(data.data.uploadfiles != null && data.data.uploadfiles != '') {
+								files = JSON.parse(data.data.uploadfiles);
+								var fe = document.getElementById("files");
+
+								if(files.length > 0) {
+									plus.storage.setItem('kscg_uploadfiles', JSON.stringify(files));
+								}
+
+								for(var i = 0; i < files.length; i++) {
+									//console.log(files[i].url);
+									var li = document.createElement("li");
+									var n = "";
+									if(files[i].url.indexOf("_IMG_") >= 0) {
+										//console.log(files[i].url.indexOf("_IMG_"));
+										n = files[i].url.substr(files[i].url.indexOf('_IMG_') + 1);
+									} else {
+										n = files[i].url.substr(files[i].url.lastIndexOf('_') + 1);
+									}
+									var aa = '<a href="javascript:;" onclick="openview(\'' + files[i].url + '\')">' + n + '</a>';
+									li.innerHTML = aa;
+									fe.appendChild(li);
+								}
+								empty.style.display = "none";
+							}
+						}
+					},
+					'json'
+				);
+			}
+			mui.init()
+		</script>
+	</body>
+
+</html>
