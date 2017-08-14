@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title></title>
+		<link href="css/mui.css" rel="stylesheet" />
+		<style>
+			.mui-btn-block {
+				padding: 10px 0;
+			}
+			
+			.bT {
+				margin-bottom: -10px;
+			}
+			
+			#dcontent ul li {
+				line-height: 35px;
+			}
+			
+			.mui-plus .plus {
+				display: inline;
+			}
+			
+			.plus {
+				display: none;
+			}
+			
+			#topPopover {
+				position: fixed;
+				top: 16px;
+				right: 6px;
+			}
+			
+			#topPopover .mui-popover-arrow {
+				left: auto;
+				right: 6px;
+			}
+			
+			p {
+				text-indent: 22px;
+			}
+			
+			span.mui-icon {
+				font-size: 14px;
+				color: #007aff;
+				margin-left: -15px;
+				padding-right: 10px;
+			}
+			
+			.mui-popover {
+				height: 100px;
+			}
+			
+			.mui-content {
+				padding: 10px;
+			}
+			
+			.mui-table-view-cell {
+				font-size: 14px;
+			}
+			
+			.text_empty {
+				font-size: 16px;
+				color: #ccc;
+				margin-left: 16px;
+				margin-top: 16px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="mui-navbar-inner mui-bar mui-bar-nav">
+			<h1 class="mui-center mui-title">款式初稿审核-记录操作</h1>
+			<a id="menu" class="mui-action-menu mui-icon mui-icon-bars mui-pull-right" href="#topPopover"></a>
+		</div>
+		<div class="mui-content">
+			<div id="dcontent" class="mui-content-padded ">
+				<h5>上传文件列表：</h5>
+				<div id="files" style="text-align:left;">
+					<p id="empty" class="text_empty">无上传文件</p>
+				</div>
+			</div>
+			<div class="mui-content-padded bT">
+				<h5>设计说明：</h5>
+				<div class="mui-input-row">
+					<textarea rows="4"></textarea>
+				</div>
+			</div>
+			<div class="mui-content-padded bT">
+				<h5>审核说明：</h5>
+				<div class="mui-input-row">
+					<textarea rows="4"></textarea>
+				</div>
+				<button type="button" class="mui-btn mui-btn-primary mui-btn-block mui-icon mui-icon-search mui-center">
+		           	语音输入
+		        </button>
+			</div>
+			<div class="mui-content-padded">
+				<table width='100%'>
+					<tr>
+						<td>
+							<center>
+								<button id="submitbtn01" class="mui-btn mui-btn mui-btn-primary" type='button' style="width:90%" onclick="submittasksub(1);">审核通过</button>
+							</center>
+						</td>
+						<td>
+							<center>
+								<button id="submitbtn02" class="mui-btn mui-btn mui-btn-warning" type='button' style="width:80%" onclick="submittasksub(2);">审核不通过</button>									
+							</center>
+						</td>
+					</tr>
+				</table>
+				<center>
+				</center>
+			</div>
+			<div id="topPopover" class="mui-popover">
+				<div class="mui-popover-arrow"></div>
+				<div class="mui-scroll-wrapper">
+					<div class="mui-scroll">
+						<ul class="mui-table-view">
+							<li class="mui-table-view-cell">
+								<a href="#">查看研发任务详细</a>
+							</li>
+							<li class="mui-table-view-cell">
+								<a href="#">查看款式初稿详细</a>
+							</li>
+
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+		<script src="js/mui.min.js"></script>
+		<script src="js/common.js"></script>
+		<script src="js/h.js"></script>
+		<script type="text/javascript" charset="utf-8">
+			mui.init();
+
+			var next_id = 0;
+			var next_name = '';
+
+			// 提交款式初稿审核任务
+			var submittasksub = function(flag) {
+				//				console.log('tt:' + flag);
+				//				console.log(plus.storage.getItem('currentsubinfo'));
+				var btnArray = ['否', '是'];
+				if(flag == 1) {
+					mui.confirm('您确定要审核通过该项款式初稿？', '操作提示', btnArray, function(e) {
+						if(e.index == 1) {
+							mui.post(
+								url + 'devtasksub/nextdevtasksubinfo?token=' + plus.storage.getItem('token'), {
+									devtasksub_guid: plus.storage.getItem('currentsubinfo'),
+									flag: 1
+								},
+								function(data) {
+									//console.log(data.error_message);
+									if(data.flag == 'next_devtasksubinfo_success') {
+										mui.toast('审核通过，已通知配面辅料');
+									}
+								},
+								'json'
+							);
+						}
+					})
+
+				} else {
+					mui.post(
+						url + 'devtasksub/nextdevtasksubinfo?token=' + plus.storage.getItem('token'), {
+							devtasksub_guid: plus.storage.getItem('currentsubinfo'),
+							flag: 2
+						},
+						function(data) {
+							if(data.flag == 'next_devtasksubinfo_success') {
+								mui.toast('审核未通过，已通知设计师调整任务');
+							}
+						},
+						'json'
+					);
+				}
+			};
+
+			var getnextinfo = function() {
+
+			}
+
+			function getData() {
+				plus.storage.removeItem('kscg_uploadfiles');
+				mui.post(
+					url + 'devtask/getcscgdata?token=' + plus.storage.getItem('token'), {
+						subguid: plus.storage.getItem('currentsubinfo'),
+					},
+					function(data) {
+						if(data.flag == 'success') {
+							//console.log(data.data.uploadfiles);
+							//console.log(data.data.designremark);
+							h('#files').html('').html('<p id="empty" class="text_empty">无上传文件</p>');
+
+							if(data.data.uploadfiles != null && data.data.uploadfiles != '') {
+								files = JSON.parse(data.data.uploadfiles);
+								var fe = document.getElementById("files");
+
+								if(files.length > 0) {
+									plus.storage.setItem('kscg_uploadfiles', JSON.stringify(files));
+								}
+
+								for(var i = 0; i < files.length; i++) {
+									//console.log(files[i].url);
+									var li = document.createElement("li");
+									var n = "";
+									if(files[i].url.indexOf("_IMG_") >= 0) {
+										//console.log(files[i].url.indexOf("_IMG_"));
+										n = files[i].url.substr(files[i].url.indexOf('_IMG_') + 1);
+									} else {
+										n = files[i].url.substr(files[i].url.lastIndexOf('_') + 1);
+									}
+									var aa = '<a href="javascript:;" onclick="openview(\'' + files[i].url + '\')">' + n + '</a>';
+									li.innerHTML = aa;
+									fe.appendChild(li);
+								}
+								empty.style.display = "none";
+							}
+						}
+					},
+					'json'
+				);
+			}
+		</script>
+	</body>
+
+</html>
