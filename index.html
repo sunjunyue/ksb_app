@@ -107,8 +107,8 @@
 						left: "600%"
 					}
 				}, {
-					url: 'work_kscgsh.html',
-					id: 'work_kscgsh.html',
+					url: 'work_kscgsh2.html',
+					id: 'work_kscgsh2.html',
 					styles: {
 						top: '44px',
 						bottom: '50px',
@@ -194,7 +194,7 @@
 				home = plus.webview.getWebviewById('home.html'); // 1
 				work = plus.webview.getWebviewById('work.html'); // 2
 				kscg = plus.webview.getWebviewById('work_kscg2.html'); // 7
-				kscgsh = plus.webview.getWebviewById('work_kscgsh.html'); // 8
+				kscgsh = plus.webview.getWebviewById('work_kscgsh2.html'); // 8
 				mflzb = plus.webview.getWebviewById('work_mflzb.html');  // 9
 				mflsh = plus.webview.getWebviewById('work_mflsh.html');  // 10
 				sjzb = plus.webview.getWebviewById('work_sjzb.html');  // 11
@@ -229,6 +229,11 @@
 //				if (index == 7) {
 //					kscg.evalJS('getShls()');
 //				}
+
+				if(index == 8) {
+					kscgsh.evalJS('getDevtaskData();');
+					kscgsh.evalJS('getData();');
+				}
 				
 				home.setStyle({
 					left: (1 - index) * 100 + "%"

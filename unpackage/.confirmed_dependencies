@@ -25,7 +25,8 @@
 			"work_sjzb.html",
 			"work_yycj.html",
 			"work_yyzz.html",
-			"work_kscg2.html"
+			"work_kscg2.html",
+			"work_kscgsh2.html"
 		]
 	},
 	"work.html": {
@@ -179,6 +180,14 @@
 			"js/mui.min.js",
 			"js/h.js",
 			"js/common.js"
+		]
+	},
+	"work_kscgsh2.html": {
+		"resources": [
+			"css/mui.css"
+		],
+		"refer": [
+			"task_detail.html"
 		]
 	}
 }

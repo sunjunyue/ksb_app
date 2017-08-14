@@ -259,6 +259,7 @@
 				);
 			}
 
+			// 查看研发任务详细
 			function opentaskdetail() {
 				mui.openWindow({
 					url: 'task_detail.html',
@@ -273,6 +274,7 @@
 			function openview(purl) {
 				console.log(purl);
 				plus.storage.setItem('kscg_uploadfile', purl);
+				plus.storage.setItem('delebtnisvisible', 'true');
 				mui.openWindow({
 					url: 'kscg_view.html',
 					id: 'kscg_view',

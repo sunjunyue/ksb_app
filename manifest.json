@@ -217,7 +217,8 @@
 					"work_sjzb.html",
 					"work_yycj.html",
 					"work_yyzz.html",
-					"work_kscg2.html"
+					"work_kscg2.html",
+					"work_kscgsh2.html"
 				],
 				"priority": 0
 			},
@@ -402,6 +403,15 @@
 					"js/common.js"
 				],
 				"refer": [],
+				"priority": 0
+			},
+			"work_kscgsh2.html": {
+				"resources": [
+					"css/mui.css"
+				],
+				"refer": [
+					"task_detail.html"
+				],
 				"priority": 0
 			}
 		},

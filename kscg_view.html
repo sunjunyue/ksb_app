@@ -195,7 +195,7 @@
 			<span class="mui-icon mui-icon-left-nav"></span>
 		</button>
 			<h1 class="mui-center mui-title" id="titleh1">款式初稿-查看图片</h1>
-			<button type="button" class="mui-right  mui-btn-link mui-btn-nav" onclick="deleteimg();" style="float:right">
+			<button id="delebtn" type="button" class="mui-right  mui-btn-link mui-btn-nav" onclick="deleteimg();" style="float:right">
 		        <span class="mui-icon mui-icon-trash"></span>
 			</button>
 		</div>
@@ -218,9 +218,12 @@
 			mui.previewImage();
 			var kscg_uploadfiles = [];
 			mui.plusReady(function() {
+				if(plus.storage.getItem('delebtnisvisible') == 'false') {
+					h('#delebtn').css({display:'none'});
+				}
 				h('#titleh1').html("款式初稿上传参考图片");
-				console.log(plus.storage.getItem('kscg_uploadfile'));
-				console.log(plus.storage.getItem('kscg_uploadfiles'));
+				//console.log(plus.storage.getItem('kscg_uploadfile'));
+				//console.log(plus.storage.getItem('kscg_uploadfiles'));
 				kscg_uploadfiles = JSON.parse(plus.storage.getItem('kscg_uploadfiles'));
 				//htmltup += '<p><img src="' + urlqiniu + plus.storage.getItem('kscg_uploadfile') + '" data-preview-src="" data-preview-group="1" /></p>';
 				//console.log(htmltup);
