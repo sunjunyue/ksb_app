@@ -195,7 +195,7 @@
 			<span class="mui-icon mui-icon-left-nav"></span>
 		</button>
 			<h1 class="mui-center mui-title" id="titleh1">款式初稿-查看图片</h1>
-			<button type="button" class="mui-right  mui-btn-link mui-btn-nav" onclick="backto();" style="float:right">
+			<button type="button" class="mui-right  mui-btn-link mui-btn-nav" onclick="deleteimg();" style="float:right">
 		        <span class="mui-icon mui-icon-trash"></span>
 			</button>
 		</div>
@@ -216,9 +216,12 @@
 		<script type="text/javascript">
 			mui.init()
 			mui.previewImage();
+			var kscg_uploadfiles = [];
 			mui.plusReady(function() {
 				h('#titleh1').html("款式初稿上传参考图片");
 				console.log(plus.storage.getItem('kscg_uploadfile'));
+				console.log(plus.storage.getItem('kscg_uploadfiles'));
+				kscg_uploadfiles = JSON.parse(plus.storage.getItem('kscg_uploadfiles'));
 				//htmltup += '<p><img src="' + urlqiniu + plus.storage.getItem('kscg_uploadfile') + '" data-preview-src="" data-preview-group="1" /></p>';
 				//console.log(htmltup);
 				h("#htmlcontent").html('<p><img src="' + urlqiniu + plus.storage.getItem('kscg_uploadfile') + '" data-preview-src="" data-preview-group="1" /></p>');
@@ -228,6 +231,38 @@
 
 			function backto() {
 				mui.back();
+			}
+
+			// 删除图片
+			function deleteimg() {
+				var btnArray = ['否', '是'];
+				mui.confirm('您是否要删除此图片？', '操作提示', btnArray, function(e) {
+					if(e.index == 1) {
+						//console.log('y');
+						for(var p = 0; p < kscg_uploadfiles.length; p++) {
+							if(plus.storage.getItem('kscg_uploadfile') == kscg_uploadfiles[p].url) {
+								console.log('删除此项');
+								kscg_uploadfiles.splice(p, 1);
+							}
+						}
+						console.log("删除结果：" + JSON.stringify(kscg_uploadfiles));
+						var de = JSON.stringify(kscg_uploadfiles) == "[]" ? 'null' : JSON.stringify(kscg_uploadfiles);
+						mui.post(
+							url + 'devtask/setuploadfiles?token=' + plus.storage.getItem('token'), {
+								subguid: plus.storage.getItem('currentsubinfo'),
+								uploadfiles: de
+							},
+							function(data) {
+								if(data.flag == 'success') {
+									mui.toast('删除成功');
+								}
+							},
+							'json'
+						);
+						plus.webview.getLaunchWebview().evalJS('handle_kscg_getData()');
+						backto();
+					}
+				})
 			}
 		</script>
 	</body>

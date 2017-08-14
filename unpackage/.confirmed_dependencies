@@ -162,7 +162,9 @@
 			"js/mui.min.js",
 			"css/app.css",
 			"css/icons-extra.css",
-			"fonts/mui-icons-extra.ttf"
+			"fonts/mui-icons-extra.ttf",
+			"js/h.js",
+			"js/common.js"
 		],
 		"refer": [
 			"kscg_view.html",

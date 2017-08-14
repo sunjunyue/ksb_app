@@ -50,6 +50,14 @@
 			ul li {
 				line-height: 35px;
 			}
+			
+			.tcolor {
+				color: #CCCCCC;
+			}
+			
+			.tbackcolor {
+				background-color: #CCCCCC;
+			}
 		</style>
 	</head>
 
@@ -72,10 +80,10 @@
 					<tbody>
 						<tr>
 							<td style="width:40%">
-								<div class="button" onclick="appendByCamera()">拍照</div>
+								<div id="pzBtn" class="button" onclick="appendByCamera();">拍照</div>
 							</td>
 							<td style="width:40%">
-								<div class="button" onclick="appendByGallery()">相册选取</div>
+								<div id="xcxqBtn" class="button" onclick="appendByGallery();">相册选取</div>
 							</td>
 						</tr>
 					</tbody>
@@ -92,12 +100,15 @@
 				</div>
 			</div>
 			<div class="mui-content-padded">
-				<h5 style="float:left">是否编辑状态：</h5>
+				<h5 style="float:left" id="eidtflag">编辑状态</h5>
 
 				<div id="myswitch" class="mui-switch mui-active" style="float:right">
 					<div class="mui-switch-handle"></div>
 				</div>
 				<div class="mui-clearfix"></div>
+			</div>
+			<div class="mui-content-padded" id="ts">
+				<h5 style="float:left;color: red;">【请注意：非编辑状态下才可以完成提交任务】</h5>
 			</div>
 			<!--<div class="mui-content-padded ">
 				<div class="mui-input-row">
@@ -107,17 +118,17 @@
 					</p>
 				</div>
 			</div>-->
-			<div class="mui-content-padded ">
-				<button type="button" id='showUserPicker' class="mui-btn mui-btn-block" style="font-size:14px;margin-top:20px;">选择款式初稿审核人</button>
+			<div class="mui-content-padded " id="selectcheckerdiv" style="display: none;">
+				<button type="button" id='showUserPicker' class="mui-btn mui-btn-block" style="font-size:14px;margin-top:20px;">点击此处选择款式初稿审核人</button>
 			</div>
 			<div class="mui-content-padded">
-				<button id="submitbtn" class="mui-btn mui-btn-block mui-btn-primary" type='button'>暂时保存</button>
+				<button id="submitbtn" class="mui-btn mui-btn-block mui-btn-primary" type='button' onclick="submit();">保存</button>
 			</div>
 			<!--<div class="mui-content-padded">
 				<button id='showUserPicker' class="mui-btn mui-btn-block" type='button'>点击此处选择款式初稿审核人</button>
 				<div id='userResult' class="ui-alert"></div>
 				<button id="savebtn" class="mui-btn mui-btn" type='button'>任务保存</button>
-				<button id="submitbtn" class="mui-btn mui-btn" type='button' style="display: none;" onclick="submittasksub();"></button>
+				<button id="submitbtn" class="mui-btn mui-btn" type='button' style="display: none;" onclick="submit()"></button>
 			</div>-->
 		</div>
 		<script src="js/mui.min.js"></script>
@@ -132,6 +143,48 @@
 
 			var files = []; // 上传文件集合
 
+			// 暂时保存
+			function submit() {
+				if(shrid == 0) {
+					console.log('工作保存');
+					if(h('#designremark').val().trim() != '') {
+						savedesigneremark();
+					} else {
+						mui.toast('您未填写任何说明');
+					}
+				} else {
+					console.log('提交审核');
+					var btnArray = ['否', '是'];
+					mui.confirm('是否提交给' + shrname + '审核？', '操作提示', btnArray, function(e) {
+						if(e.index == 1) {
+							submittasksub();
+							plus.webview.getLaunchWebview().evalJS('changeSub(2)');
+						}
+					})
+
+				}
+			}
+
+			// 保存设计说明
+			function savedesigneremark() {
+				var dr = h('#designremark').val().trim() == '' ? 'null' : h('#designremark').val().trim();
+				console.log(dr);
+				mui.post(
+					url + 'devtask/setdesigneremark?token=' + plus.storage.getItem('token'), {
+						subguid: plus.storage.getItem('currentsubinfo'),
+						designeremark: dr
+					},
+					function(data) {
+						console.log(data.flag);
+						if(data.flag == 'success') {
+							console.log('设计说明上传成功');
+							//mui.toast('上传成功');
+						}
+					},
+					'json'
+				);
+			}
+
 			// 改函数用以从工作列表中跳进来是获取
 			// 正在编辑中的原始数据
 			function getData() {
@@ -144,8 +197,11 @@
 						if(data.flag == 'success') {
 							//console.log(data.data.uploadfiles);
 							//console.log(data.data.designremark);
+							h('#designremark').val(data.data.designremark);
 							h('#files').html('').html('<p id="empty" style="font-size:12px;color:#C6C6C6;">无上传文件</p>');
 
+							files = [];
+							plus.storage.setItem('kscg_uploadfiles', JSON.stringify(files));
 							if(data.data.uploadfiles != null && data.data.uploadfiles != '') {
 								files = JSON.parse(data.data.uploadfiles);
 								var fe = document.getElementById("files");
@@ -178,6 +234,11 @@
 					},
 					'json'
 				);
+
+				var isActive = document.getElementById("myswitch").classList.contains("mui-active");
+				if(!isActive) {
+					mui('#myswitch').switch().toggle();
+				}
 			}
 
 			function getDevtaskData() {
@@ -336,7 +397,7 @@
 					var userResult = doc.getElementById('userResult');
 					showUserPickerButton.addEventListener('tap', function(event) {
 						userPicker.show(function(items) {
-							userResult.innerText = JSON.stringify(items[0]);
+							//userResult.innerText = JSON.stringify(items[0]);
 							h('#submitbtn').html('提交给' + items[0].text + '审核').show();
 							shrid = items[0].value;
 							shrname = items[0].text;
@@ -348,17 +409,37 @@
 
 				doc.getElementById('myswitch').addEventListener("toggle", function(event) {
 					if(event.detail.isActive) {
-						console.log("你启动了开关");
-						h('#submitbtn').html('暂时保存');
+						//console.log("你启动了开关");
+						h('#designremark').removeAttr('disabled').removeClass('tcolor');
+						h('#pzBtn').attr('onclick', 'appendByCamera();').removeClass('tbackcolor');;
+						h('#xcxqBtn').attr('onclick', 'appendByGallery();').removeClass('tbackcolor');;
+						h('#submitbtn').html('保存').show();
+						h('#ts').show();
+						h('#eidtflag').html('编辑状态');
+						h('#selectcheckerdiv').hide();
+						shrid = 0;
+						shrname = '';
 					} else {
-						console.log("你关闭了开关");
-						h('#submitbtn').html('提交');
+						//console.log("你关闭了开关");
+						h('#designremark').attr('disabled', 'disabled').addClass('tcolor');
+						h('#pzBtn').attr('onclick', '').addClass('tbackcolor');
+						h('#xcxqBtn').attr('onclick', '').addClass('tbackcolor');;
+						if(files.length == 0 && h('#designremark').val().trim() == "") {
+							mui.toast('请注意，款式初稿未做任何记录操作');
+							mui('#myswitch').switch().toggle();
+							return;
+						}
+						savedesigneremark();
+						h('#submitbtn').html('提交').hide();
+						h('#ts').hide();
+						h('#eidtflag').html('非编辑状态：请先选择款式初稿审核人');
+						h('#selectcheckerdiv').show();
 					}
 				});
 			})(mui, document);
 
 			// 提交款式初稿任务
-			var submittasksub = function() {
+			function submittasksub() {
 				//console.log(plus.storage.getItem('currentsubinfo')+"|"+shrid+"|"+shrname);	
 				mui.post(
 					url + 'devtasksub/nextdevtasksubinfo?token=' + plus.storage.getItem('token'), {
@@ -369,10 +450,19 @@
 					function(data) {
 						if(data.flag == 'next_devtasksubinfo_success') {
 							mui.toast('已经提交审核');
+							reset();
 						}
 					},
 					'json'
 				);
+			};
+
+			function reset() {
+				shls = null; // 审核人集合对象
+				shrid = 0;
+				shrname = '';
+				files = []; // 上传文件集合
+				empty.style.display = "block";
 			};
 		</script>
 	</body>
