@@ -160,6 +160,15 @@
 						width: "100%",
 						left: "600%"
 					}
+				}, {
+					url: 'work_kscg2ed.html',
+					id: 'work_kscg2ed.html',
+					styles: {
+						top: '44px',
+						bottom: '50px',
+						width: "100%",
+						left: "600%"
+					}
 				}]
 			});
 
@@ -200,6 +209,7 @@
 				sjzb = plus.webview.getWebviewById('work_sjzb.html');  // 11
 				yycj = plus.webview.getWebviewById('work_yycj.html'); // 12
 				yyzz = plus.webview.getWebviewById('work_yyzz.html'); // 13
+				kscg2ed = plus.webview.getWebviewById('work_kscg2ed.html'); // 14
 				if (index != 1 && index != 4) {
 					if (!plus.storage.getItem('uid')){
 						mui.toast('请先登录');
@@ -273,6 +283,9 @@
 				});
 				yyzz.setStyle({
 					left: (13 - index) * 100 + "%"
+				});
+				kscg2ed.setStyle({
+					left: (14 - index) * 100 + "%"
 				});
 				wt.close();
 			}

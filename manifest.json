@@ -218,7 +218,8 @@
 					"work_yycj.html",
 					"work_yyzz.html",
 					"work_kscg2.html",
-					"work_kscgsh2.html"
+					"work_kscgsh2.html",
+					"work_kscg2ed.html"
 				],
 				"priority": 0
 			},
@@ -233,7 +234,9 @@
 					"js/h.js",
 					"js/mui.min.js"
 				],
-				"refer": [],
+				"refer": [
+					"work_kscg2ed.html"
+				],
 				"priority": 0
 			},
 			"home.html": {
@@ -354,9 +357,13 @@
 					"css/mui.picker.css",
 					"css/mui.css",
 					"js/mui.picker.js",
-					"js/mui.poppicker.js"
+					"js/mui.poppicker.js",
+					"js/mui.min.js"
 				],
-				"refer": [],
+				"refer": [
+					"task_detail.html",
+					"mflselect.html"
+				],
 				"priority": 0
 			},
 			"work_sjzb.html": {
@@ -412,6 +419,27 @@
 				"refer": [
 					"task_detail.html"
 				],
+				"priority": 0
+			},
+			"work_kscg2ed.html": {
+				"resources": [
+					"css/mui.min.css",
+					"js/mui.min.js",
+					"js/h.js",
+					"js/common.js"
+				],
+				"refer": [
+					"task_detail.html",
+					"kscg_view.html"
+				],
+				"priority": 0
+			},
+			"mflselect.html": {
+				"resources": [
+					"css/mui.css",
+					"js/mui.min.js"
+				],
+				"refer": [],
 				"priority": 0
 			}
 		},

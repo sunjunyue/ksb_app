@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>copy</title>
+		<link href="css/mui.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="css/mui.picker.css" />
+		<link rel="stylesheet" type="text/css" href="css/mui.poppicker.css" />
+		<style>
+			.mui-numbox {
+				width: 120px;
+				margin-top: -50px;
+				margin-left: 150px;
+				height: 30px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="mui-navbar-inner mui-bar mui-bar-nav">
+			<button type="button" class="mui-left mui-btn  mui-btn-link mui-btn-nav mui-pull-left">
+				<span class="mui-icon mui-icon-left-nav"></span>
+			</button>
+			<h1 class="mui-center mui-title">请选择面辅料</h1>
+			<a id="menu" class="mui-icon mui-icon-bars mui-pull-right" href="javascript:;"></a>
+		</div>
+		<div class="mui-content">
+			<div class="mui-content-padded">
+				<h5 id="textC">未选择分类：</h5>
+				<button id='showSelectPicker' class="mui-btn mui-btn-block" style="font-size:14px;padding:5px">点击选择1~3级分类</button>
+				<button id='showSelectPicker2' class="mui-btn mui-btn-block" style="font-size:14px;padding:5px;display: none;">点击选择4~5级分类</button>
+			</div>
+			<div id="mycard" class="mui-content-padded">
+				<!--<div class="mui-card">
+					<div class="mui-card-header">面辅料-1 | 本地货号 COTTON-HI30QX</div>
+					<div class="mui-card-content">
+						<div class="mui-card-content-inner">
+							<img src="imgs/logo.jpeg" width="80">
+							<p style="margin-top: -80px;margin-left:100px;text-indent:0;font-size:14px;">
+								<b>名称: </b>棉布006<br/>
+								<b>参考单价: </b>12.15 (人民币)<br/>
+								<b>计量单位: </b>米<br/>
+								<b>供应商: </b>13381757679<br/>
+								<b><span style="margin-top:20px;">需要量：</span></b>
+								<div class="mui-numbox" data-numbox-min="0"  style="width: 180px;">
+									<button class="mui-btn mui-btn-numbox-minus" type="button">-</button>
+									<input id="test" class="mui-input-numbox" type="number" style="text-align: right;" value="0" />
+									<button class="mui-btn mui-btn-numbox-plus" type="button">+</button>
+								</div>
+							</p>
+						</div>
+					</div>
+					<div class="mui-card-footer">当前供应库存数：11700
+						<span class="mui-icon mui-icon-reload"></span>
+					</div>
+				</div>-->
+			
+				
+			</div>
+		</div>
+
+		<script src="js/mui.min.js"></script>
+		<script src="js/common.js"></script>
+		<script src="js/h.js"></script>
+		<script src="js/mui.picker.js"></script>
+		<script src="js/mui.poppicker.js"></script>
+		<script type="text/javascript" charset="utf-8">
+			var catagorydata = [],
+				catagorydata2 = [];
+			var level = 0; // 这个数值标识选中的层级
+			var catagory = null,
+				catagory2 = null;
+			var showSelectPicker = null;
+			var showSelectPicker2 = null;
+
+			var currentcatagoryid = 0;
+
+			var text = "";
+			
+			var mydata = [];
+			var selected = [];
+
+			(function($, doc) {
+				$.init({
+					swipeBack: true
+				});
+				var btnArray = [{
+					title: "重新选择分类"
+				},{
+					title: '确定选择'
+				}];
+				doc.getElementById("menu").addEventListener('tap', function() {
+					plus.nativeUI.actionSheet({
+						title: '操作菜单',
+						cancel: '取消',
+						buttons: btnArray
+					}, function(e) {
+						var index = e.index;
+						switch(index) {
+							case 0:
+								break;
+							case 1:
+								reset();
+								break;
+							case 2:
+								submitselected();
+								break;
+						}
+					});
+				});
+				catagory = new $.PopPicker({
+					layer: 3
+				});
+				catagory2 = new $.PopPicker({
+					layer: 2
+				});
+				$.plusReady(function() {
+					var _getParam = function(obj, param) {
+						return obj[param] || '';
+					};
+
+					mui.post(
+						url + 'rmc/getrmcjsonapp?token=' + plus.storage.getItem('token'), {
+							pid: 0,
+							flag: 1
+						},
+						function(data) {
+							if(data.flag == 'get_raw_meterial_category_json_forapp_success') {
+								catagorydata = eval(data.data);
+								catagory.setData(catagorydata);
+							}
+						},
+						'json'
+					);
+
+					showSelectPicker = doc.getElementById('showSelectPicker');
+					showSelectPicker2 = doc.getElementById('showSelectPicker2');
+					showSelectPicker.addEventListener('tap', function(event) {
+						catagory.show(function(items) {
+							level = 0;
+							currentcatagoryid = 0;
+							console.log("你选择的是:" + _getParam(items[0], 'text') + " " + _getParam(items[1], 'text') + " " + _getParam(items[2], 'text'));
+							text = "当前分类：" + _getParam(items[0], 'text');
+							level++;
+							currentcatagoryid = _getParam(items[0], 'id');
+							if(_getParam(items[1], 'text') != '不选择' && _getParam(items[1], 'text').trim() != '') {
+								text += '->' + _getParam(items[1], 'text');
+								level++;
+								currentcatagoryid = _getParam(items[1], 'id');
+								console.log(_getParam(items[2], 'text'));
+								if(_getParam(items[2], 'text') != '不选择' && _getParam(items[2], 'text').trim() != '') {
+									text += '->' + _getParam(items[2], 'text');
+									level++;
+									currentcatagoryid = _getParam(items[2], 'id');
+								}
+							}
+							console.log('选中第' + level + '层');
+							h('#textC').html(text);
+							if(level == 3) {
+								//h('#showSelectPicker').hide();
+								//h('#showSelectPicker2').show();
+								//h('#showSelectPicker2').removeAttr('disabled');
+								getcatagorydata2(currentcatagoryid);
+							}
+							console.log(currentcatagoryid);
+							getdata(currentcatagoryid);
+						});
+					}, false);
+					showSelectPicker2.addEventListener('tap', function(event) {
+						catagory2.show(function(items) {
+							if(_getParam(items[0], 'text') != '不选择' && _getParam(items[0], 'text').trim() != '') {
+								console.log("你选择的是:" + _getParam(items[0], 'text') + " " + _getParam(items[1], 'text'));
+								text += "当前分类：" + _getParam(items[0], 'text');
+								level++;
+								currentcatagoryid = _getParam(items[0], 'id');
+								console.log('text:' + text);
+								console.log('level:' + level);
+								console.log(currentcatagoryid);
+							}
+
+						});
+					}, false);
+				});
+
+			})(mui, document);
+
+			function getdata(categoryid) {
+				mui.post(
+					url + 'faa/getfaalist2?token=' + plus.storage.getItem('token'), {
+						categoryid: categoryid
+					},
+					function(data) {
+						if(data.flag == 'get_fabricandaccessories_list2_success') {
+							if(data.data.faa_count == 0){
+								clearmycard();
+							} else {
+								mydata = data.data.faa;
+								makemycard();
+							}
+						}
+					},
+					'json'
+				);
+			}
+			
+			function clearmycard(){
+				h('#mycard').html('');
+				mydata = [];
+				selected = [];
+			}
+			
+			function makemycard(){
+				var m = '';
+				for(var i = 0; i < mydata.length; i++){
+					m += '<div class="mui-card" id="' + mydata[i].guid + '">';
+					m += '<div class="mui-card-header">面辅料-' + (i+1) + ' | 本地货号 '+ mydata[i].localarticlenumber +'</div>';
+					m += '<div class="mui-card-content">';
+					m += '<div class="mui-card-content-inner">';
+					m += '<img src="imgs/logo.jpeg" width="80">';
+					m += '<p style="margin-top: -80px;margin-left:100px;text-indent:0;font-size:14px;">';
+					m += '<b>名称: </b>'+mydata[i].faname+'<br/>';
+					m += '<b>参考单价: </b>'+mydata[i].referenceprice+' (人民币)<br/>';
+					m += '<b>计量单位: </b>'+mydata[i].measureunit+'<br/>';
+					m += '<b>供应商: </b>'+mydata[i].supplier+'<br/>';
+					m += '<b><span style="margin-top:20px;">需要量：</span></b>';
+					//m += '<div class="mui-numbox" data-numbox-min="0" style="width: 180px;">';
+					//m += '<button class="mui-btn mui-btn-numbox-minus" type="button">-</button>';
+					m += '<input id="'+mydata[i].guid+'_num" class="mui-input-numbox" type="number" style="text-align: right;" value="0" />';
+					//m += '<button class="mui-btn mui-btn-numbox-plus" type="button">+</button>';
+					//m += '</div>';
+					m += '</p>'
+					m += '</div>';
+					m += '</div>';
+					m += '<div class="mui-card-footer">当前供应库存数：' + mydata[i].curr_quantity;
+					m += '<span class="mui-icon mui-icon-reload"></span>';
+					m += '</div>';
+					m += '</div>';
+				}
+				h('#mycard').html(m);
+			}
+			
+			// 确定选择
+			function submitselected() {
+				for(var i = 0; i < mydata.length; i++){
+					console.log(h("#"+mydata[i].guid+"_num").val());	
+					mydata[i].xyl = h("#"+mydata[i].guid+"_num").val();
+					if(mydata[i].xyl != 0) {
+						selected.push(mydata[i]);
+					}
+				}
+				console.log(JSON.stringify(selected));
+			}
+
+			function getcatagorydata2(pid) {
+				console.log('pid:' + pid);
+				mui.post(
+					url + 'rmc/getrmcjsonapp?token=' + plus.storage.getItem('token'), {
+						pid: pid,
+						flag: 2
+					},
+					function(data) {
+						if(data.flag == 'get_raw_meterial_category_json_forapp_success') {
+							console.log(12);
+							catagorydata2 = eval(data.data);
+							catagory2.setData(catagorydata2);
+							console.log('catagorydata2:' + catagorydata2.length);
+							if(catagorydata2.length > 0) {
+								//h('#showSelectPicker2').attr('disabled','disabled');
+								h('#showSelectPicker').hide();
+								h('#showSelectPicker2').show();
+							}
+						}
+					},
+					'json'
+				);
+			}
+
+			function reset() {
+				h('#showSelectPicker2').hide();
+				h('#showSelectPicker').show();
+				h('#textC').html('未选择分类');
+			}
+		</script>
+	</body>
+
+</html>

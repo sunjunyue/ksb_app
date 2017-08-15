@@ -26,7 +26,8 @@
 			"work_yycj.html",
 			"work_yyzz.html",
 			"work_kscg2.html",
-			"work_kscgsh2.html"
+			"work_kscgsh2.html",
+			"work_kscg2ed.html"
 		]
 	},
 	"work.html": {
@@ -39,6 +40,9 @@
 			"css/icons-extra.css",
 			"js/h.js",
 			"js/mui.min.js"
+		],
+		"refer": [
+			"work_kscg2ed.html"
 		]
 	},
 	"home.html": {
@@ -140,7 +144,12 @@
 			"css/mui.picker.css",
 			"css/mui.css",
 			"js/mui.picker.js",
-			"js/mui.poppicker.js"
+			"js/mui.poppicker.js",
+			"js/mui.min.js"
+		],
+		"refer": [
+			"task_detail.html",
+			"mflselect.html"
 		]
 	},
 	"work_sjzb.html": {
@@ -188,6 +197,24 @@
 		],
 		"refer": [
 			"task_detail.html"
+		]
+	},
+	"work_kscg2ed.html": {
+		"resources": [
+			"css/mui.min.css",
+			"js/mui.min.js",
+			"js/h.js",
+			"js/common.js"
+		],
+		"refer": [
+			"task_detail.html",
+			"kscg_view.html"
+		]
+	},
+	"mflselect.html": {
+		"resources": [
+			"css/mui.css",
+			"js/mui.min.js"
 		]
 	}
 }

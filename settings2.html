@@ -556,6 +556,7 @@
 			plus.storage.removeItem('token');
 			plus.storage.removeItem('face');
 			plus.storage.removeItem('name');
+			plus.storage.clear();
 			mui.toast('注销成功');
 			h('#loginstr').html('未登录 <p class="mui-ellipsis">点击此处登录</p>');
 			h('#logoffbtn').hide();

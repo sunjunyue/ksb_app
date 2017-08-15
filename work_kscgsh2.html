@@ -91,25 +91,35 @@
 			<div class="mui-content-padded bT">
 				<h5>审核说明：</h5>
 				<div class="mui-input-row">
-					<textarea id="cscgcheck" rows="4"></textarea>
+					<textarea disabled="disabled" id="cscgcheck" rows="4" style="color: #CCCCCC;"></textarea>
 				</div>
-				<button type="button" class="mui-btn mui-btn-primary mui-btn-block mui-icon mui-icon-mic mui-center">
+				<!--<button onclick="startRecognize();" type="button" class="mui-btn mui-btn-primary mui-btn-block mui-icon mui-icon-mic mui-center">
 		           	语音输入
 		        </button>
+		        <button onclick="reset();" type="button" class="mui-btn mui-btn-primary mui-btn-block mui-icon mui-icon-mic mui-center">
+		           	删除语音输入
+		        </button>-->
+		        <table width='100%'>
+					<tr>
+						<td width="48%">
+							<button id="submitbtn03" onclick="startRecognize();" class="mui-btn mui-btn mui-icon mui-icon-mic mui-btn-primary" style="width:100%" type='button'>语音输入</button>
+						</td>
+						<td width="4%"></td>
+						<td width="48%">
+							<button id="submitbtn04" onclick="reset();" class="mui-btn mui-btn mui-icon mui-icon-trash mui-btn-warning" style="width:100%" type='button'>删除语音输入</button>
+						</td>
+					</tr>
+				</table>
 			</div>
-			<div class="mui-content-padded">
+			<div class="mui-content-padded" style="margin-top: 20px;">
 				<table width='100%'>
 					<tr>
-						<td>
-							
-							<button id="submitbtn01" class="mui-btn mui-btn mui-btn-primary" type='button'  onclick="submittasksub(1);">审核通过</button>
-							
+						<td width="48%">
+							<button id="submitbtn01" onclick="submittasksub(1);" class="mui-btn mui-btn mui-btn-primary" style="width:100%" type='button'onclick="submittasksub(1);">审核通过</button>
 						</td>
-						<td>
-							
-								<button id="submitbtn02" class="mui-btn mui-btn mui-btn-warning" type='button'  onclick="submittasksub(2);">审核不通过</button>									
-							
-				
+						<td width="4%"></td>
+						<td width="48%">
+							<button id="submitbtn02" onclick="submittasksub(2);" class="mui-btn mui-btn mui-btn-warning" style="width:100%" type='button' onclick="submittasksub(2);">审核不通过</button>
 						</td>
 					</tr>
 				</table>
@@ -138,14 +148,55 @@
 		<script type="text/javascript" charset="utf-8">
 			(function($, doc) {
 				$.init();
-				$.plusReady(function (){
-//					getDevtaskData();
-//					console.log('test1:' + plus.storage.getItem('devtask'));
-//					getData();
+				$.plusReady(function() {
+					//					getDevtaskData();
+					//					console.log('test1:' + plus.storage.getItem('devtask'));
+					//					getData();
 				});
-				
+
 			})(mui, document);
 			
+			// 提交款式初稿审核任务
+			function submittasksub (flag) {
+				//				console.log('tt:' + flag);
+				//				console.log(plus.storage.getItem('currentsubinfo'));
+				var btnArray = ['否', '是'];
+				if(flag == 1) {
+					mui.confirm('您确定要审核通过该项款式初稿？', '操作提示', btnArray, function(e) {
+						if(e.index == 1) {
+							mui.post(
+								url + 'devtasksub/nextdevtasksubinfo?token=' + plus.storage.getItem('token'), {
+									devtasksub_guid: plus.storage.getItem('currentsubinfo'),
+									flag: 1,
+									cscgcheck: h('#cscgcheck').html
+								},
+								function(data) {
+									//console.log(data.error_message);
+									if(data.flag == 'next_devtasksubinfo_success') {
+										mui.toast('审核通过，已通知配面辅料');
+									}
+								},
+								'json'
+							);
+						}
+					})
+
+				} else {
+					mui.post(
+						url + 'devtasksub/nextdevtasksubinfo?token=' + plus.storage.getItem('token'), {
+							devtasksub_guid: plus.storage.getItem('currentsubinfo'),
+							flag: 2
+						},
+						function(data) {
+							if(data.flag == 'next_devtasksubinfo_success') {
+								mui.toast('审核未通过，已通知设计师调整任务');
+							}
+						},
+						'json'
+					);
+				}
+			};
+
 			// 查看已上传图片
 			function openview(purl) {
 				//console.log(purl);
@@ -159,7 +210,7 @@
 					}
 				});
 			}
-			
+
 			// 查看研发任务详细
 			function opentaskdetail() {
 				mui.openWindow({
@@ -170,7 +221,7 @@
 					}
 				});
 			}
-			
+
 			function getDevtaskData() {
 				mui.post(
 					url + 'devtask/getdevtaskbysubguid?token=' +
@@ -188,7 +239,31 @@
 					'json'
 				);
 			}
+
+			var text = '';
+
+			function startRecognize() {
+				if(plus.os.name == 'Android' && navigator.userAgent.indexOf('StreamApp') > 0) {
+					plus.nativeUI.toast('当前环境暂不支持语音识别插件');
+					return;
+				}
+				var options = {};
+				options.engine = 'iFly';
+				// options.punctuation = false;
+				plus.speech.startRecognize(options, function(s) {
+					//outLine(s);
+					text += s;
+					h('#cscgcheck').html(text);
+				}, function(e) {
+					//outSet("语音识别失败：" + e.message);
+				});
+			}
 			
+			function reset() {
+				h('#cscgcheck').html('');
+				text = '';
+			}
+
 			// 获取款式初稿的工作数据
 			function getData() {
 				plus.storage.removeItem('kscg_uploadfiles');

@@ -20,17 +20,19 @@
 
 	<body>
 		<div class="mui-navbar-inner mui-bar mui-bar-nav">
-			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-			<a class="mui-icon-extra mui-icon-extra-dictionary  mui-icon mui-icon-bars mui-pull-right"></a>
-			<h1 class="mui-center mui-title">款式初稿</h1>
+			<h1 class="mui-center mui-title">款式初稿-已完成任务</h1>
+			<button type="button" class="mui-right mui-btn  mui-btn-link mui-btn-nav mui-pull-right" onclick="opentaskdetail();">
+				<span class="mui-icon-extra mui-icon-extra-dictionary"></span>
+			</button>
+		</div>
+		<div id="dcontent" class="dcontent">
+			<br />
+			<p class="heading">上传文件列表：</p>
+			<ul id="files" style="text-align:left;">
+				<p id="empty" style="font-size:12px;color:#C6C6C6;">无上传文件</p>
+			</ul>
 		</div>
 		<div class="mui-content">
-			<div id="dcontent" class="mui-content-padded ">
-				<h5>上传文件列表：</h5>
-				<div id="files" style="text-align:left;">
-					<p id="empty" class="text_empty">无上传文件</p>
-				</div>
-			</div>
 			<div class="mui-content-padded bT">
 				<h5>设计说明：</h5>
 				<div class="mui-input-row">
@@ -85,7 +87,32 @@
 					'json'
 				);
 			}
-			mui.init()
+			mui.init();
+			
+			// 查看研发任务详细
+			function opentaskdetail() {
+				mui.openWindow({
+					url: 'task_detail.html',
+					id: 'task_detail',
+					show: {
+						autoShow: false
+					}
+				});
+			}
+			
+			// 查看已上传图片
+			function openview(purl) {
+				console.log(purl);
+				plus.storage.setItem('kscg_uploadfile', purl);
+				plus.storage.setItem('delebtnisvisible', 'false');
+				mui.openWindow({
+					url: 'kscg_view.html',
+					id: 'kscg_view',
+					show: {
+						autoShow: false
+					}
+				});
+			}
 		</script>
 	</body>
 

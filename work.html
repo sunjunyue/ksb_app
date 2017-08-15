@@ -6,8 +6,8 @@
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<title></title>
 		<link href="css/mui.css" rel="stylesheet" />
-		<link href="css/app.css" rel="stylesheet" type="text/css"/>
-		<link href="css/icons-extra.css" rel="stylesheet" type="text/css"/>
+		<link href="css/app.css" rel="stylesheet" type="text/css" />
+		<link href="css/icons-extra.css" rel="stylesheet" type="text/css" />
 		<style>
 			.mui-table h4,
 			.mui-table h5,
@@ -40,14 +40,15 @@
 			.mui-h4 {
 				font-size: 14px;
 			}
-			.mui-icon-extra{
-				font-size:16px;
+			
+			.mui-icon-extra {
+				font-size: 16px;
 			}
 		</style>
 	</head>
 
 	<body>
-		
+
 		<div class="mui-navbar-inner mui-bar mui-bar-nav">
 			<button type="button" class="mui-left mui-action-back mui-btn  mui-btn-link mui-btn-nav mui-pull-left">
 			<span class="mui-icon mui-icon-left-nav"></span>
@@ -59,8 +60,7 @@
 				<ul class="mui-table-view">
 					<li class="mui-table-view-cell mui-collapse mui-active">
 						<a class="mui-navigate-right" href="#">
-							<span class="mui-icon-extra mui-icon-extra-order" style="margin-right:5px;color:#007aff"></span>
-							正在进行中的工作
+							<span class="mui-icon-extra mui-icon-extra-order" style="margin-right:5px;color:#007aff"></span> 正在进行中的工作
 						</a>
 						<div class="mui-collapse-content">
 							<div class="mui-content">
@@ -73,12 +73,23 @@
 					</li>
 					<li class="mui-table-view-cell mui-collapse">
 						<a class="mui-navigate-right" href="#">
-							<span class="mui-icon-extra mui-icon-extra-topic" style="margin-right:5px;color:#007aff"></span>
-							已经完成的工作
+							<span class="mui-icon-extra mui-icon-extra-topic" style="margin-right:5px;color:#007aff"></span> 已经完成的工作
 						</a>
 						<div class="mui-collapse-content">
 							<div class="mui-content">
 								<ul id="list02" class="mui-table-view mui-table-view-striped mui-table-view-condensed">
+									<center>暂无数据</center>
+								</ul>
+							</div>
+						</div>
+					</li>
+					<li class="mui-table-view-cell mui-collapse">
+						<a class="mui-navigate-right" href="#">
+							<span class="mui-icon-extra mui-icon-extra-topic" style="margin-right:5px;color:#007aff"></span> 需要修正的工作
+						</a>
+						<div class="mui-collapse-content">
+							<div class="mui-content">
+								<ul id="list03" class="mui-table-view mui-table-view-striped mui-table-view-condensed">
 									<center>暂无数据</center>
 								</ul>
 							</div>
@@ -94,63 +105,88 @@
 			mui.init();
 			var temp01 = null;
 			var temp02 = null;
-			
+			var temp03 = null;
+
 			(function($) {
 				$('#list01').on('tap', '.mui-table', function(event) {
 					var elem = this;
 					//var typett = ""
 					//console.log(elem.parentNode.id);
-					for (var i = 0; i < temp01.length; i++) {
-						if (elem.parentNode.id == temp01[i].guid) {
+					for(var i = 0; i < temp01.length; i++) {
+						if(elem.parentNode.id == temp01[i].guid) {
 							//typett = temp01[i].type;
-							nextWork(temp01[i].type,elem.parentNode.id);
+							nextWork(temp01[i].type, elem.parentNode.id);
 							break;
 						}
 					}
-					
+
+				});
+
+				$('#list02').on('tap', '.mui-table', function(event) {
+					var elem2 = this;
+					//var typett = ""
+					//console.log(elem2.parentNode.id);
+					for(var i = 0; i < temp02.length; i++) {
+						if(elem2.parentNode.id == temp02[i].guid) {
+							//typett = temp01[i].type;
+							completeWork(temp02[i].type, elem2.parentNode.id);
+							break;
+						}
+					}
+
 				});
 			})(mui);
-			
-			var nextWork = function (type,guid) {
-				if (type == '款式初稿') {
+
+			function completeWork(type, guid) {
+				if(type == '款式初稿') {
+					//console.log(type + ":" + guid);
+					plus.storage.setItem('currentsubinfo', guid);
+					plus.webview.getWebviewById('work_kscg2ed.html').evalJS('getData()');
+					plus.webview.getLaunchWebview().evalJS('changeSub(14)');
+				}
+			}
+
+			function nextWork(type, guid) {
+				if(type == '款式初稿') {
 					//console.log(guid);
-					plus.storage.setItem('currentsubinfo',guid);
+					plus.storage.setItem('currentsubinfo', guid);
 					plus.webview.getWebviewById('work_kscg2.html').evalJS('getData()');
 					plus.webview.getLaunchWebview().evalJS('changeSub(7)');
-				} else if (type == '款式初稿审核') {
+				} else if(type == '款式初稿审核') {
 					// console.log(guid);
-					plus.storage.setItem('currentsubinfo',guid);
+					plus.storage.setItem('currentsubinfo', guid);
 					plus.webview.getLaunchWebview().evalJS('changeSub(8)');
-				} else if (type == '配面辅料') {
+				} else if(type == '配面辅料') {
 					// console.log(guid);
-					plus.storage.setItem('currentsubinfo',guid);
+					plus.storage.setItem('currentsubinfo', guid);
 					plus.webview.getLaunchWebview().evalJS('changeSub(9)');
-				} else if (type == '配面辅料审核') {
+				} else if(type == '配面辅料审核') {
 					// console.log(guid);
-					plus.storage.setItem('currentsubinfo',guid);
+					plus.storage.setItem('currentsubinfo', guid);
 					plus.webview.getLaunchWebview().evalJS('changeSub(10)');
-				} else if (type == '设计制版') {
+				} else if(type == '设计制版') {
 					// console.log(guid);
-					plus.storage.setItem('currentsubinfo',guid);
+					plus.storage.setItem('currentsubinfo', guid);
 					plus.webview.getLaunchWebview().evalJS('changeSub(11)');
-				} else if (type == '样衣裁剪') {
+				} else if(type == '样衣裁剪') {
 					// console.log(guid);
-					plus.storage.setItem('currentsubinfo',guid);
+					plus.storage.setItem('currentsubinfo', guid);
 					plus.webview.getLaunchWebview().evalJS('changeSub(12)');
-				} else if (type == '样衣制作') {
+				} else if(type == '样衣制作') {
 					// console.log(guid);
-					plus.storage.setItem('currentsubinfo',guid);
+					plus.storage.setItem('currentsubinfo', guid);
 					plus.webview.getLaunchWebview().evalJS('changeSub(13)');
-				} 
+				}
 			}
 
 			//var _index, _self, _next, _prev;
 			var currentpage = 1,
 				currentpage2 = 1,
+				currentpage3 = 1,
 				numperpage = 3;
 			var uname;
 			mui.plusReady(function() {
-				
+
 				//    		_self = plus.webview.currentWebview();
 				//    		_next = plus.webview.getWebviewById('message.html');
 				//    		_index = plus.webview.getLaunchWebview();
@@ -179,12 +215,13 @@
 				//    		});
 
 			});
-			
-			var getData = function () {
+
+			var getData = function() {
 				uname = plus.storage.getItem('name');
 				//console.log(uname);
 				getsubinfo('任务执行中');
 				getsubinfo('任务完成');
+				getsubinfo('修正任务');
 			}
 
 			var createFragment = function(subs) {
@@ -228,6 +265,16 @@
 			var prepage2 = function() {
 				currentpage2--;
 				getsubinfo('任务完成');
+			}
+			
+			var nextpage3 = function() {
+				currentpage3++;
+				getsubinfo('修正任务');
+			}
+
+			var prepage3 = function() {
+				currentpage3--;
+				getsubinfo('修正任务');
 			}
 
 			var getsubinfo = function(status) {
@@ -317,7 +364,7 @@
 						},
 						function(data) {
 							if(data.flag == 'get_devtasksubinfo_list_success') {
-
+								temp02 = data.data.devtasksub;
 								var list = document.getElementById("list02");
 								h('#list02').html('');
 								list.appendChild(createFragment(data.data.devtasksub));
@@ -376,6 +423,82 @@
 											'下一页' +
 											'</a></li></ul></div>';
 										h('#list02').html(temp);
+									}
+								}
+								//console.log(data.data.currentpage);
+
+							}
+						}
+					);
+				} else if(status == '修正任务') {
+					mui.post(
+						url + 'devtasksub/getdevtasksubinfolist?token=' + plus.storage.getItem('token'), {
+							curr_page: currentpage,
+							page_size: numperpage,
+							uid: plus.storage.getItem('uid'),
+							status: status,
+						},
+						function(data) {
+							if(data.flag == 'get_devtasksubinfo_list_success') {
+								temp03 = data.data.devtasksub;
+								var list = document.getElementById("list03");
+								h('#list03').html('');
+								list.appendChild(createFragment(data.data.devtasksub));
+
+								// 加分页按钮
+								if(data.data.pages == 2) {
+									if(data.data.currentpage == 1) {
+										var temp = h('#list03').html() +
+											'<div class="mui-content-padded" style="margin-top: 10px;margin-bottom: 10px"><ul class="mui-pager">' +
+											'<li class="mui-disabled"><span>' +
+											'上一页' +
+											'</span></li>' +
+											'<li><a href="javascript:;" onclick="nextpage3();">' +
+											'下一页' +
+											'</a></li></ul></div>';
+										h('#list01').html(temp);
+									} else {
+										var temp = h('#list03').html() +
+											'<div class="mui-content-padded" style="margin-top: 10px;margin-bottom: 10px"><ul class="mui-pager">' +
+											'<li><a href="javascript:;" onclick="prepage3();">' +
+											'上一页' +
+											'</a></li>' +
+											'<li class="mui-disabled"><span>' +
+											'下一页' +
+											'</span></li></ul></div>';
+										h('#list03').html(temp);
+									}
+								} else if(data.data.pages > 2) {
+									if(data.data.currentpage == 1) {
+										var temp = h('#list03').html() +
+											'<div class="mui-content-padded" style="margin-top: 10px;margin-bottom: 10px"><ul class="mui-pager">' +
+											'<li class="mui-disabled"><span>' +
+											'上一页' +
+											'</span></li>' +
+											'<li><a href="javascript:;" onclick="nextpage3();">' +
+											'下一页' +
+											'</a></li></ul></div>';
+										h('#list03').html(temp);
+									} else if(data.data.currentpage == data.data.pages) {
+										var temp = h('#list03').html() +
+											'<div class="mui-content-padded" style="margin-top: 10px;margin-bottom: 10px"><ul class="mui-pager">' +
+											'<li><a href="javascript:;" onclick="prepage3();">' +
+											'上一页' +
+											'</a></li>' +
+											'<li class="mui-disabled"><span>' +
+											'下一页' +
+											'</span></li></ul></div>';
+										h('#list03').html(temp);
+									} else {
+										var temp = h('#list03').html() +
+											'<div class="mui-content-padded" style="margin-top: 10px;margin-bottom: 10px"><ul class="mui-pager">' +
+											'<li><a href="javascript:;" onclick="prepage3();">' +
+											'上一页' +
+											'</a></li>' +
+											'<li><a href="javascript:;" onclick="nextpage3();">' +
+											'下一页' +
+											'</a></li></ul></div>';
+										h('#list03').html(temp);
 									}
 								}
 								//console.log(data.data.currentpage);
