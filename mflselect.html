@@ -56,8 +56,7 @@
 						<span class="mui-icon mui-icon-reload"></span>
 					</div>
 				</div>-->
-			
-				
+
 			</div>
 		</div>
 
@@ -78,9 +77,11 @@
 			var currentcatagoryid = 0;
 
 			var text = "";
-			
+
 			var mydata = [];
-			var selected = [];
+			var selected = []; // 已经选定的mfl
+			var ws = null; // 本窗口对象
+			var wo = null; // 父窗口对象
 
 			(function($, doc) {
 				$.init({
@@ -88,7 +89,7 @@
 				});
 				var btnArray = [{
 					title: "重新选择分类"
-				},{
+				}, {
 					title: '确定选择'
 				}];
 				doc.getElementById("menu").addEventListener('tap', function() {
@@ -117,6 +118,12 @@
 					layer: 2
 				});
 				$.plusReady(function() {
+					ws = plus.webview.currentWebview();
+					wo = ws.opener();
+
+					selected = JSON.parse(plus.storage.getItem('mfls'));
+					//console.log('sele:'+selected.length);
+
 					var _getParam = function(obj, param) {
 						return obj[param] || '';
 					};
@@ -193,10 +200,24 @@
 					},
 					function(data) {
 						if(data.flag == 'get_fabricandaccessories_list2_success') {
-							if(data.data.faa_count == 0){
+							if(data.data.faa_count == 0) {
 								clearmycard();
 							} else {
-								mydata = data.data.faa;
+								for(var i = 0; i < data.data.faa.length; i++) {
+									// 排除已经选择的
+									var pflag = false;
+									for(var j = 0; j < selected.length; j++) {
+										if(data.data.faa[i].guid == selected[j].guid) {
+											pflag = true;
+											break;
+										}
+									}
+									if(pflag) {
+										continue;
+									}
+									mydata.push(data.data.faa[i]);
+								}
+
 								makemycard();
 							}
 						}
@@ -204,30 +225,41 @@
 					'json'
 				);
 			}
-			
-			function clearmycard(){
+
+			function clearmycard() {
 				h('#mycard').html('');
 				mydata = [];
 				selected = [];
 			}
-			
-			function makemycard(){
+
+			function makemycard() {
 				var m = '';
-				for(var i = 0; i < mydata.length; i++){
+				for(var i = 0; i < mydata.length; i++) {
+					// 排除已经选择的
+					var pflag = false;
+					for(var j = 0; j < selected.length; j++) {
+						if(mydata[i].guid == selected[j].guid) {
+							pflag = true;
+							break;
+						}
+					}
+					if(pflag) {
+						continue;
+					}
 					m += '<div class="mui-card" id="' + mydata[i].guid + '">';
-					m += '<div class="mui-card-header">面辅料-' + (i+1) + ' | 本地货号 '+ mydata[i].localarticlenumber +'</div>';
+					m += '<div class="mui-card-header">面辅料-' + (i + 1) + ' | 本地货号 ' + mydata[i].localarticlenumber + '</div>';
 					m += '<div class="mui-card-content">';
 					m += '<div class="mui-card-content-inner">';
 					m += '<img src="imgs/logo.jpeg" width="80">';
 					m += '<p style="margin-top: -80px;margin-left:100px;text-indent:0;font-size:14px;">';
-					m += '<b>名称: </b>'+mydata[i].faname+'<br/>';
-					m += '<b>参考单价: </b>'+mydata[i].referenceprice+' (人民币)<br/>';
-					m += '<b>计量单位: </b>'+mydata[i].measureunit+'<br/>';
-					m += '<b>供应商: </b>'+mydata[i].supplier+'<br/>';
+					m += '<b>名称: </b>' + mydata[i].faname + '<br/>';
+					m += '<b>参考单价: </b>' + mydata[i].referenceprice + ' (人民币)<br/>';
+					m += '<b>计量单位: </b>' + mydata[i].measureunit + '<br/>';
+					m += '<b>供应商: </b>' + mydata[i].supplier + '<br/>';
 					m += '<b><span style="margin-top:20px;">需要量：</span></b>';
 					//m += '<div class="mui-numbox" data-numbox-min="0" style="width: 180px;">';
 					//m += '<button class="mui-btn mui-btn-numbox-minus" type="button">-</button>';
-					m += '<input id="'+mydata[i].guid+'_num" class="mui-input-numbox" type="number" style="text-align: right;" value="0" />';
+					m += '<input id="' + mydata[i].guid + '_num" class="mui-input-numbox" type="number" style="text-align: right;" value="0" />';
 					//m += '<button class="mui-btn mui-btn-numbox-plus" type="button">+</button>';
 					//m += '</div>';
 					m += '</p>'
@@ -240,17 +272,24 @@
 				}
 				h('#mycard').html(m);
 			}
-			
+
 			// 确定选择
 			function submitselected() {
-				for(var i = 0; i < mydata.length; i++){
-					console.log(h("#"+mydata[i].guid+"_num").val());	
-					mydata[i].xyl = h("#"+mydata[i].guid+"_num").val();
-					if(mydata[i].xyl != 0) {
-						selected.push(mydata[i]);
+				//console.log('TT:' + mydata[0].guid);
+				if(mydata.length > 0) {
+					for(var i = 0; i < mydata.length; i++) {
+						console.log(h("#" + mydata[i].guid + "_num").val());
+						mydata[i].xyl = h("#" + mydata[i].guid + "_num").val();
+						if(mydata[i].xyl != 0) {
+							selected.push(mydata[i]);
+						}
 					}
+					console.log(JSON.stringify(selected));
+					plus.storage.setItem('mfls', JSON.stringify(selected));
 				}
-				console.log(JSON.stringify(selected));
+				wo.evalJS('setmflsdata()');
+				ws.clear();
+				ws.close();
 			}
 
 			function getcatagorydata2(pid) {

@@ -168,7 +168,7 @@
 								url + 'devtasksub/nextdevtasksubinfo?token=' + plus.storage.getItem('token'), {
 									devtasksub_guid: plus.storage.getItem('currentsubinfo'),
 									flag: 1,
-									cscgcheck: h('#cscgcheck').html
+									cscgcheck: h('#cscgcheck').html()
 								},
 								function(data) {
 									//console.log(data.error_message);

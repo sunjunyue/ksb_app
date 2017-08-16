@@ -61,8 +61,9 @@
 				margin-left: 16px;
 				margin-top: 16px;
 			}
-			span.mui-icon{
-				font-size:20px;
+			
+			span.mui-icon {
+				font-size: 20px;
 			}
 		</style>
 	</head>
@@ -76,95 +77,17 @@
 			<a id="menu" class="mui-icon mui-icon-bars mui-pull-right" href="javascript:;"></a>
 		</div>
 		<div class="mui-content">
-			<!--<div class="mui-content-padded">
-				<button id='showUserPicker' class="mui-btn mui-btn-block" type='button'>点击此处选择面辅料审核人</button>
-				<div id='userResult' class="ui-alert"></div>
-				<button id="savebtn" class="mui-btn mui-btn" type='button'>任务保存</button>
-				<button id="submitbtn" class="mui-btn mui-btn" type='button' style="display: none;" onclick="submittasksub();"></button>
-			</div>-->
-			<div id="dcontent" class="mui-content-padded ">
-				<h5>上传文件列表：</h5>
-				<div id="files" style="text-align:left;">
-					<p id="empty" class="text_empty">无上传文件</p>
-				</div>
-			</div>
 			<div class="mui-content-padded bT">
-				<h5>设计说明：</h5>
+				<h5>配面辅料说明：</h5>
 				<div class="mui-input-row">
-					<textarea id="designremark" rows="4" disabled="disabled" style="color: #CCCCCC;"></textarea>
+					<textarea id="mflzbremark" rows="4"></textarea>
 				</div>
 			</div>
-			<div class="mui-card">
-				<div class="mui-card-header">面辅料-1 | 本地货号 COTTON-HI30QX</div>
-				<div class="mui-card-content">
-					<div class="mui-card-content-inner">
-						<img src="imgs/logo.jpeg" width="80">
-						<p style="margin-top: -80px;margin-left:100px;text-indent:0;font-size:14px;">
-							<b>分类：</b>面料-棉<br/>
-							<b>名称: </b>棉布006<br/>
-							<b>参考单价: </b>12.15 (人民币)<br/>
-							<b>计量单位: </b>米<br/>
-							<b>供应商: </b>13381757679<br/>
-							<b>需要量：</b>5.5
-						</p>
-					</div>
-				</div>
-				<div class="mui-card-footer">当前供应库存数：11700
-					 <span class="mui-icon mui-icon-trash"></span>
-				</div>
+			<div id="mycard" class="mui-content-padded">
+				<ul class="mui-table-view mui-table-view-striped mui-table-view-condensed">
+					<center>暂无面辅料数据</center>
+				</ul>
 			</div>
-			<div class="mui-card">
-				<div class="mui-card-header">页眉</div>
-				<div class="mui-card-content">
-					<div class="mui-card-content-inner">
-						包含页眉页脚的卡片，页眉常用来显示面板标题，页脚用来显示额外信息或支持的操作（比如点赞、评论等）
-					</div>
-				</div>
-				<div class="mui-card-footer">页脚</div>
-			</div>
-			<div class="mui-card">
-				<div class="mui-card-header">页眉</div>
-				<div class="mui-card-content">
-					<div class="mui-card-content-inner">
-						包含页眉页脚的卡片，页眉常用来显示面板标题，页脚用来显示额外信息或支持的操作（比如点赞、评论等）
-					</div>
-				</div>
-				<div class="mui-card-footer">页脚</div>
-			</div>
-			<div class="mui-card">
-				<div class="mui-card-header">页眉</div>
-				<div class="mui-card-content">
-					<div class="mui-card-content-inner">
-						包含页眉页脚的卡片，页眉常用来显示面板标题，页脚用来显示额外信息或支持的操作（比如点赞、评论等）
-					</div>
-				</div>
-				<div class="mui-card-footer">页脚</div>
-			</div>
-			<div class="mui-card">
-				<div class="mui-card-header">页眉</div>
-				<div class="mui-card-content">
-					<div class="mui-card-content-inner">
-						包含页眉页脚的卡片，页眉常用来显示面板标题，页脚用来显示额外信息或支持的操作（比如点赞、评论等）
-					</div>
-				</div>
-				<div class="mui-card-footer">页脚</div>
-			</div>
-
-			<!--<div id="topPopover" class="mui-popover">
-				<div class="mui-popover-arrow"></div>
-				<div class="mui-scroll-wrapper">
-					<div class="mui-scroll">
-						<ul class="mui-table-view">
-							<li class="mui-table-view-cell">
-								<a href="javascript:;" onclick="opentaskdetail();">查看研发任务详细</a>
-							</li>
-							<li class="mui-table-view-cell">
-								<a href="#">查看款式初稿详细</a>
-							</li>
-						</ul>
-					</div>
-				</div>
-			</div>-->
 		</div>
 		<script src="js/mui.min.js"></script>
 		<script src="js/common.js"></script>
@@ -176,19 +99,36 @@
 			var shrid = 0;
 			var shrname = '';
 
+			var mfls = [];
+
+			var userPicker;
+			
+			var btnArray;
+			var btnArray2 = ['否', '是'];
+
 			(function($, doc) {
 				$.init({
 					swipeBack: true
 				});
-				var btnArray = [{title:"查看研发任务详细"},{title:"选择面辅料"}];
-				doc.getElementById("menu").addEventListener('tap', function () {
+				btnArray = [{
+					title: "查看研发任务详细"
+				}, {
+					title: "选择面辅料"
+				}, {
+					title: "保存"
+				}, {
+					title: "选择审核人"
+				}, {
+					title: "提交审核"
+				}];
+				doc.getElementById("menu").addEventListener('tap', function() {
 					plus.nativeUI.actionSheet({
 						title: '配面辅料操作',
 						cancel: '取消',
 						buttons: btnArray
-					}, function (e) {
+					}, function(e) {
 						var index = e.index;
-						switch (index) {
+						switch(index) {
 							case 0:
 								break;
 							case 1:
@@ -197,12 +137,20 @@
 							case 2:
 								openmflselect();
 								break;
+							case 3:
+								savedata();
+								break;
+							case 4:
+								selectchecker();
+								break;
+							case 5:
+								submit();
+								break;
 						}
 					});
 				});
-				
-				
-				var userPicker = new $.PopPicker();
+
+				userPicker = new $.PopPicker();
 				$.plusReady(function() {
 					mui.post(
 						url + 'user/getuserlistbyroleid2', {
@@ -231,6 +179,77 @@
 				});
 			})(mui, document);
 
+			function submit() {
+				if(h('#mflzbremark').val().trim() == '') {
+					plus.nativeUI.toast('请填写说明', {
+						icon: 'imgs/logo.jpeg',
+						style: 'inline',
+						duration: 'long',
+						verticalAlign: 'center',
+					});
+					return;
+				} else if(mfls.length == 0) {
+					plus.nativeUI.toast('请至少选择一项面料', {
+						icon: 'imgs/logo.jpeg',
+						style: 'inline',
+						duration: 'long',
+						verticalAlign: 'center',
+					});
+					return;
+				} else if(shrid == 0) {
+					plus.nativeUI.toast('请先指定审核人', {
+						icon: 'imgs/logo.jpeg',
+						style: 'inline',
+						duration: 'short',
+						verticalAlign: 'center',
+					});
+					return;
+				}
+				
+				
+				mui.confirm('您确定要提交该配面辅料任务吗？', '操作提示', btnArray2, function(e) {
+					if(e.index == 1) {
+						submittasksub();
+					}
+				});
+
+			}
+
+			function selectchecker() {
+				userPicker.show(function(items) {
+					shrid = items[0].value;
+					shrname = items[0].text;
+					btnArray[4].title = "提交给" + shrname + "审核";
+				});
+				
+			}
+
+			//
+			function savedata() {
+				var mflremark = h('#mflzbremark').val().trim() == '' ? null : h('#mflzbremark').val().trim();
+				var mf = mfls.length == 0 ? 'null' : JSON.stringify(mfls);
+				mui.post(
+					url + 'devtask/setmfldata?token=' + plus.storage.getItem('token'), {
+						subguid: plus.storage.getItem('currentsubinfo'),
+						mflremark: mflremark,
+						mfls: mf
+					},
+					function(data) {
+						console.log(data.flag);
+						if(data.flag == 'sucess') {
+							plus.nativeUI.toast('面辅料数据已经保存', {
+								icon: 'imgs/logo.jpeg',
+								style: 'inline',
+								duration: 'long',
+								verticalAlign: 'center',
+							});
+						}
+					},
+					'json'
+				);
+
+			}
+
 			// 查看研发任务详细
 			function opentaskdetail() {
 				mui.openWindow({
@@ -241,17 +260,108 @@
 					}
 				});
 			}
-			
+
 			// 打开面辅料选取页面
-			function openmflselect () {
+			function openmflselect() {
+				plus.storage.setItem('mfls', JSON.stringify(mfls));
 				mui.openWindow({
 					url: 'mflselect.html',
 					id: 'mflselect',
 				});
 			}
 
+			// 从服务端获取已选定的面辅料数据
+			function getmflsdatafromserver() {
+				shls = null; // 审核人集合对象
+				shrid = 0;
+				shrname = '';
+				btnArray[4].title = "提交审核";
+				mui.post(
+					url + 'devtask/getmfldata?token=' + plus.storage.getItem('token'), {
+						subguid: plus.storage.getItem('currentsubinfo'),
+					},
+					function(data) {
+						if(data.flag == 'sucess') {
+							if(data.data.mflremark != null) {
+								h('#mflzbremark').val(data.data.mflremark);
+							} else {
+								h('#mflzbremark').val('');
+							}
+
+							if(data.data.mfls != null) {
+								mfls = eval(data.data.mfls);
+								plus.storage.setItem('mfls', JSON.stringify(mfls));
+								setmflsdata();
+							} else {
+								mfls = [];
+							}
+						}
+					},
+					'json'
+				);
+			}
+
+			// 设定
+			function setmflsdata() {
+				mfls = JSON.parse(plus.storage.getItem('mfls'));
+				if(mfls.length != 0) {
+					h('#mycard').html('');
+					var m = '';
+					for(var i = 0; i < mfls.length; i++) {
+						m += '<div class="mui-card" id="' + mfls[i].guid + '">';
+						m += '<div class="mui-card-header">面辅料-' + (i + 1) + ' | 本地货号 ' + mfls[i].localarticlenumber + '</div>';
+						m += '<div class="mui-card-content">';
+						m += '<div class="mui-card-content-inner">';
+						m += '<img src="imgs/logo.jpeg" width="80">';
+						m += '<p style="margin-top: -80px;margin-left:100px;text-indent:0;font-size:14px;">';
+						m += '<b>名称: </b>' + mfls[i].faname + '<br/>';
+						m += '<b>参考单价: </b>' + mfls[i].referenceprice + ' (人民币)<br/>';
+						m += '<b>计量单位: </b>' + mfls[i].measureunit + '<br/>';
+						m += '<b>供应商: </b>' + mfls[i].supplier + '<br/>';
+						m += '<b><span style="margin-top:20px;">需要量：</span></b>';
+						//m += '<div class="mui-numbox" data-numbox-min="0" style="width: 180px;">';
+						//m += '<button class="mui-btn mui-btn-numbox-minus" type="button">-</button>';
+						m += '<input id="' + mfls[i].guid + '_num" class="mui-input-numbox" type="number" style="text-align: right;" value="' + mfls[i].xyl + '" />';
+						//m += '<button class="mui-btn mui-btn-numbox-plus" type="button">+</button>';
+						//m += '</div>';
+						m += '</p>'
+						m += '</div>';
+						m += '</div>';
+						m += '<div class="mui-card-footer">当前供应库存数：' + mfls[i].curr_quantity;
+						m += '<span class="mui-icon mui-icon-trash" onclick="deletemfl(\'' + mfls[i].guid + '\')"></span>';
+						m += '</div>';
+						m += '</div>';
+					}
+					h('#mycard').html(m);
+				} else {
+					h('#mycard').html('<ul class="mui-table-view mui-table-view-striped mui-table-view-condensed"><center>暂无面辅料数据</center></ul>');
+				}
+			}
+
+			function deletemfl(guid) {
+				console.log('删除：' + guid);
+				
+				mui.confirm('您是否要删除该项面辅料？', '操作提示', btnArray2, function(e) {
+					if(e.index == 1) {
+						var ti = -1;
+						for(var i = 0; i < mfls.length; i++) {
+							if(mfls[i].guid == guid) {
+								ti = i;
+							}
+						}
+						//console.log('ti:'+ti);
+						if(ti != -1) {
+							mfls.splice(ti, 1);
+							//console.log(mfls.length);
+							plus.storage.setItem('mfls', JSON.stringify(mfls));
+							setmflsdata();
+						}
+					}
+				})
+			}
+
 			// 提交面辅料准备任务
-			var submittasksub = function() {
+			function submittasksub () {
 				//console.log(plus.storage.getItem('currentsubinfo')+"|"+shrid+"|"+shrname);	
 				mui.post(
 					url + 'devtasksub/nextdevtasksubinfo?token=' + plus.storage.getItem('token'), {
@@ -261,8 +371,9 @@
 					},
 					function(data) {
 						if(data.flag == 'next_devtasksubinfo_success') {
-							mui.toast('已经提交审核');
+							mui.toast('已通知'+shrname+'审核');
 						}
+						plus.webview.getLaunchWebview().evalJS('changeSub(2)');
 					},
 					'json'
 				);
